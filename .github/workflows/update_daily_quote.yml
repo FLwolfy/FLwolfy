@@ -1,0 +1,36 @@
+name: Update README with quotes
+
+on:
+  push:
+      paths:
+        - 'quotes.txt'  # update when quotes.txt is updated
+  schedule:
+    - cron: "0 0 * * *"  # 每天 00:00 自动运行
+  workflow_dispatch:
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Read quotes.txt and update README
+        run: |
+          # read quotes.txt and convert to URI
+          QQUOTES=$(cat quotes.txt | tr '\n' ';' | jq -sRr @uri)
+          
+          # replace spaces with + and newlines with ;
+          NEW_LINES=$(echo "$QUOTES" | sed 's/ /+/g' | tr '\n' ';')
+
+          # replace lines in README
+          sed -i "s|lines=.*|lines=${NEW_LINES}|g" README.md
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add README.md
+          git commit -m "🔄 Auto update Typing SVG in README"
+          git push
