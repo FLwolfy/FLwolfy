@@ -19,13 +19,17 @@ jobs:
       - name: Read quotes.txt and update README
         run: |
           # read quotes.txt and convert to URI
-          QQUOTES=$(cat quotes.txt | tr '\n' ';' | jq -sRr @uri)
+          QUOTES=$(cat quotes.txt | tr '\n' ';' | jq -sRr @uri)
           
           # replace spaces with + and newlines with ;
           NEW_LINES=$(echo "$QUOTES" | sed 's/ /+/g' | tr '\n' ';')
 
           # replace lines in README
-          sed -i "s|lines=.*|lines=${NEW_LINES}|g" README.md
+          if grep -q "lines=" README.md; then
+            sed -i "s|lines=.*|lines=${NEW_LINES})](https://git.io/typing-svg)|g" README.md
+          else
+            echo "lines=${NEW_LINES})](https://git.io/typing-svg)" >> README.md
+          fi
 
       - name: Commit and push changes
         run: |
