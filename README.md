@@ -22,8 +22,8 @@
 ![Unity](https://img.shields.io/badge/-Unity-000000?style=flat&logo=unity&logoColor=white)
 ![Git](https://img.shields.io/badge/-Git-F05032?style=flat&logo=git&logoColor=white)
 
-![GitHub Commit Stats](https://github-readme-stats.vercel.app/api?username=FLwolfy&count_private=true&show_icons=true&hide_title=true&hide=prs&theme=tokyonight)
-![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=FLwolfy&layout=compact&theme=tokyonight)
+![GitHub Commit Stats](https://github-readme-stats.vercel.app/api?username=FLwolfy&count_private=true&show_icons=true&hide_title=true&hide=prs&theme=tokyonight&card_width=500)
+![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=FLwolfy&layout=compact&theme=tokyonight&card_width=500)
 
 </div>
 
