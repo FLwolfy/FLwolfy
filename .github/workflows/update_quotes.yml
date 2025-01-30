@@ -5,7 +5,7 @@ on:
       paths:
         - 'quotes.txt'  # update when quotes.txt is updated
   schedule:
-    - cron: "0 0 * * *"  # 每天 00:00 自动运行
+    - cron: "0 0 * * *"  # daily update
   workflow_dispatch:
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
       - name: Read quotes.txt and update README
         run: |
           # read quotes.txt and convert to URI
-          QUOTES=$(cat quotes.txt | tr '\n' ';' | jq -sRr @uri)
+          QUOTES=$(cat QUOTES.txt | tr '\n' ';' | jq -sRr @uri)
           
           # replace spaces with + and newlines with ;
           NEW_LINES=$(echo "$QUOTES" | sed 's/ /+/g' | tr '\n' ';')
