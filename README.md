@@ -4,7 +4,7 @@
   
 **【Quote of the Day】**
 
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=60&height=45&pause=3000&color=7C5DF7&background=FFFFFF00&center=true&vCenter=true&width=600&lines=Stay%20slower%2C%20work%20faster.%20%F0%9F%91%8B%3BHi%20There%3F%3B;)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=60&height=45&pause=3000&color=7C5DF7&background=FFFFFF00&center=true&vCenter=true&width=600&lines=;)](https://git.io/typing-svg)
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FFLwolfy&count_bg=%2373C9E8&title_bg=%2336BCF7&icon=github.svg&icon_color=%23FFFFFF&title=Visitors&edge_flat=false)](https://github.com/FLwolfy)
 
