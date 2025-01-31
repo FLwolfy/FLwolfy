@@ -19,7 +19,7 @@ jobs:
           QUOTES=$(awk '{
               gsub(/^[ \t]+|[ \t]+$/, "");
               if (length == 0) {
-                  if (!p) print "";  # 只打印一个空行
+                  if (!p) print "";  # only keep one empty line
                   p=1;
               } else {
                   print;
