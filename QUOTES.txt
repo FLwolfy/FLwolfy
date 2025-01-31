@@ -1,6 +1,6 @@
-#################################################
-##### [01/30/25] FROM ANIME "MAGICA MADOKA" #####
-#################################################
+################################################
+##### [01/31/25] LATEST QUOTES UPDATE TIME #####
+################################################
 
 ## QUOTE 1
 "You found a reason to do battle, right?
@@ -8,19 +8,20 @@ You're determined not to run away?
 Then you're doing all you can do.
 And the only thing left,
 is to run with it as hard as you can."
---- Kyoko Sakura
-
-
-
-
-
-
+--- Kyoko Sakura 「Puella Magi Madoka Magica」
 
 ## QUOTE 2
 "If anyone tells me it's a mistake to have hope,
 well then, I'll just tell them they're wrong.
 And I'll keep telling them until they believe.
 No matter how many times it takes."
---- Madoka Kaname
-#
-#### FROM https://en.wikiquote.org/wiki/Puella_Magi_Madoka_Magica ####
+--- Madoka Kaname 「Puella Magi Madoka Magica」
+
+## QUOTE 3
+"The exploration of the unknown by humanity never stops."
+—-- Gabu 「Made in Abyss」
+
+## QUOTE 4
+"We don't know what will happen in the future, nor can we change what has already happened. All we can do is our best."
+--- Nazru 「Made in Abyss」
+################################################
