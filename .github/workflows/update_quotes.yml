@@ -16,7 +16,7 @@ jobs:
       - name: Read quotes.txt and update README
         run: |
           # read quotes.txt and convert to URI
-          QUOTES=$(grep -v '^#' QUOTES.txt | tr '\n' ';' | jq -sRr @uri)
+          QUOTES=$(grep -v '^#' QUOTES.txt | tr '\n' ';' | sed 's/[[:space:]]\+/ /g' | sed 's/;;;[;]*/;;/g' | jq -sRr @uri)
 
           # replace spaces with + and newlines with ;
           NEW_LINES=$(echo "$QUOTES" | sed 's/ /+/g' | tr '\n' ';')
