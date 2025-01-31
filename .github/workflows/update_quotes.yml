@@ -16,8 +16,16 @@ jobs:
       - name: Read quotes.txt and update README
         run: |
           # read quotes.txt and convert to URI
-          QUOTES=$(awk 'BEGIN { empty=0 } /^[[:space:]]*$/ { if (!empty) print ""; empty=1; next } { print; empty=0 }' QUOTES.txt | jq -sRr @uri)
-          
+          QUOTES=$(awk '
+            NF { 
+              if (prev_empty) print "";
+              print;
+              prev_empty = 0;
+              next;
+            }
+            !NF { prev_empty = 1; }
+          ' QUOTES.txt | jq -sRr @uri)
+
           # replace spaces with + and newlines with ;
           NEW_LINES=$(echo "$QUOTES" | sed 's/ /+/g' | tr '\n' ';')
 
@@ -28,6 +36,13 @@ jobs:
 
       - name: Commit and push changes
         run: |
+          # check are there any git differences
+          if git diff --quiet README.md; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          # commit and push
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add README.md
