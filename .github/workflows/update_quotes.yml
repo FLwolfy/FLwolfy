@@ -16,16 +16,7 @@ jobs:
       - name: Read quotes.txt and update README
         run: |
           # read quotes.txt and convert to URI
-          QUOTES=$(awk '{
-              gsub(/^[ \t]+|[ \t]+$/, "");
-              if (length == 0) {
-                  if (!p) print "";  # only keep one empty line
-                  p=1;
-              } else {
-                  print;
-                  p=0;
-              }
-          }' QUOTES.txt | jq -sRr @uri)
+          QUOTES=$(awk 'BEGIN { empty=0 } /^[[:space:]]*$/ { if (!empty) print ""; empty=1; next } { print; empty=0 }' QUOTES.txt | jq -sRr @uri)
           
           # replace spaces with + and newlines with ;
           NEW_LINES=$(echo "$QUOTES" | sed 's/ /+/g' | tr '\n' ';')
