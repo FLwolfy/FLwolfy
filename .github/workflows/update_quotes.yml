@@ -4,9 +4,6 @@ on:
   push:
       paths:
         - 'QUOTES.txt'  # update when quotes.txt is updated
-  schedule:
-    - cron: "0 0 * * *"  # daily update
-  workflow_dispatch:
 
 jobs:
   update-readme:
@@ -19,7 +16,7 @@ jobs:
       - name: Read quotes.txt and update README
         run: |
           # read quotes.txt and convert to URI
-          QUOTES=$(grep -v '^#' QUOTES.txt | tr '\n' ';' | jq -sRr @uri)
+          QUOTES=$(awk 'NF{if (p) print ""; print; p=0} !NF{p=1}' QUOTES.txt | jq -sRr @uri)
           
           # replace spaces with + and newlines with ;
           NEW_LINES=$(echo "$QUOTES" | sed 's/ /+/g' | tr '\n' ';')
