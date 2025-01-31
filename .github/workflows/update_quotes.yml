@@ -26,9 +26,7 @@ jobs:
 
           # replace lines in README
           if grep -q "lines=" README.md; then
-            sed -i "s|lines=.*|lines=${NEW_LINES})](https://git.io/typing-svg)|g" README.md
-          else
-            echo "lines=${NEW_LINES})" >> README.md
+            sed -i "s|lines=.*|lines=${NEW_LINES})|g" README.md
           fi
 
       - name: Commit and push changes
