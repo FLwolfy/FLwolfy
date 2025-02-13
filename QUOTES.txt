@@ -1,30 +1,16 @@
 ################################################
-##### [01/31/25] LATEST QUOTES UPDATE TIME #####
+##### [02/13/25] LATEST QUOTES UPDATE TIME #####
 ################################################
 
 ## QUOTE 1
-"You found a reason to do battle, right?
-You're determined not to run away?
-Then you're doing all you can do.
-And the only thing left,
-is to run with it as hard as you can."
---- Kyoko Sakura 「Puella Magi Madoka Magica」
-
-## QUOTE 2
-"If anyone tells me it's a mistake to have hope,
-well then, I'll just tell them they're wrong.
-And I'll keep telling them until they believe.
-No matter how many times it takes."
---- Madoka Kaname 「Puella Magi Madoka Magica」
-
-## QUOTE 3
-"Humanity will never stops the adventure for
-the exploration of the unknown."
-—-- Gabu 「Made in Abyss」
-
-## QUOTE 4
 "We don't know what will happen in the future,
 nor can we change what has already happened.
 All we can do is our best."
 --- Nazru 「Made in Abyss」
+
+## QUOTE 2
+"When UX doesn't consider ALL users,
+shouldn't it be known as 'SOME User Experience' 
+or… SUX?"
+--- Billy Gregory 「Senior Accessibility Engineer」
 ################################################
