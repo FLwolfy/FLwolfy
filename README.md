@@ -5,9 +5,6 @@
 **꧁≺[QUOTES OF THE DAY](QUOTES.txt)≻꧂**
 
 ![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&width=1000&&height=40&duration=800&pause=1200&color=7C5DF7&background=FFFFFF00&center=true&vCenter=true&width=600&lines=%3B%22We%20don%27t%20know%20what%20will%20happen%20in%20the%20future%2C%3Bnor%20can%20we%20change%20what%20has%20already%20happened.%3BAll%20we%20can%20do%20is%20our%20best.%22%3B---%20Nazru%20%E3%80%8CMade%20in%20Abyss%E3%80%8D%3B%3B%22When%20UX%20doesn%27t%20consider%20ALL%20users%2C%3Bshouldn%27t%20it%20be%20known%20as%20%27SOME%20User%20Experience%27%20%3Bor%E2%80%A6%20SUX%3F%22%3B---%20Billy%20Gregory%20%E3%80%8CSenior%20Accessibility%20Engineer%E3%80%8D%3B;)
-
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FFLwolfy&count_bg=%2373C9E8&title_bg=%2336BCF7&icon=github.svg&icon_color=%23FFFFFF&title=Visitors&edge_flat=false)](https://github.com/FLwolfy)
-
 </div>
 
 ---
