@@ -29,6 +29,6 @@
 
 ## 📫 Contacts
 
-- 📧 **Email**: [hsuankailiao@foxmail.com](mailto:hsuankailiao@foxmail.com)
+- 📧 **Email**: [hsuankailiao@gmail.com](mailto:hsuankailiao@gmail.com)
 - 🐦 **Twitter**: [https://twitter.com/fl_wolfy](https://twitter.com/fl_wolfy)
 - 💬 **Discord**: [https://discord.com/users/1006448723326410782](https://discord.com/users/1006448723326410782)
