@@ -26,6 +26,11 @@ jobs:
             sed -i "s|lines=.*|lines=${NEW_LINES})|g" README.md
           fi
 
+      - name: Update last updated date in README
+        run: |
+          TODAY=$(date -u +%Y-%m-%d)
+          sed -i -E "s/(Last Updated: )[0-9]{4}-[0-9]{2}-[0-9]{2}/\1$TODAY/" README.md
+
       - name: Commit and push changes
         run: |
           # check are there any git differences
@@ -38,5 +43,5 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git add README.md
-          git commit -m "🔄 Auto update Typing SVG in README"
+          git commit -m "🔄 Auto update README last updated date and quotes"
           git push
