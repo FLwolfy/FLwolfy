@@ -3,10 +3,13 @@
 ################################################
 
 ## QUOTE 1
-"Even if it's just for a moment, I want to hold on to this warmth... and never let go."
+"Even if it's just for a moment, 
+I want to hold on to this warmth... 
+and never let go."
 --- Ushio Kofune 「Summer Time Rendering」
 
 ## QUOTE 2
-"Programs must be written for people to read, and only incidentally for machines to execute."
+"Programs must be written for people to read, 
+and only incidentally for machines to execute."
 --- Harold Abelson 「Co-author of SICP」
 ################################################
