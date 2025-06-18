@@ -1,16 +1,12 @@
 ################################################
-##### [02/13/25] LATEST QUOTES UPDATE TIME #####
+##### [06/18/25] LATEST QUOTES UPDATE TIME #####
 ################################################
 
 ## QUOTE 1
-"We don't know what will happen in the future,
-nor can we change what has already happened.
-All we can do is our best."
---- Nazru 「Made in Abyss」
+"Even if it's just for a moment, I want to hold on to this warmth... and never let go."
+--- Ushio Kofune 「Summer Time Rendering」
 
 ## QUOTE 2
-"When UX doesn't consider ALL users,
-shouldn't it be known as 'SOME User Experience' 
-or… SUX?"
---- Billy Gregory 「Senior Accessibility Engineer」
+"Programs must be written for people to read, and only incidentally for machines to execute."
+--- Harold Abelson 「Co-author of SICP」
 ################################################
