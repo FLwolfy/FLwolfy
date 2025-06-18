@@ -1,4 +1,4 @@
-## 👋 Hi, I'm ![Aaron Liao](https://FLwolfy.github.io)
+## 👋 Hi, I'm Aaron Liao
 
 <div align="center">
   
@@ -29,6 +29,7 @@
 
 ## 📫 Contacts
 
+- 🌐 **Blog**: [(https://FLwolfy.github.io](https://FLwolfy.github.io)
 - 📧 **Email**: [hsuankailiao@gmail.com](mailto:hsuankailiao@gmail.com)
 - 🐦 **Twitter**: [https://twitter.com/fl_wolfy](https://twitter.com/fl_wolfy)
 - 💬 **Discord**: [https://discord.com/users/1006448723326410782](https://discord.com/users/1006448723326410782)
