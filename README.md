@@ -27,7 +27,7 @@
 
 ---
 
-## 📫 Contacts
+## 📫 Links and Contacts
 
 - 🌐 **Blog**: [(https://FLwolfy.github.io](https://FLwolfy.github.io)
 - 📧 **Email**: [hsuankailiao@gmail.com](mailto:hsuankailiao@gmail.com)
