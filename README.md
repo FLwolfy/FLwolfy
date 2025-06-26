@@ -25,8 +25,8 @@
 ![C#](https://img.shields.io/badge/-C%23-239120?style=flat&logo=csharp&logoColor=white)
 ![Git](https://img.shields.io/badge/-Git-F05032?style=flat&logo=git&logoColor=white)
 
-![GitHub Commit Stats](https://github-readme-stats.vercel.app/api?username=FLwolfy&count_private=true&show_icons=true&hide_title=true&hide=prs&theme=tokyonight&card_width=300)
-![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=FLwolfy&layout=compact&theme=tokyonight&card_width=300&langs_count=4&hide=jupyter%20notebook)
+![GitHub Commit Stats](https://github-readme-stats.vercel.app/api?username=FLwolfy&bg_color=30,8e2de2,4a00e0&title_color=ffffff&text_color=e0c3fc&icon_color=feb47b&show_icons=truecount_private=true&show_icons=true&hide_title=true&hide=prs&theme=tokyonight&card_width=300)
+![Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=FLwolfy&bg_color=30,e96443,904e95&title_color=fff&layout=compact&theme=tokyonight&card_width=300&langs_count=4&hide=jupyter%20notebook)
 
 
 </div>
