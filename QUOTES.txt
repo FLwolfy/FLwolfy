@@ -1,15 +1,13 @@
 ################################################
-##### [06/18/25] LATEST QUOTES UPDATE TIME #####
+##### [07/09/25] LATEST QUOTES UPDATE TIME #####
 ################################################
 
 ## QUOTE 1
-"Even if it's just for a moment, 
-I want to hold on to this warmth... 
-and never let go."
---- Ushio Kofune 「Summer Time Rendering」
+"If you don’t take a stand,  
+nothing’s gonna change."
+--- Kyoko Sakura 「Puella Magi Madoka Magica」
 
 ## QUOTE 2
-"Programs must be written for people to read, 
-and only incidentally for machines to execute."
---- Harold Abelson 「Co-author of SICP」
+"Talk is cheap. Show me the code."
+--- Linus Torvalds 「Creator of Linux」
 ################################################
