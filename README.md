@@ -4,7 +4,7 @@
   
 **꧁≺[QUOTES OF THE DAY](QUOTES.txt)≻꧂**
 
-![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&width=1000&&height=40&duration=800&pause=1200&color=7C5DF7&background=FFFFFF00&center=true&vCenter=true&width=600&lines=%3B%22If%20you%20don%E2%80%99t%20take%20a%20stand%2C%20%3Bnothing%E2%80%99s%20gonna%20change.%22%3B---%20Kyoko%20Sakura%20%E3%80%8CPuella%20Magi%20Madoka%20Magica%E3%80%8D%3B%3B%22Talk%20is%20cheap.%20Show%20me%20the%20code.%22%3B---%20Linus%20Torvalds%20%E3%80%8CCreator%20of%20Linux%E3%80%8D%3B;)
+![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&width=1000&&height=40&duration=800&pause=1200&color=7C5DF7&background=FFFFFF00&center=true&vCenter=true&width=600&lines=%3B%22The%20law%20doesn%27t%20protect%20people.%3BIt%27s%20people%20who%20protect%20the%20law.%22%3B---%20Akane%20Tsunemori%20%E3%80%8CPsycho-Pass%E3%80%8D%3B%3B%22Programs%20must%20be%20written%20for%20people%20to%20read%2C%20%3Band%20only%20incidentally%20for%20machines%20to%20execute.%22%3B---%20Harold%20Abelson%20%E3%80%8CMIT%20Computer%20Scientist%E3%80%8D%3B;)
 </div>
 <p align="right">
   <sub><sub>
