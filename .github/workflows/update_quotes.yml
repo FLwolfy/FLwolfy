@@ -44,7 +44,7 @@ jobs:
       - name: Commit and push changes
         run: |
           # check are there any git differences
-          if git diff --quiet README.md; then
+          if git diff --quiet README.md HISTORY.txt; then
             echo "No changes to commit."
             exit 0
           fi
@@ -52,6 +52,6 @@ jobs:
           # commit and push
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add README.md
-          git commit -m "🔄 Auto update README last updated date and quotes"
+          git add README.md HISTORY.txt
+          git commit -m "🔄 Auto update quotes"
           git push
