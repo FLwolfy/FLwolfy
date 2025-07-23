@@ -31,6 +31,16 @@ jobs:
           TODAY=$(date -u +%Y-%m-%d)
           sed -i -E "s/(Last Updated: )[0-9]{4}-[0-9]{2}-[0-9]{2}/\1$TODAY/" README.md
 
+      - name: Prepend QUOTES.txt to HISTORY.txt
+        run: |
+          echo "" > temp.txt
+          cat QUOTES.txt >> temp.txt
+          echo -e "\n------------------------------------------------\n" >> temp.txt
+          if [ -f HISTORY.txt ]; then
+            cat HISTORY.txt >> temp.txt
+          fi
+          mv temp.txt HISTORY.txt
+
       - name: Commit and push changes
         run: |
           # check are there any git differences
