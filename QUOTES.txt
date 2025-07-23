@@ -1,13 +1,14 @@
 ################################################
-##### [07/09/25] LATEST QUOTES UPDATE TIME #####
+##### [07/23/25] LATEST QUOTES UPDATE TIME #####
 ################################################
 
 ## QUOTE 1
-"If you don’t take a stand,  
-nothing’s gonna change."
---- Kyoko Sakura 「Puella Magi Madoka Magica」
+"The law doesn't protect people.
+It's people who protect the law."
+--- Akane Tsunemori 「Psycho-Pass」
 
 ## QUOTE 2
-"Talk is cheap. Show me the code."
---- Linus Torvalds 「Creator of Linux」
+"Programs must be written for people to read,  
+and only incidentally for machines to execute."
+--- Harold Abelson 「MIT Computer Scientist」
 ################################################
