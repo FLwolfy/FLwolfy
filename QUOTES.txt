@@ -2,12 +2,12 @@
 ##### [07/09/25] LATEST QUOTES UPDATE TIME #####
 ################################################
 
-## QUOTE 1
+## QUOTE 1 
 "If you don’t take a stand,  
 nothing’s gonna change."
 --- Kyoko Sakura 「Puella Magi Madoka Magica」
 
-## QUOTE 2
+## QUOTE 2 
 "Talk is cheap. Show me the code."
 --- Linus Torvalds 「Creator of Linux」
 ################################################
