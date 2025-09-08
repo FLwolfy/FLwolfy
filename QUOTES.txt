@@ -1,14 +1,14 @@
 ################################################
-##### [07/23/25] LATEST QUOTES UPDATE TIME #####
+##### [09/08/25] LATEST QUOTES UPDATE TIME #####
 ################################################
 
 ## QUOTE 1
-"The law doesn't protect people.
-It's people who protect the law."
---- Akane Tsunemori 「Psycho-Pass」
+"People cannot live without illusions.
+That is what sustains them."
+--- Arcueid Brunestud 「Tsukihime」
 
 ## QUOTE 2
-"Programs must be written for people to read,  
-and only incidentally for machines to execute."
---- Harold Abelson 「MIT Computer Scientist」
+"Design is not just what it looks like and feels like.
+Design is how it works."
+--- Steve Jobs 「Apple Co-founder」
 ################################################
