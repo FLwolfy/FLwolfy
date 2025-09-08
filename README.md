@@ -4,11 +4,11 @@
   
 **꧁≺[QUOTES OF THE DAY](QUOTES.txt)≻꧂**
 
-![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&width=1000&&height=40&duration=800&pause=1200&color=7C5DF7&background=FFFFFF00&center=true&vCenter=true&width=600&lines=%3B%22The%20law%20doesn%27t%20protect%20people.%3BIt%27s%20people%20who%20protect%20the%20law.%22%3B---%20Akane%20Tsunemori%20%E3%80%8CPsycho-Pass%E3%80%8D%3B%3B%22Programs%20must%20be%20written%20for%20people%20to%20read%2C%20%3Band%20only%20incidentally%20for%20machines%20to%20execute.%22%3B---%20Harold%20Abelson%20%E3%80%8CMIT%20Computer%20Scientist%E3%80%8D%3B;)
+![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&width=1000&&height=40&duration=800&pause=1200&color=7C5DF7&background=FFFFFF00&center=true&vCenter=true&width=600&lines=%3B%22People%20cannot%20live%20without%20illusions.%3BThat%20is%20what%20sustains%20them.%22%3B---%20Arcueid%20Brunestud%20%E3%80%8CTsukihime%E3%80%8D%3B%3B%22Design%20is%20not%20just%20what%20it%20looks%20like%20and%20feels%20like.%3BDesign%20is%20how%20it%20works.%22%3B---%20Steve%20Jobs%20%E3%80%8CApple%20Co-founder%E3%80%8D%3B;)
 </div>
 <p align="right">
   <sub><sub>
-    Last Updated: 2025-07-23
+    Last Updated: 2025-09-08
   </sub></sub>
 </p>
 
