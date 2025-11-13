@@ -4,11 +4,11 @@
   
 **꧁≺[QUOTES OF THE DAY](QUOTES.txt)≻꧂**
 
-![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&width=1000&&height=40&duration=800&pause=1200&color=7C5DF7&background=FFFFFF00&center=true&vCenter=true&width=600&lines=%3B%22People%20cannot%20live%20without%20illusions.%3BThat%20is%20what%20sustains%20them.%22%3B---%20Arcueid%20Brunestud%20%E3%80%8CTsukihime%E3%80%8D%3B%3B%22Design%20is%20not%20what%20it%20looks%20like%20and%20feels%20like.%3BDesign%20is%20how%20it%20works.%22%3B---%20Steve%20Jobs%20%E3%80%8CApple%20Co-founder%E3%80%8D%3B;)
+![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&width=1000&&height=40&duration=800&pause=1200&color=7C5DF7&background=FFFFFF00&center=true&vCenter=true&width=600&lines=%3B%22Happiness%20only%20visits%20those%3Bwho%20seem%20to%20already%20possess%20it.%22%3B---%20Caim%20%E3%80%8CAiyoku%20no%20Eustia%E3%80%8D%3B%3B%22He%20who%20has%20a%20why%20to%20live%20can%20bear%20almost%20any%20how.%22%3B---%20Friedrich%20Nietzsche%20%E3%80%8CPhilosopher%E3%80%8D%3B;)
 </div>
 <p align="right">
   <sub><sub>
-    Last Updated: 2025-09-08
+    Last Updated: 2025-11-13
   </sub></sub>
 </p>
 
