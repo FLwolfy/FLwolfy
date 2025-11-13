@@ -1,14 +1,13 @@
 ################################################
-##### [09/08/25] LATEST QUOTES UPDATE TIME #####
+##### [11/13/25] LATEST QUOTES UPDATE TIME #####
 ################################################
 
 ## QUOTE 1
-"People cannot live without illusions.
-That is what sustains them."
---- Arcueid Brunestud 「Tsukihime」
+"Happiness only visits those
+who seem to already possess it."
+--- Caim 「Aiyoku no Eustia」
 
 ## QUOTE 2
-"Design is not what it looks like and feels like.
-Design is how it works."
---- Steve Jobs 「Apple Co-founder」
+"He who has a why to live can bear almost any how."
+--- Friedrich Nietzsche 「Philosopher」
 ################################################
