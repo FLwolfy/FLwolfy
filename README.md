@@ -2,9 +2,10 @@
 
 <div align="center">
   
-**꧁≺[QUOTES OF THE DAY](QUOTES.txt)≻꧂**
+**꧁≺[QUOTES OF THE DAY](quote/QUOTES.txt)≻꧂**
 
-![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&width=1000&&height=40&duration=800&pause=1200&color=7C5DF7&background=FFFFFF00&center=true&vCenter=true&width=600&lines=%3B%22Happiness%20only%20visits%20those%3Bwho%20seem%20to%20already%20possess%20it.%22%3B---%20Caim%20%E3%80%8CAiyoku%20no%20Eustia%E3%80%8D%3B%3B%22He%20who%20has%20a%20why%20to%20live%20can%20bear%20almost%20any%20how.%22%3B---%20Friedrich%20Nietzsche%20%E3%80%8CPhilosopher%E3%80%8D%3B;)
+![Typing SVG](./quote/typing.svg)
+
 </div>
 <p align="right">
   <sub><sub>

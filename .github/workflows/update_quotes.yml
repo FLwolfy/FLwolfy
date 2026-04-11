@@ -2,56 +2,55 @@ name: Update README with quotes
 
 on:
   push:
-      paths:
-        - 'QUOTES.txt'  # update when quotes.txt is updated
+    paths:
+      - 'quote/QUOTES.txt'
+  workflow_dispatch:
 
 jobs:
   update-readme:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Read quotes.txt and update README
+      - name: Ensure quote directory exists
+        run: mkdir -p quote
+
+      - name: Generate quote/typing.svg from quote/QUOTES.txt
         run: |
-          # read quotes.txt and convert to URI
-          QUOTES=$(grep -v '^#' QUOTES.txt | tr '\n' ';' | sed 's/[[:space:]]\+/ /g' | sed 's/;;;[;]*/;;/g' | jq -sRr @uri)
+          QUOTES=$(grep -v '^#' quote/QUOTES.txt | tr '\n' ';' | sed 's/[[:space:]]\+/ /g' | sed 's/;;;[;]*/;;/g' | jq -sRr @uri)
 
-          # replace spaces with + and newlines with ;
-          NEW_LINES=$(echo "$QUOTES" | sed 's/ /+/g' | tr '\n' ';')
-
-          # replace lines in README
-          if grep -q "lines=" README.md; then
-            sed -i "s|lines=.*|lines=${NEW_LINES})|g" README.md
-          fi
+          curl -L "https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=600&height=40&duration=800&pause=1200&color=7C5DF7&background=FFFFFF00&center=true&vCenter=true&width=600&lines=${QUOTES}" \
+            -o quote/typing.svg
 
       - name: Update last updated date in README
         run: |
           TODAY=$(date -u +%Y-%m-%d)
           sed -i -E "s/(Last Updated: )[0-9]{4}-[0-9]{2}-[0-9]{2}/\1$TODAY/" README.md
 
-      - name: Prepend QUOTES.txt to HISTORY.txt
+      - name: Prepend quote/QUOTES.txt to quote/HISTORY.txt
         run: |
-          echo "" > temp.txt
-          cat QUOTES.txt >> temp.txt
-          echo -e "\n------------------------------------------------\n" >> temp.txt
-          if [ -f HISTORY.txt ]; then
-            cat HISTORY.txt >> temp.txt
-          fi
-          mv temp.txt HISTORY.txt
+          touch quote/HISTORY.txt
+          {
+            cat quote/QUOTES.txt
+            printf "\n------------------------------------------------\n\n"
+            cat quote/HISTORY.txt
+          } > quote/HISTORY.tmp
+          mv quote/HISTORY.tmp quote/HISTORY.txt
 
       - name: Commit and push changes
         run: |
-          # check are there any git differences
-          if git diff --quiet README.md HISTORY.txt; then
+          if git diff --quiet README.md quote/HISTORY.txt quote/typing.svg; then
             echo "No changes to commit."
             exit 0
           fi
 
-          # commit and push
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add README.md HISTORY.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md quote/HISTORY.txt quote/typing.svg
           git commit -m "🔄 Auto update quotes"
           git push
