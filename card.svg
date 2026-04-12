@@ -1,0 +1,530 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="860" viewBox="0 0 1400 860">
+<defs>
+<clipPath id="asciiClip"><rect x="948.7199999999999" y="93.954" width="381.91999999999996" height="513.7719999999999" /></clipPath>
+<clipPath id="codeClip"><rect x="90" y="238" width="795.36" height="468" /></clipPath>
+<clipPath id="statsClip"><rect x="931.36" y="646.2746268656716" width="416.64" height="75.72537313432835" /></clipPath>
+</defs>
+<rect width="100%" height="100%" fill="#0d1117"/>
+<rect x="36" y="36" width="1328" height="788" rx="20" fill="#161b22" stroke="#30363d"/>
+<polygon points="36,414.24 36,36 832.8,36" fill="#1f6feb" opacity="0.18"/>
+<line x1="36" y1="414.24" x2="832.8" y2="36" stroke="#8cc8ff" stroke-opacity="0.24" stroke-width="2.2" stroke-linecap="round"/>
+<polygon points="1304.0,445.76 1304.0,824 507.20000000000005,824" fill="#081f4d" opacity="0.22"/>
+<line x1="1304.0" y1="445.76" x2="507.20000000000005" y2="824" stroke="#8cc8ff" stroke-opacity="0.20" stroke-width="2.2" stroke-linecap="round"/>
+<text x="72" y="94" font-size="28" fill="#e6edf3" font-family="Inter, Arial, sans-serif" font-weight="700">👋 Hi, I&apos;m</text>
+<text x="72" y="152" font-size="46" fill="#e6edf3" text-decoration="underline" font-family="Inter, Arial, sans-serif" font-weight="900">Aaron Liao</text>
+<rect x="72" y="186" width="831.36" height="536" rx="14" fill="#0f141b" stroke="#2f3942"/>
+<rect x="72" y="186" width="831.36" height="36" rx="14" fill="#161b22"/>
+<circle cx="90" cy="204" r="4.5" fill="#7d8590" opacity="0.85"/>
+<circle cx="106" cy="204" r="4.5" fill="#7d8590" opacity="0.65"/>
+<circle cx="122" cy="204" r="4.5" fill="#7d8590" opacity="0.45"/>
+<text x="144" y="209" font-size="14" fill="#7d8590" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">about.me</text>
+<g clip-path="url(#codeClip)">
+<text x="90" y="254" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve"># About Me</text>
+<text x="90" y="276.4" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve"> </text>
+<text x="90" y="298.79999999999995" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Hi, I'm Aaron Liao.</text>
+<text x="90" y="321.19999999999993" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve"> </text>
+<text x="90" y="343.5999999999999" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">- Computer Science student</text>
+<text x="90" y="365.9999999999999" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">- Building my own C# game engine: Inno</text>
+<text x="90" y="388.39999999999986" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">- Interested in rendering, editor tooling, and engine architecture</text>
+<text x="90" y="410.79999999999984" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve"> </text>
+<text x="90" y="433.1999999999998" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">## Tech</text>
+<text x="90" y="455.5999999999998" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">- C#</text>
+<text x="90" y="477.9999999999998" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">- C++</text>
+<text x="90" y="500.39999999999975" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">- Java</text>
+<text x="90" y="522.7999999999997" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">- Git</text>
+<text x="90" y="545.1999999999997" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve"> </text>
+<text x="90" y="567.5999999999997" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">## Hobby</text>
+<text x="90" y="589.9999999999997" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">- Football</text>
+<text x="90" y="612.3999999999996" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">- Anime</text>
+<text x="90" y="634.7999999999996" font-size="16" fill="#c9d1d9" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">- Games</text>
+</g>
+<text x="931.36" y="84" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">+----------------------------------------------+</text>
+<text x="931.36" y="100.52" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="117.03999999999999" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="133.56" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="150.08" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="166.60000000000002" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="183.12000000000003" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="199.64000000000004" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="216.16000000000005" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="232.68000000000006" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="249.20000000000007" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="265.7200000000001" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="282.24000000000007" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="298.76000000000005" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="315.28000000000003" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="331.8" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="348.32" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="364.84" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="381.35999999999996" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="397.87999999999994" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="414.3999999999999" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="430.9199999999999" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="447.4399999999999" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="463.95999999999987" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="480.47999999999985" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="496.99999999999983" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="513.5199999999999" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="530.0399999999998" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="546.5599999999998" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="563.0799999999998" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="579.5999999999998" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="596.1199999999998" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="612.6399999999998" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">|                                              |</text>
+<text x="931.36" y="629.1599999999997" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">+----------------------------------------------+</text>
+<g clip-path="url(#asciiClip)">
+<text x="913.9999999999999" y="42.699999999999974" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="59.21999999999997" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⢀⣀⠀⠀⠀⠀⠀⠀⠔⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="75.73999999999997" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⢄⣈⠀⠓⠌⡀⠎⠑⠠⢋⠢⢄⡀⢓⠎⠀⠀⣀⡀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="92.25999999999996" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠌⠉⠀⠁⠀⠁⠀⠉⠁⠊⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="108.77999999999996" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠤⠠⠉⠉⠀⠀⠀⠀⠘⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠀⠄⠈⠀⠀⠀⠂⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="125.29999999999995" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⢀⠰⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠁⠐⠳⡀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="141.81999999999996" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠢⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠀⠀⠀⠀⠁⠀⠁⠁⠀⠂⠁⠀⠁⠠⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="158.33999999999997" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⢀⠊⠄⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠄⠀⠀⠡⠀⠀⠁⡀⠕⠂⠀⠀⠀⡧⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="174.85999999999999" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠁⠀⠄⠀⠁⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠈⠈⠀⠐⠂⢝⡀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="191.38" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠸⠂⠀⠀⠀⠐⠀⠀⠀⠀⠐⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⡀⠀⢀⠀⠠⠀⢑⠠⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="207.9" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⢁⠀⢀⠀⠀⠀⠀⠀⡀⠀⠂⣀⣠⠖⢖⠁⠀⠠⠀⠀⠀⠀⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⣠⠠⠈⣈⡀⠁⠠⠀⠀⠀⠀⡀⠀⠀⠀</text>
+<text x="913.9999999999999" y="224.42000000000002" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠐⠄⠀⠠⣀⠀⢀⠀⡀⠀⡠⣦⣾⣤⣹⡀⢚⠌⠀⠰⠀⢀⡀⠀⠈⢐⠀⠀⠀⠀⡀⡀⠈⠰⡀⠉⠦⠅⠈⠄⡀⠆⠀⠀⠀⠀⡐⠀⠀⠀</text>
+<text x="913.9999999999999" y="240.94000000000003" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⡢⠀⠀⠀⠀⠀⠀⠠⠄⣶⣿⣿⣿⣿⣷⣠⢔⡖⢈⢬⢰⢘⣕⣁⠐⡁⡆⠀⡄⠠⣀⢠⠀⠀⠀⠁⠀⠀⠀⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="257.46000000000004" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⣡⠂⠀⠀⠉⠁⠀⡀⡘⡟⣿⣿⣿⣿⣿⣸⡠⠃⣿⠱⠹⣟⢄⢗⡑⠋⢅⡀⡁⠁⠠⢰⠤⠀⠁⠀⠀⠀⠀⠌⠁⠀⠀⠀⡰⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="273.98" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⢀⠄⠀⠀⠀⠀⢲⡿⣿⣿⣿⣿⣿⣿⣿⣧⣽⣾⢸⣻⢸⣹⢟⣖⢷⢳⢈⡰⣈⣦⣗⢽⡄⡂⠀⠈⠁⠀⠀⡆⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="290.5" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⡄⠈⢀⠐⠀⠀⠀⠀⣱⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣾⣿⣿⠧⣿⣿⣷⡿⣍⣼⢚⠠⠄⠀⠀⠀⠂⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="307.02" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠁⡀⠄⠠⠅⡀⠀⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣠⣵⡰⠀⠀⠀⠀⠜⠁⠀⠄⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="323.53999999999996" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⡴⢿⣵⡀⠀⢸⣿⣿⣿⣿⢿⡟⠡⡞⢿⠟⡟⠻⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢿⣿⠛⠱⡋⢐⠂⠁⠀⠀⢀⢀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="340.05999999999995" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⢻⣺⣿⡗⠥⠈⡿⣿⣿⣿⣱⡿⠽⠷⠿⣾⣿⣿⣾⣶⠿⣻⣿⣿⣿⣿⣿⠋⢈⣀⣀⣤⡤⠢⢢⡀⠀⠀⠀⠀⠂⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="356.5799999999999" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠘⣞⣿⠇⠐⣷⣦⡃⠁⠠⡴⠒⠒⠋⠉⠀⠀⡄⢴⣀⣍⠛⠿⡿⠝⠯⠁⢌⠄⠒⠖⠂⡂⠀⠀⠂⡀⣉⠀⠐⠈⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="373.0999999999999" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⢸⣿⣠⢰⣿⣿⣿⣥⣿⣶⣰⣿⣿⣿⣿⢻⣧⣞⣟⣿⡧⢽⣿⡬⡀⢠⢀⠾⣶⡽⢖⢦⡒⣔⣀⡴⢸⠀⠘⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="389.6199999999999" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⢟⡇⠞⣿⣿⣿⣿⢻⣿⣼⣿⣿⣿⣿⣿⣿⣿⣿⡧⣖⣾⣿⣏⠐⠂⣰⣿⣟⣿⣷⣿⣯⣾⣷⡀⢰⢘⢀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="406.1399999999999" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠸⡿⡯⣿⣿⣿⣿⣏⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣥⣾⣿⣿⣿⡠⡆⢘⣽⣿⣿⣿⣿⣿⣿⡿⣗⠂⢲⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="422.65999999999985" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⣿⣿⢿⣿⣿⣿⣿⣿⣿⣯⣿⣭⣍⣉⢙⣩⣽⣿⣿⣿⣿⣻⡥⢠⡨⣮⣽⣽⣿⣿⣏⣍⣋⡨⢀⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="439.17999999999984" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⠙⠿⠟⣿⣿⣿⣿⣿⣿⣿⣿⣿⢻⢭⣿⣿⣿⣿⣿⣿⣿⣿⣿⢲⠇⠈⢻⣿⣿⣿⣿⣿⣿⡼⣄⠎⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="455.6999999999998" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⠀⠱⢸⢿⣿⣿⣿⣿⣿⣿⡿⠯⣰⣿⣿⣿⣿⣭⣿⡿⢽⠿⠋⠀⠀⢉⣺⣿⣿⣿⣿⣿⡻⠀⢐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="472.2199999999998" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⠀⠈⡁⣟⣿⣿⣿⣿⣿⡿⢣⣾⣽⣿⣿⣿⣿⣿⣿⣷⣿⣿⡶⡾⣿⡼⡜⣿⠿⣿⣛⠺⠔⡁⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="488.7399999999998" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⢸⢿⣿⣿⣿⣿⣿⡿⢦⣭⡩⣍⣯⣹⣇⣭⣿⣿⣽⣍⣉⠉⠉⣀⣽⣎⣿⣿⡀⠰⠲⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="505.25999999999976" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⢣⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⢽⣾⣽⡻⣿⡿⠛⣟⣪⢚⢛⣽⣿⣿⣿⡷⠴⠠⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="521.7799999999997" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡵⡻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢷⣿⡿⢯⡋⢩⣽⣯⣼⣟⠭⠂⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="538.2999999999997" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣻⣯⣚⡽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣿⣻⣧⣿⣿⡷⠓⠗⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="554.8199999999997" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⠀⠀⠀⠀⢀⡠⠄⢢⣷⣿⣿⣷⣷⠜⢼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⡻⡷⠀⠀⠰⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="571.3399999999997" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠀⡀⠤⠒⠈⠆⢠⢰⣾⣯⣿⣿⣿⣿⣿⣿⣧⡩⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⡁⠂⡠⠠⢠⠂⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="587.8599999999997" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠒⠉⠈⠈⠁⢀⠀⢁⢺⡺⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⣝⡻⠟⠿⠟⠿⠟⡁⠃⠈⠀⠀⠀⠀⠀⡕⡀⠁⢆⠄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="604.3799999999997" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⡀⠀⠀⠀⡐⠀⡀⠀⠈⣧⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⢶⣄⣀⡀⢀⠅⠀⠀⠀⠀⠀⠀⠠⠀⠀⠀⠀⠁⠠⡀⠀⠀⠀⠀⠀⠀</text>
+<text x="913.9999999999999" y="620.8999999999996" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠁⠀⠄⠈⠀⠀⠀⢐⡹⣯⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡿⣯⣍⣷⡗⠾⠡⢀⡐⠳⠌⠠⠀⡄⠀⣀⠀⠀⠀⠀⠂⠀⠈⠒⠠⠠⢀⠀</text>
+<text x="913.9999999999999" y="637.4199999999996" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⡀⠁⠀⠈⠠⠀⠀⠁⠠⠘⢷⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣻⣿⣷⣿⣿⣏⣉⢜⣦⣪⠁⢈⢅⣨⡉⡁⠁⡋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠈</text>
+<text x="913.9999999999999" y="653.9399999999996" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠀⠠⠄⠀⠀⠀⢔⢀⠈⠀⠁⡃⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣽⣿⣻⢖⠶⣿⢇⣌⠈⠀⠓⠠⠀⠀⠁⠀⠀⠀⠈⠀⠀⠀</text>
+<text x="913.9999999999999" y="670.4599999999996" font-size="14" fill="#e6edf3" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">⠀⠔⠀⠄⠀⠀⠁⢀⠈⠂⠢⡀⡀⠀⠀⠉⠉⡟⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⣯⣻⣟⣯⣻⣿⡿⠿⠁⢀⢐⠌⠀⠀⠀⠠⠀⠀⡄⠀⠄⠀⠀</text>
+</g>
+<g clip-path="url(#statsClip)">
+<svg x="931.36" y="646.2746268656716" width="236.37134328358206" height="75.72537313432835" viewBox="0 0 437.0 140.0" preserveAspectRatio="xMidYMid meet">
+        <title id="titleId">Aaron Liao's GitHub Stats, Rank: B</title>
+        <desc id="descId">Total Stars Earned: 50, Total Commits  (last year) : 616, Total Issues: 14, Contributed to (last year): 0</desc>
+        <style>
+          .header {
+            font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+            fill: #ffffff;
+            animation: fadeInAnimation 0.8s ease-in-out forwards;
+          }
+          @supports(-moz-appearance: auto) {
+            /* Selector detects Firefox */
+            .header { font-size: 15.5px; }
+          }
+          
+    .stat {
+      font: 600 14px 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif; fill: #e0c3fc;
+    }
+    @supports(-moz-appearance: auto) {
+      /* Selector detects Firefox */
+      .stat { font-size:12px; }
+    }
+    .stagger {
+      opacity: 0;
+      animation: fadeInAnimation 0.3s ease-in-out forwards;
+    }
+    .rank-text {
+      font: 800 24px 'Segoe UI', Ubuntu, Sans-Serif; fill: #e0c3fc;
+      animation: scaleInAnimation 0.3s ease-in-out forwards;
+    }
+    .rank-percentile-header {
+      font-size: 14px;
+    }
+    .rank-percentile-text {
+      font-size: 16px;
+    }
+    
+    .not_bold { font-weight: 400 }
+    .bold { font-weight: 700 }
+    .icon {
+      fill: #feb47b;
+      display: block;
+    }
+
+    .rank-circle-rim {
+      stroke: #ffffff;
+      fill: none;
+      stroke-width: 6;
+      opacity: 0.2;
+    }
+    .rank-circle {
+      stroke: #ffffff;
+      stroke-dasharray: 250;
+      fill: none;
+      stroke-width: 6;
+      stroke-linecap: round;
+      opacity: 0.8;
+      transform-origin: -10px 8px;
+      transform: rotate(-90deg);
+      animation: rankAnimation 1s forwards ease-in-out;
+    }
+    
+    @keyframes rankAnimation {
+      from {
+        stroke-dashoffset: 251.32741228718345;
+      }
+      to {
+        stroke-dashoffset: 141.4378399694852;
+      }
+    }
+  
+  
+
+          
+      /* Animations */
+      @keyframes scaleInAnimation {
+        from {
+          transform: translate(-5px, 5px) scale(0);
+        }
+        to {
+          transform: translate(-5px, 5px) scale(1);
+        }
+      }
+      @keyframes fadeInAnimation {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    
+          
+        </style>
+
+        
+        <defs>
+          <linearGradient
+            id="gradient"
+            gradientTransform="rotate(30)"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0%" stop-color="#e432ef" />,<stop offset="100%" stop-color="#4a00e0" />
+          </linearGradient>
+        </defs>
+        
+
+        <rect
+          data-testid="card-bg"
+          x="0.5"
+          y="0.5"
+          rx="4.5"
+          height="99%"
+          stroke="#e4e2e2"
+          width="436"
+          fill="url(#gradient)"
+          stroke-opacity="1"
+        />
+
+        
+
+        <g
+          data-testid="main-card-body"
+          transform="translate(0, 25)"
+        >
+          
+    <g data-testid="rank-circle"
+          transform="translate(367, 35)">
+        <circle class="rank-circle-rim" cx="-10" cy="8" r="40" />
+        <circle class="rank-circle" cx="-10" cy="8" r="40" />
+        <g class="rank-text">
+          
+        <text x="-5" y="3" alignment-baseline="central" dominant-baseline="central" text-anchor="middle" data-testid="level-rank-icon">
+          B
+        </text>
+      
+        </g>
+      </g>
+    <svg x="0" y="0">
+      <g transform="translate(0, 0)">
+    <g class="stagger" style="animation-delay: 450ms" transform="translate(25, 0)">
+      
+    <svg data-testid="icon" class="icon" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+      <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"/>
+    </svg>
+  
+      <text class="stat  bold" x="25" y="12.5">Total Stars Earned:</text>
+      <text
+        class="stat  bold"
+        x="219.01"
+        y="12.5"
+        data-testid="stars"
+      >50</text>
+    </g>
+  </g><g transform="translate(0, 25)">
+    <g class="stagger" style="animation-delay: 600ms" transform="translate(25, 0)">
+      
+    <svg data-testid="icon" class="icon" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+      <path fill-rule="evenodd" d="M1.643 3.143L.427 1.927A.25.25 0 000 2.104V5.75c0 .138.112.25.25.25h3.646a.25.25 0 00.177-.427L2.715 4.215a6.5 6.5 0 11-1.18 4.458.75.75 0 10-1.493.154 8.001 8.001 0 101.6-5.684zM7.75 4a.75.75 0 01.75.75v2.992l2.028.812a.75.75 0 01-.557 1.392l-2.5-1A.75.75 0 017 8.25v-3.5A.75.75 0 017.75 4z"/>
+    </svg>
+  
+      <text class="stat  bold" x="25" y="12.5">Total Commits (last year):</text>
+      <text
+        class="stat  bold"
+        x="219.01"
+        y="12.5"
+        data-testid="commits"
+      >616</text>
+    </g>
+  </g><g transform="translate(0, 50)">
+    <g class="stagger" style="animation-delay: 750ms" transform="translate(25, 0)">
+      
+    <svg data-testid="icon" class="icon" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+      <path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm9 3a1 1 0 11-2 0 1 1 0 012 0zm-.25-6.25a.75.75 0 00-1.5 0v3.5a.75.75 0 001.5 0v-3.5z"/>
+    </svg>
+  
+      <text class="stat  bold" x="25" y="12.5">Total Issues:</text>
+      <text
+        class="stat  bold"
+        x="219.01"
+        y="12.5"
+        data-testid="issues"
+      >14</text>
+    </g>
+  </g><g transform="translate(0, 75)">
+    <g class="stagger" style="animation-delay: 900ms" transform="translate(25, 0)">
+      
+    <svg data-testid="icon" class="icon" viewBox="0 0 16 16" version="1.1" width="16" height="16">
+      <path fill-rule="evenodd" d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8zM5 12.25v3.25a.25.25 0 00.4.2l1.45-1.087a.25.25 0 01.3 0L8.6 15.7a.25.25 0 00.4-.2v-3.25a.25.25 0 00-.25-.25h-3.5a.25.25 0 00-.25.25z"/>
+    </svg>
+  
+      <text class="stat  bold" x="25" y="12.5">Contributed to (last year):</text>
+      <text
+        class="stat  bold"
+        x="219.01"
+        y="12.5"
+        data-testid="contribs"
+      >0</text>
+    </g>
+  </g>
+    </svg>
+  
+        </g>
+      </svg>
+<svg x="1175.7313432835822" y="646.2746268656716" width="162.2686567164179" height="75.72537313432835" viewBox="0 0 300.0 140.0" preserveAspectRatio="xMidYMid meet">
+        <title id="titleId"></title>
+        <desc id="descId"></desc>
+        <style>
+          .header {
+            font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
+            fill: #fff;
+            animation: fadeInAnimation 0.8s ease-in-out forwards;
+          }
+          @supports(-moz-appearance: auto) {
+            /* Selector detects Firefox */
+            .header { font-size: 15.5px; }
+          }
+          
+    @keyframes slideInAnimation {
+      from {
+        width: 0;
+      }
+      to {
+        width: calc(100%-100px);
+      }
+    }
+    @keyframes growWidthAnimation {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+    .stat {
+      font: 600 14px 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif; fill: #38bdae;
+    }
+    @supports(-moz-appearance: auto) {
+      /* Selector detects Firefox */
+      .stat { font-size:12px; }
+    }
+    .bold { font-weight: 700 }
+    .lang-name {
+      font: 400 11px "Segoe UI", Ubuntu, Sans-Serif;
+      fill: #38bdae;
+    }
+    .stagger {
+      opacity: 0;
+      animation: fadeInAnimation 0.3s ease-in-out forwards;
+    }
+    #rect-mask rect{
+      animation: slideInAnimation 1s ease-in-out forwards;
+    }
+    .lang-progress{
+      animation: growWidthAnimation 0.6s ease-in-out forwards;
+    }
+    
+
+          
+      /* Animations */
+      @keyframes scaleInAnimation {
+        from {
+          transform: translate(-5px, 5px) scale(0);
+        }
+        to {
+          transform: translate(-5px, 5px) scale(1);
+        }
+      }
+      @keyframes fadeInAnimation {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    
+          
+        </style>
+
+        
+        <defs>
+          <linearGradient
+            id="gradient"
+            gradientTransform="rotate(30)"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0%" stop-color="#4a00e0" />,<stop offset="100%" stop-color="#e96443" />
+          </linearGradient>
+        </defs>
+        
+
+        <rect
+          data-testid="card-bg"
+          x="0.5"
+          y="0.5"
+          rx="4.5"
+          height="99%"
+          stroke="#e4e2e2"
+          width="299"
+          fill="url(#gradient)"
+          stroke-opacity="1"
+        />
+
+        
+      <g
+        data-testid="card-title"
+        transform="translate(25, 35)"
+      >
+        <g transform="translate(0, 0)">
+      <text
+        x="0"
+        y="0"
+        class="header"
+        data-testid="header"
+      >Most Used Languages</text>
+    </g>
+      </g>
+    
+
+        <g
+          data-testid="main-card-body"
+          transform="translate(0, 55)"
+        >
+          
+    <svg data-testid="lang-items" x="25">
+      
+  
+      <mask id="rect-mask">
+          <rect x="0" y="0" width="250" height="8" fill="white" rx="5"/>
+        </mask>
+        
+        <rect
+          mask="url(#rect-mask)"
+          data-testid="lang-progress"
+          x="0"
+          y="0"
+          width="168.29"
+          height="8"
+          fill="#178600"
+        />
+      
+        <rect
+          mask="url(#rect-mask)"
+          data-testid="lang-progress"
+          x="168.29"
+          y="0"
+          width="38.82"
+          height="8"
+          fill="#b07219"
+        />
+      
+        <rect
+          mask="url(#rect-mask)"
+          data-testid="lang-progress"
+          x="207.10999999999999"
+          y="0"
+          width="23.54"
+          height="8"
+          fill="#663399"
+        />
+      
+        <rect
+          mask="url(#rect-mask)"
+          data-testid="lang-progress"
+          x="230.64999999999998"
+          y="0"
+          width="19.36"
+          height="8"
+          fill="#f34b7d"
+        />
+      
+      
+    <g transform="translate(0, 25)">
+      <g transform="translate(0, 0)"><g transform="translate(0, 0)">
+    <g class="stagger" style="animation-delay: 450ms">
+      <circle cx="5" cy="6" r="5" fill="#178600" />
+      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
+        C# 67.32%
+      </text>
+    </g>
+  </g><g transform="translate(0, 25)">
+    <g class="stagger" style="animation-delay: 600ms">
+      <circle cx="5" cy="6" r="5" fill="#b07219" />
+      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
+        Java 15.53%
+      </text>
+    </g>
+  </g></g><g transform="translate(150, 0)"><g transform="translate(0, 0)">
+    <g class="stagger" style="animation-delay: 450ms">
+      <circle cx="5" cy="6" r="5" fill="#663399" />
+      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
+        CSS 9.41%
+      </text>
+    </g>
+  </g><g transform="translate(0, 25)">
+    <g class="stagger" style="animation-delay: 600ms">
+      <circle cx="5" cy="6" r="5" fill="#f34b7d" />
+      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
+        C++ 7.74%
+      </text>
+    </g>
+  </g></g>
+    </g>
+  
+    </svg>
+  
+        </g>
+      </svg>
+</g>
+<rect x="36" y="750" width="1328" height="74" rx="0" fill="#11161d" opacity="0.95"/>
+<text x="64" y="795" font-size="18" fill="#8b949e" font-family="Inter, Arial, sans-serif">@FLwolfy</text>
+<text x="487.52000000000004" y="795" font-size="18" fill="#8b949e" font-family="Inter, Arial, sans-serif">hsuankailiao@gmail.com</text>
+<text x="1336" y="795" font-size="18" fill="#8b949e" font-family="Inter, Arial, sans-serif" text-anchor="end">Undergraduate Student · COMPSCI · Duke University</text>
+</svg>

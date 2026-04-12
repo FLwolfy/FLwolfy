@@ -1,29 +1,84 @@
 from pathlib import Path
 import html
+import json
+import re
 
-TXT_FILE = "image.txt"
-ABOUT_FILE = "about.md"
-OUT_FILE = "card.svg"
+BASE_DIR = Path(__file__).resolve().parent
+CONFIG_FILE = BASE_DIR / "config.json"
 
-name = "Aaron Liao"
-username = "FLwolfy"
-email = "hsuankailiao@gmail.com"
-tagline = "Undergraduate Student · COMPSCI · Duke University"
+
+def load_config(config_path: Path) -> dict:
+    return json.loads(config_path.read_text(encoding="utf-8"))
+
+
+def load_svg_for_embed(svg_path: Path) -> tuple[str, float, float]:
+    raw = svg_path.read_text(encoding="utf-8")
+
+    # Strip XML declaration if present.
+    raw = re.sub(r"^\s*<\?xml[^>]*>\s*", "", raw, flags=re.IGNORECASE)
+
+    svg_open_match = re.search(r"<svg\b[^>]*>", raw, flags=re.IGNORECASE | re.DOTALL)
+    if not svg_open_match:
+        raise ValueError(f"Invalid SVG (missing <svg>): {svg_path}")
+    svg_open = svg_open_match.group(0)
+
+    viewbox_match = re.search(r'viewBox="([^"]+)"', svg_open, flags=re.IGNORECASE)
+    if viewbox_match:
+        vb = [float(x) for x in viewbox_match.group(1).replace(",", " ").split()]
+        if len(vb) == 4:
+            _, _, vb_w, vb_h = vb
+        else:
+            vb_w, vb_h = 300.0, 140.0
+    else:
+        w_match = re.search(r'width="([^"]+)"', svg_open, flags=re.IGNORECASE)
+        h_match = re.search(r'height="([^"]+)"', svg_open, flags=re.IGNORECASE)
+        vb_w = float(re.sub(r"[^\d.]+", "", w_match.group(1))) if w_match else 300.0
+        vb_h = float(re.sub(r"[^\d.]+", "", h_match.group(1))) if h_match else 140.0
+
+    inner_match = re.search(r"<svg\b[^>]*>(.*)</svg>\s*$", raw, flags=re.IGNORECASE | re.DOTALL)
+    if not inner_match:
+        raise ValueError(f"Invalid SVG content: {svg_path}")
+    inner = inner_match.group(1)
+
+    return inner, vb_w, vb_h
+
+
+config = load_config(CONFIG_FILE)
+
+files = config["files"]
+colors = config["colors"]
+
+txt_file = files["ascii_art_file"]
+about_file = files["about_file"]
+out_file = files["output_file"]
+metadata_file = files["metadata_file"]
+stats_svg_file = files["stats_svg_file"]
+top_langs_svg_file = files["top_langs_svg_file"]
+
+metadata = load_config(BASE_DIR / metadata_file)
+
+name = metadata["name"]
+username = metadata["username"]
+email = metadata["email"]
+tagline = metadata["tagline"]
 
 W, H = 1400, 860
 
-BG = "#0d1117"
-CARD = "#161b22"
-BORDER = "#30363d"
-TEXT = "#e6edf3"
-MUTED = "#8b949e"
-FLAG = "#1f6feb"
+BG = colors["background"]
+CARD = colors["card"]
+BORDER = colors["border"]
+TEXT = colors["text"]
+MUTED = colors["muted"]
+FLAG = colors["flag"]
+ACCENT_SECONDARY = colors["accent_secondary"]
+EDGE_HIGHLIGHT = colors["edge_highlight"]
 
-CODE_BG = "#0f141b"
-CODE_BORDER = "#2f3942"
-CODE_HEADER = "#161b22"
-CODE_TEXT = "#c9d1d9"
-CODE_MUTED = "#7d8590"
+CODE_BG = colors["code_background"]
+CODE_BORDER = colors["code_border"]
+CODE_HEADER = colors["code_header"]
+CODE_TEXT = colors["code_text"]
+CODE_MUTED = colors["code_muted"]
+INFO_STRIP = colors["info_strip"]
 
 
 def esc(s: str) -> str:
@@ -72,15 +127,20 @@ def draw_text_lines(
 # ----------------------------
 # Load source files
 # ----------------------------
-ascii_raw = Path(TXT_FILE).read_text(encoding="utf-8")
+ascii_raw = (BASE_DIR / txt_file).read_text(encoding="utf-8")
 ascii_lines = [normalize_tabs(line.rstrip("\n\r")) for line in ascii_raw.splitlines()]
 if not ascii_lines:
     ascii_lines = [""]
 
-about_raw = Path(ABOUT_FILE).read_text(encoding="utf-8")
+about_raw = (BASE_DIR / about_file).read_text(encoding="utf-8")
 about_lines = [normalize_tabs(line.rstrip("\n\r")) for line in about_raw.splitlines()]
 if not about_lines:
     about_lines = [""]
+
+stats_inner, stats_vb_w, stats_vb_h = load_svg_for_embed(BASE_DIR / stats_svg_file)
+langs_inner, langs_vb_w, langs_vb_h = load_svg_for_embed(BASE_DIR / top_langs_svg_file)
+stats_aspect = stats_vb_w / stats_vb_h
+langs_aspect = langs_vb_w / langs_vb_h
 
 # ----------------------------
 # Card geometry
@@ -111,8 +171,10 @@ code_line_px = code_font_size * code_line_height
 # Right-side ASCII frame layout
 # ----------------------------
 frame_right_margin = 16
-frame_top_padding = 48
-frame_bottom_gap = 24
+frame_top_padding = 34
+shared_bottom_gap = 28
+ascii_to_stats_gap = 4
+stats_to_info_gap = shared_bottom_gap
 
 FIXED_COLS = 48
 cols = FIXED_COLS
@@ -120,6 +182,21 @@ cols = FIXED_COLS
 frame_w = cols * char_px
 frame_x = card_x + card_w - frame_right_margin - frame_w
 frame_y = card_y + frame_top_padding
+
+# Stats pair layout:
+# 1) fixed total width,
+# 2) equal height,
+# 3) height solved from width and intrinsic aspect ratios.
+stats_gap = 8
+stats_left_padding = 0.0
+stats_right_padding = 10.0
+stats_total_w = frame_w - stats_left_padding - stats_right_padding
+stats_section_h = (stats_total_w - stats_gap) / (stats_aspect + langs_aspect)
+stats_box_w1 = stats_aspect * stats_section_h
+stats_box_w2 = langs_aspect * stats_section_h
+stats_x1 = frame_x + stats_left_padding
+stats_x2 = stats_x1 + stats_box_w1 + stats_gap
+frame_bottom_gap = ascii_to_stats_gap + stats_section_h + stats_to_info_gap
 
 frame_h = info_y - frame_y - frame_bottom_gap
 rows = max(4, int(frame_h / line_px))
@@ -162,8 +239,8 @@ ascii_first_y = crop_y + (crop_h - ascii_block_h) / 2.0 + ascii_font_size
 # ----------------------------
 left_x = card_x + 36
 left_y = card_y + 150
-left_w = frame_x - left_x - 48
-left_h = info_y - left_y - 28
+left_w = frame_x - left_x - 28
+left_h = info_y - left_y - shared_bottom_gap
 
 code_header_h = 36
 code_pad_x = 18
@@ -177,11 +254,18 @@ code_body_h = left_h - code_header_h - code_pad_y * 2
 # Keep exact lines/blank lines; only clip visually by SVG clipPath.
 code_first_y = code_body_y + code_font_size
 
+# ----------------------------
+# Stats row (between ASCII and bottom stripe)
+# ----------------------------
+stats_y = info_y - stats_to_info_gap - stats_section_h
+stats_box_h = stats_section_h
+
 parts = [
     f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">',
     "<defs>",
     f'<clipPath id="asciiClip"><rect x="{crop_x}" y="{crop_y}" width="{crop_w}" height="{crop_h}" /></clipPath>',
     f'<clipPath id="codeClip"><rect x="{code_body_x}" y="{code_body_y}" width="{code_body_w}" height="{code_body_h}" /></clipPath>',
+    f'<clipPath id="statsClip"><rect x="{frame_x}" y="{stats_y}" width="{frame_w}" height="{stats_box_h}" /></clipPath>',
     "</defs>",
     f'<rect width="100%" height="100%" fill="{BG}"/>'
 ]
@@ -202,6 +286,30 @@ flag_y3 = card_y
 parts.append(
     f'<polygon points="{flag_x1},{flag_y1} {flag_x2},{flag_y2} {flag_x3},{flag_y3}" '
     f'fill="{FLAG}" opacity="0.18"/>'
+)
+parts.append(
+    f'<line x1="{flag_x1}" y1="{flag_y1}" x2="{flag_x3}" y2="{flag_y3}" '
+    f'stroke="{EDGE_HIGHLIGHT}" stroke-opacity="0.24" stroke-width="2.2" stroke-linecap="round"/>'
+)
+
+# Decorative triangle (bottom-right mirror)
+triangle_right_gap = stats_right_padding + 50.0
+flag2_x1 = card_x + card_w - triangle_right_gap
+flag2_y1 = card_y + card_h * 0.52
+flag2_x2 = card_x + card_w - triangle_right_gap
+flag2_y2 = card_y + card_h
+# Match the left triangle's hypotenuse slope.
+left_slope_abs = (flag_y1 - flag_y3) / (flag_x3 - flag_x1)
+flag2_x3 = flag2_x1 - (flag2_y2 - flag2_y1) / left_slope_abs
+flag2_y3 = card_y + card_h
+
+parts.append(
+    f'<polygon points="{flag2_x1},{flag2_y1} {flag2_x2},{flag2_y2} {flag2_x3},{flag2_y3}" '
+    f'fill="{ACCENT_SECONDARY}" opacity="0.22"/>'
+)
+parts.append(
+    f'<line x1="{flag2_x1}" y1="{flag2_y1}" x2="{flag2_x3}" y2="{flag2_y3}" '
+    f'stroke="{EDGE_HIGHLIGHT}" stroke-opacity="0.20" stroke-width="2.2" stroke-linecap="round"/>'
 )
 
 # Header
@@ -281,10 +389,22 @@ parts.append(
     )
 )
 
+# Stats cards row
+parts.append('<g clip-path="url(#statsClip)">')
+parts.append(
+    f'<svg x="{stats_x1}" y="{stats_y}" width="{stats_box_w1}" height="{stats_box_h}" '
+    f'viewBox="0 0 {stats_vb_w} {stats_vb_h}" preserveAspectRatio="xMidYMid meet">{stats_inner}</svg>'
+)
+parts.append(
+    f'<svg x="{stats_x2}" y="{stats_y}" width="{stats_box_w2}" height="{stats_box_h}" '
+    f'viewBox="0 0 {langs_vb_w} {langs_vb_h}" preserveAspectRatio="xMidYMid meet">{langs_inner}</svg>'
+)
+parts.append('</g>')
+
 # Bottom info strip
 parts.append(
     f'<rect x="{card_x}" y="{info_y}" width="{card_w}" height="{info_h}" '
-    f'rx="0" fill="#11161d" opacity="0.95"/>'
+    f'rx="0" fill="{INFO_STRIP}" opacity="0.95"/>'
 )
 
 info_text_y = info_y + 45
@@ -307,5 +427,6 @@ parts.append(
 
 parts.append("</svg>")
 
-Path(OUT_FILE).write_text("\n".join(parts), encoding="utf-8")
-print(f"Generated {OUT_FILE}")
+out_path = BASE_DIR / out_file
+out_path.write_text("\n".join(parts), encoding="utf-8")
+print(f"Generated {out_file}")

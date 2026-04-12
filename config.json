@@ -1,0 +1,26 @@
+{
+  "files": {
+    "ascii_art_file": "info/image.txt",
+    "about_file": "info/about.md",
+    "output_file": "card.svg",
+    "metadata_file": "info/metadata.json",
+    "stats_svg_file": "profile/stats.svg",
+    "top_langs_svg_file": "profile/top-langs.svg"
+  },
+  "colors": {
+    "background": "#0d1117",
+    "card": "#161b22",
+    "border": "#30363d",
+    "text": "#e6edf3",
+    "muted": "#8b949e",
+    "flag": "#1f6feb",
+    "accent_secondary": "#081f4d",
+    "edge_highlight": "#8cc8ff",
+    "code_background": "#0f141b",
+    "code_border": "#2f3942",
+    "code_header": "#161b22",
+    "code_text": "#c9d1d9",
+    "code_muted": "#7d8590",
+    "info_strip": "#11161d"
+  }
+}
