@@ -247,8 +247,62 @@ jobs:
           PY
           )
 
-          curl -fsSL "https://github-readme-stats.vercel.app/api?username=${USERNAME}&show_icons=true&count_private=true&include_all_commits=true&hide_border=true&bg_color=00000000&title_color=e6edf3&text_color=8b949e&icon_color=58a6ff&ring_color=58a6ff&rank_icon=percentile&border_radius=8&card_width=320&token=${GH_STATS_TOKEN}" -o stats/stats.svg
-          curl -fsSL "https://github-readme-stats.vercel.app/api/top-langs/?username=${USERNAME}&layout=compact&hide_border=true&bg_color=00000000&title_color=e6edf3&text_color=8b949e&border_radius=8&langs_count=6&card_width=320&token=${GH_STATS_TOKEN}" -o stats/top-langs.svg
+          TOKEN_PARAM=""
+          if [ -n "${GH_STATS_TOKEN:-}" ]; then
+            TOKEN_PARAM="&token=${GH_STATS_TOKEN}"
+          fi
+
+          fetch_svg() {
+            local label="$1"
+            local url="$2"
+            local out="$3"
+            local tmp="${out}.tmp"
+            local max_attempts=5
+            local delay=4
+            local attempt http_code
+
+            for attempt in $(seq 1 "${max_attempts}"); do
+              http_code=$(curl -sS -L \
+                --connect-timeout 15 \
+                --max-time 90 \
+                --retry 2 \
+                --retry-delay 2 \
+                --retry-all-errors \
+                -w "%{http_code}" \
+                -o "${tmp}" \
+                "${url}" || true)
+
+              if [ "${http_code}" = "200" ] && grep -qi "<svg" "${tmp}"; then
+                mv "${tmp}" "${out}"
+                echo "Updated ${label}: ${out}"
+                return 0
+              fi
+
+              rm -f "${tmp}"
+              if [ "${attempt}" -lt "${max_attempts}" ]; then
+                echo "::warning::${label} fetch failed (attempt ${attempt}/${max_attempts}, http=${http_code:-curl_error}). Retrying in ${delay}s."
+                sleep "${delay}"
+                delay=$((delay * 2))
+              fi
+            done
+
+            echo "::warning::${label} fetch failed after ${max_attempts} attempts. Keep existing file: ${out}"
+            if [ -s "${out}" ]; then
+              return 0
+            fi
+            echo "::error::${label} is unavailable and no fallback file exists: ${out}"
+            return 1
+          }
+
+          fetch_svg \
+            "stats card" \
+            "https://github-readme-stats.vercel.app/api?username=${USERNAME}&show_icons=true&count_private=true&include_all_commits=true&hide_border=true&bg_color=00000000&title_color=e6edf3&text_color=8b949e&icon_color=58a6ff&ring_color=58a6ff&rank_icon=percentile&border_radius=8&card_width=320${TOKEN_PARAM}" \
+            "stats/stats.svg"
+
+          fetch_svg \
+            "top langs card" \
+            "https://github-readme-stats.vercel.app/api/top-langs/?username=${USERNAME}&layout=compact&hide_border=true&bg_color=00000000&title_color=e6edf3&text_color=8b949e&border_radius=8&langs_count=6&card_width=320${TOKEN_PARAM}" \
+            "stats/top-langs.svg"
 
       - name: Sync status header emoji from GitHub (best effort)
         env:
