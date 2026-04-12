@@ -236,19 +236,19 @@ jobs:
           print("Updated stats/github_stats.json:", payload)
           PY
 
-      - name: Generate stats card (dark theme)
+      - name: Generate stats card
         uses: readme-tools/github-readme-stats-action@v1
         with:
           card: stats
-          options: username=FLwolfy&bg_color=30,0d1117,161b22&title_color=e6edf3&text_color=8b949e&icon_color=58a6ff&show_icons=true&count_private=true&include_all_commits=true&rank_icon=percentile&hide_border=true&border_radius=8&card_width=320
+          options: username=FLwolfy&bg_color=30,6f6c9a,4f4a78&title_color=f8fafc&text_color=e6e9f2&icon_color=ffd08a&show_icons=true&count_private=true&hide_title=true&hide=prs&theme=tokyonight&card_width=300
           path: stats/stats.svg
           token: ${{ secrets.GH_STATS_TOKEN || github.token }}
 
-      - name: Generate top languages card (dark theme)
+      - name: Generate top languages card
         uses: readme-tools/github-readme-stats-action@v1
         with:
           card: top-langs
-          options: username=FLwolfy&bg_color=30,0d1117,161b22&title_color=e6edf3&text_color=8b949e&layout=compact&hide_border=true&border_radius=8&langs_count=6&card_width=320&hide=jupyter%20notebook,html
+          options: username=FLwolfy&bg_color=30,6a6795,5b5f84&title_color=f8fafc&layout=compact&theme=tokyonight&card_width=300&langs_count=4&hide=jupyter notebook,html
           path: stats/top-langs.svg
           token: ${{ secrets.GH_STATS_TOKEN || github.token }}
 

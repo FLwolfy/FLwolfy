@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "name": "dark",
+    "description": "Primary dark theme for profile card"
+  },
+  "blocks": {
+    "app": {
+      "background": "#0d1117",
+      "card_surface": "#161b22",
+      "text_primary": "#e6edf3",
+      "ascii_art_text": "#ffffff",
+      "ascii_inner_background": "#0000004d",
+      "text_muted": "#8b949e",
+      "decorative_flag": "#1f6feb",
+      "decorative_accent_secondary": "#081f4d",
+      "decorative_edge_highlight": "#8cc8ff",
+      "card_outline_stroke": "#c9d1d9",
+      "info_strip_background": "#11161d"
+    },
+    "code_window": {
+      "background": "#0f141b",
+      "border": "#2f3942",
+      "header_background": "#161b22",
+      "text_primary": "#c9d1d9",
+      "text_muted": "#7d8590",
+      "traffic_dot_1": "#ff6b6b",
+      "traffic_dot_2": "#e5bb8a",
+      "traffic_dot_3": "#8cc8ff",
+      "terminal_background": "#0b1016",
+      "terminal_border": "#34404b",
+      "terminal_prompt": "#9fd8ff",
+      "terminal_text": "#c6d0da",
+      "terminal_cursor": "#c6d0da"
+    },
+    "quotes_window": {
+      "panel_background": "#1b2027",
+      "panel_stroke": "#444f5e",
+      "header_background": "#242a33",
+      "tab_background": "#2b323d",
+      "tab_stroke": "#5a6572",
+      "tab_text": "#d4dbe3",
+      "status_text": "#8f98a6",
+      "gutter_background": "#1b1f26",
+      "gutter_stroke": "#343b46",
+      "line_number_text": "#7f8896",
+      "scramble_text": "#3fa9f5",
+      "quote_text": "#e8edf3",
+      "title_text": "#e5bb8a"
+    },
+    "status_window": {
+      "panel_background": "#202631",
+      "panel_stroke": "#444f5e",
+      "header_background": "#2a313b",
+      "header_accent": "#58a6ff",
+      "header_bubble_background": "#8cc8ff",
+      "header_bubble_stroke": "#8cc8ff",
+      "header_bubble_text": "#dbe2ea",
+      "header_title_text": "#d9dee5",
+      "close_button_stroke": "#c5cdd8",
+      "close_button_text": "#c5cdd8",
+      "markdown_text": "#dbe2ea",
+      "markdown_error_text": "#c47f7f"
+    },
+    "about_markup": {
+      "default_text": "#c9d1d9",
+      "header": "#ffffff",
+      "dim": "#d6dbe37a",
+      "label": "#f3a45f",
+      "value": "#6fa8ff"
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "name": "light",
+    "description": "Light theme for profile card"
+  },
+  "blocks": {
+    "app": {
+      "background": "#edf1f5",
+      "card_surface": "#e6ebf2",
+      "text_primary": "#1f2937",
+      "ascii_art_text": "#000000",
+      "ascii_auto_invert": "true",
+      "ascii_inner_background": "#edf1f6cc",
+      "text_muted": "#5b6473",
+      "decorative_flag": "#2563eb",
+      "decorative_accent_secondary": "#3b5fb8",
+      "decorative_edge_highlight": "#60a5fa",
+      "card_outline_stroke": "#c8d2e0",
+      "info_strip_background": "#d7dde6"
+    },
+    "code_window": {
+      "background": "#f8fafc",
+      "border": "#d6deea",
+      "header_background": "#f1f5f9",
+      "text_primary": "#1f2937",
+      "text_muted": "#6b7280",
+      "traffic_dot_1": "#f87171",
+      "traffic_dot_2": "#f59e0b",
+      "traffic_dot_3": "#60a5fa",
+      "terminal_background": "#eef3f8",
+      "terminal_border": "#ccd6e4",
+      "terminal_prompt": "#2563eb",
+      "terminal_text": "#334155",
+      "terminal_cursor": "#334155"
+    },
+    "quotes_window": {
+      "panel_background": "#f8fafc",
+      "panel_stroke": "#d3dce9",
+      "header_background": "#eef3f8",
+      "tab_background": "#e8eef7",
+      "tab_stroke": "#c8d3e4",
+      "tab_text": "#334155",
+      "status_text": "#64748b",
+      "gutter_background": "#f1f5f9",
+      "gutter_stroke": "#d6deea",
+      "line_number_text": "#7b8798",
+      "scramble_text": "#1d4ed8",
+      "quote_text": "#1f2937",
+      "title_text": "#d97706"
+    },
+    "status_window": {
+      "panel_background": "#f7f9fc",
+      "panel_stroke": "#d3dce9",
+      "header_background": "#edf3fb",
+      "header_accent": "#2563eb",
+      "header_bubble_background": "#bfdbfe",
+      "header_bubble_stroke": "#60a5fa",
+      "header_bubble_text": "#1e3a8a",
+      "header_title_text": "#334155",
+      "close_button_stroke": "#64748b",
+      "close_button_text": "#64748b",
+      "markdown_text": "#273444",
+      "markdown_error_text": "#b91c1c"
+    },
+    "about_markup": {
+      "default_text": "#334155",
+      "header": "#0f172a",
+      "dim": "#8a94a680",
+      "label": "#d97706",
+      "value": "#2563eb"
+    }
+  }
+}

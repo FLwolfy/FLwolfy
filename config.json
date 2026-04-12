@@ -1,5 +1,5 @@
 {
-  "files": {
+  "includes": {
     "ascii_art_file": "profile/image.txt",
     "about_file": "profile/about.txt",
     "metadata_file": "profile/metadata.json",
@@ -9,25 +9,14 @@
     "github_stats_json_file": "stats/github_stats.json",
 
     "quotes_file": "quote/quotes.txt",
-
-    "status_file": "status/status.md",
-
-    "output_file": "card.svg"
+    "status_file": "status/status.md"
   },
-  "colors": {
-    "background": "#0d1117",
-    "card": "#161b22",
-    "border": "#30363d",
-    "text": "#e6edf3",
-    "muted": "#8b949e",
-    "flag": "#1f6feb",
-    "accent_secondary": "#081f4d",
-    "edge_highlight": "#8cc8ff",
-    "code_background": "#0f141b",
-    "code_border": "#2f3942",
-    "code_header": "#161b22",
-    "code_text": "#c9d1d9",
-    "code_muted": "#7d8590",
-    "info_strip": "#11161d"
+  "outputs": {
+    "base_name": "card",
+    "directory": "."
+  },
+  "themes": {
+    "dark": "themes/color.dark.json",
+    "light": "themes/color.light.json"
   }
 }

@@ -4,6 +4,8 @@ import html
 import json
 import os
 import re
+import subprocess
+import sys
 import unicodedata
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
@@ -67,18 +69,120 @@ def load_svg_for_embed(svg_path: Path) -> tuple[str, float, float]:
 
 config = load_config(CONFIG_FILE)
 
-files = config["files"]
-colors = config["colors"]
+includes = config.get("includes") or config.get("files")
+if not isinstance(includes, dict):
+    raise KeyError("Missing config.includes")
 
-txt_file = files["ascii_art_file"]
-about_file = files["about_file"]
-out_file = files["output_file"]
-metadata_file = files["metadata_file"]
-stats_svg_file = files["stats_svg_file"]
-top_langs_svg_file = files["top_langs_svg_file"]
-quotes_file = files["quotes_file"]
-github_stats_json_file = files.get("github_stats_json_file")
-status_file = files.get("status_file", "info/status.md")
+outputs_config = config.get("outputs", {})
+output_base_name = outputs_config.get("base_name", "card")
+output_directory = outputs_config.get("directory", ".")
+output_dir = BASE_DIR / output_directory
+
+color_themes = config.get("themes", {})
+if not isinstance(color_themes, dict) or not color_themes:
+    color_config = config.get("colors", {})
+    color_themes = color_config.get("themes", {})
+if not isinstance(color_themes, dict) or not color_themes:
+    legacy_file = config.get("color_file")
+    if not isinstance(legacy_file, str) or not legacy_file:
+        legacy_file = config.get("colors", {}).get("file")
+    if isinstance(legacy_file, str) and legacy_file:
+        color_themes = {"default": legacy_file}
+    else:
+        raise KeyError("Missing themes")
+
+selected_theme = os.environ.get("PROFILE_CARD_RENDER_THEME", "").strip()
+selected_output = os.environ.get("PROFILE_CARD_RENDER_OUTPUT", "").strip()
+suppress_single_output_log = os.environ.get("PROFILE_CARD_SUPPRESS_SINGLE_LOG", "").strip() == "1"
+
+if not selected_theme:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    generated_paths: list[str] = []
+    script_path = str(Path(__file__).resolve())
+    for theme_name in color_themes:
+        target_path = output_dir / f"{output_base_name}-{theme_name}.svg"
+        env = os.environ.copy()
+        env["PROFILE_CARD_RENDER_THEME"] = theme_name
+        env["PROFILE_CARD_RENDER_OUTPUT"] = str(target_path)
+        env["PROFILE_CARD_SUPPRESS_SINGLE_LOG"] = "1"
+        subprocess.run([sys.executable, script_path], check=True, env=env)
+        try:
+            generated_paths.append(str(target_path.relative_to(BASE_DIR)))
+        except ValueError:
+            generated_paths.append(str(target_path))
+    print("Generated:", ", ".join(generated_paths))
+    raise SystemExit(0)
+
+if selected_theme not in color_themes:
+    raise KeyError(f"Unknown theme '{selected_theme}'. Available: {', '.join(color_themes)}")
+
+color_file = color_themes[selected_theme]
+color_theme = load_config(BASE_DIR / color_file)
+color_blocks = color_theme.get("blocks", {})
+if not isinstance(color_blocks, dict):
+    raise KeyError(f"Missing blocks in {color_file}")
+
+if selected_output:
+    output_path = Path(selected_output)
+else:
+    output_path = output_dir / f"{output_base_name}-{selected_theme}.svg"
+output_path.parent.mkdir(parents=True, exist_ok=True)
+
+try:
+    output_label = str(output_path.relative_to(BASE_DIR))
+except ValueError:
+    output_label = str(output_path)
+
+
+def color_token(path: str) -> str:
+    node = color_blocks
+    for key in path.split("."):
+        if not isinstance(node, dict) or key not in node:
+            raise KeyError(f"Missing color token: {path} (in {color_file})")
+        node = node[key]
+    if not isinstance(node, str):
+        raise KeyError(f"Color token is not a string: {path} (in {color_file})")
+    return node
+
+
+def color_token_optional(path: str, fallback: str) -> str:
+    try:
+        return color_token(path)
+    except KeyError:
+        return fallback
+
+
+def invert_hex_color(color: str) -> str:
+    m = re.fullmatch(r"#([0-9A-Fa-f]{6})([0-9A-Fa-f]{2})?", color.strip())
+    if not m:
+        return color
+    rgb = m.group(1)
+    alpha = m.group(2) or ""
+    r = 255 - int(rgb[0:2], 16)
+    g = 255 - int(rgb[2:4], 16)
+    b = 255 - int(rgb[4:6], 16)
+    return f"#{r:02x}{g:02x}{b:02x}{alpha}"
+
+
+def invert_braille_text(text: str) -> str:
+    # Invert Unicode Braille patterns (U+2800..U+28FF) by flipping all 8 dot bits.
+    out_chars: list[str] = []
+    for ch in text:
+        cp = ord(ch)
+        if 0x2800 <= cp <= 0x28FF:
+            out_chars.append(chr(0x2800 + ((cp - 0x2800) ^ 0xFF)))
+        else:
+            out_chars.append(ch)
+    return "".join(out_chars)
+
+txt_file = includes["ascii_art_file"]
+about_file = includes["about_file"]
+metadata_file = includes["metadata_file"]
+stats_svg_file = includes["stats_svg_file"]
+top_langs_svg_file = includes["top_langs_svg_file"]
+quotes_file = includes["quotes_file"]
+github_stats_json_file = includes.get("github_stats_json_file")
+status_file = includes.get("status_file", "info/status.md")
 
 metadata = load_config(BASE_DIR / metadata_file)
 
@@ -89,21 +193,66 @@ tagline = metadata["tagline"]
 
 W, H = 1400, 860
 
-BG = colors["background"]
-CARD = colors["card"]
-BORDER = colors["border"]
-TEXT = colors["text"]
-MUTED = colors["muted"]
-FLAG = colors["flag"]
-ACCENT_SECONDARY = colors["accent_secondary"]
-EDGE_HIGHLIGHT = colors["edge_highlight"]
+BG = color_token("app.background")
+CARD = color_token("app.card_surface")
+TEXT = color_token("app.text_primary")
+ASCII_ART_TEXT_BASE = color_token_optional("app.ascii_art_text", TEXT)
+ASCII_AUTO_INVERT = color_token_optional("app.ascii_auto_invert", "false").strip().lower() in (
+    "1",
+    "true",
+    "yes",
+    "on",
+)
+ASCII_ART_TEXT = ASCII_ART_TEXT_BASE
+ASCII_INNER_BACKGROUND = color_token_optional("app.ascii_inner_background", "none")
+MUTED = color_token("app.text_muted")
+FLAG = color_token("app.decorative_flag")
+ACCENT_SECONDARY = color_token("app.decorative_accent_secondary")
+EDGE_HIGHLIGHT = color_token("app.decorative_edge_highlight")
+CARD_OUTLINE_STROKE = color_token("app.card_outline_stroke")
+INFO_STRIP = color_token("app.info_strip_background")
 
-CODE_BG = colors["code_background"]
-CODE_BORDER = colors["code_border"]
-CODE_HEADER = colors["code_header"]
-CODE_TEXT = colors["code_text"]
-CODE_MUTED = colors["code_muted"]
-INFO_STRIP = colors["info_strip"]
+CODE_BG = color_token("code_window.background")
+CODE_BORDER = color_token("code_window.border")
+CODE_HEADER = color_token("code_window.header_background")
+CODE_TEXT = color_token("code_window.text_primary")
+CODE_MUTED = color_token("code_window.text_muted")
+CODE_TRAFFIC_1 = color_token("code_window.traffic_dot_1")
+CODE_TRAFFIC_2 = color_token("code_window.traffic_dot_2")
+CODE_TRAFFIC_3 = color_token("code_window.traffic_dot_3")
+TERMINAL_BG = color_token("code_window.terminal_background")
+TERMINAL_BORDER = color_token("code_window.terminal_border")
+TERMINAL_PROMPT = color_token("code_window.terminal_prompt")
+TERMINAL_TEXT = color_token("code_window.terminal_text")
+TERMINAL_CURSOR = color_token("code_window.terminal_cursor")
+
+QUOTES_PANEL_BG = color_token("quotes_window.panel_background")
+QUOTES_PANEL_STROKE = color_token("quotes_window.panel_stroke")
+QUOTES_HEADER_BG = color_token("quotes_window.header_background")
+QUOTES_TAB_BG = color_token("quotes_window.tab_background")
+QUOTES_TAB_STROKE = color_token("quotes_window.tab_stroke")
+QUOTES_TAB_TEXT = color_token("quotes_window.tab_text")
+QUOTES_STATUS_TEXT = color_token("quotes_window.status_text")
+QUOTES_GUTTER_BG = color_token("quotes_window.gutter_background")
+QUOTES_GUTTER_STROKE = color_token("quotes_window.gutter_stroke")
+QUOTES_LINE_NUM = color_token("quotes_window.line_number_text")
+QUOTES_SCRAMBLE_TEXT = color_token("quotes_window.scramble_text")
+QUOTES_TEXT = color_token("quotes_window.quote_text")
+QUOTES_TITLE = color_token("quotes_window.title_text")
+
+STATUS_PANEL_BG = color_token("status_window.panel_background")
+STATUS_PANEL_STROKE = color_token("status_window.panel_stroke")
+STATUS_HEADER_BG = color_token("status_window.header_background")
+STATUS_HEADER_ACCENT = color_token("status_window.header_accent")
+STATUS_HEADER_BUBBLE_BG = color_token("status_window.header_bubble_background")
+STATUS_HEADER_BUBBLE_STROKE = color_token("status_window.header_bubble_stroke")
+STATUS_HEADER_BUBBLE_TEXT = color_token("status_window.header_bubble_text")
+STATUS_HEADER_TITLE_TEXT = color_token("status_window.header_title_text")
+STATUS_CLOSE_STROKE = color_token("status_window.close_button_stroke")
+STATUS_CLOSE_TEXT = color_token("status_window.close_button_text")
+STATUS_MARKDOWN_TEXT = color_token("status_window.markdown_text")
+STATUS_MARKDOWN_ERROR = color_token("status_window.markdown_error_text")
+ABOUT_DEFAULT_TEXT = color_token("about_markup.default_text")
 EMOJI_CACHE_FILE = BASE_DIR / ".cache" / "github_emojis.json"
 EMOJI_CACHE_MAX_AGE_SEC = 7 * 24 * 60 * 60
 
@@ -158,11 +307,17 @@ def draw_text_lines(
 def parse_about_segments(line: str) -> list[tuple[str, str, float]]:
     # Inline color tags:
     # [#RRGGBB]text or [#RRGGBBAA]text
+    # [@about_markup.token_name]text
     # Example:
-    # [#d6dbe37a]. [#f3a45f]Skills: [#6fa8ff]C#, C++, Python
-    color_tag_re = re.compile(r"\[(#[0-9A-Fa-f]{6}(?:[0-9A-Fa-f]{2})?)\]")
+    # [@about_markup.label]Skills: [@about_markup.value]C#, C++, Python
+    color_tag_re = re.compile(
+        r"\[((?:#[0-9A-Fa-f]{6}(?:[0-9A-Fa-f]{2})?)|(?:@[a-zA-Z0-9_.-]+))\]"
+    )
 
     def decode_color(token: str) -> tuple[str, float]:
+        if token.startswith("@"):
+            mapped = color_token(token[1:])
+            token = mapped
         if len(token) == 9:
             fill = token[:7]
             alpha = int(token[7:9], 16) / 255.0
@@ -171,10 +326,10 @@ def parse_about_segments(line: str) -> list[tuple[str, str, float]]:
 
     s = line.rstrip("\n\r")
     if s == "":
-        return [("", CODE_TEXT, 1.0)]
+        return [("", ABOUT_DEFAULT_TEXT, 1.0)]
 
     segments: list[tuple[str, str, float]] = []
-    current_fill = CODE_TEXT
+    current_fill = ABOUT_DEFAULT_TEXT
     current_opacity = 1.0
     cursor = 0
 
@@ -189,7 +344,7 @@ def parse_about_segments(line: str) -> list[tuple[str, str, float]]:
         segments.append((s[cursor:], current_fill, current_opacity))
 
     if not segments:
-        return [("", CODE_TEXT, 1.0)]
+        return [("", ABOUT_DEFAULT_TEXT, 1.0)]
     return segments
 
 
@@ -616,6 +771,8 @@ ascii_raw = (BASE_DIR / txt_file).read_text(encoding="utf-8")
 ascii_lines = [normalize_tabs(line.rstrip("\n\r")) for line in ascii_raw.splitlines()]
 if not ascii_lines:
     ascii_lines = [""]
+if ASCII_AUTO_INVERT:
+    ascii_lines = [invert_braille_text(line) for line in ascii_lines]
 
 about_raw = (BASE_DIR / about_file).read_text(encoding="utf-8")
 if github_stats_json_file:
@@ -710,15 +867,16 @@ inner_y = frame_y + line_px
 inner_w = frame_w - char_px * 2
 inner_h = frame_h - line_px * 2
 
-CROP_PAD_X = char_px * 1.0
+CROP_PAD_LEFT = char_px * 1.0
+CROP_PAD_RIGHT = char_px * 1.0 + 10.0
 CROP_PAD_Y = line_px * 0.45
 
-crop_x = inner_x + CROP_PAD_X
+crop_x = inner_x + CROP_PAD_LEFT
 crop_y = inner_y + CROP_PAD_Y
-crop_w = max(1.0, inner_w - CROP_PAD_X * 2)
+crop_w = max(1.0, inner_w - CROP_PAD_LEFT - CROP_PAD_RIGHT)
 crop_h = max(1.0, inner_h - CROP_PAD_Y * 2)
 
-ascii_max_chars = max(len(line) for line in ascii_lines) if ascii_lines else 0
+ascii_max_chars = max(text_cells(line) for line in ascii_lines) if ascii_lines else 0
 ascii_line_count = len(ascii_lines)
 
 ascii_block_w = ascii_max_chars * char_px
@@ -778,19 +936,6 @@ quotes_gutter_inner_pad = 7.0
 quotes_text_left_pad = 10.0
 
 quote_font_size = 21.0
-quotes_panel_bg = "#1b1f26"
-quotes_panel_stroke = "#343b46"
-quotes_header_bg = "#242a33"
-quotes_tab_bg = "#2b323d"
-quotes_tab_stroke = "#444f5e"
-quotes_tab_text = "#c5cdd8"
-quotes_status_text = "#8f98a6"
-quotes_gutter_bg = "#202631"
-quotes_gutter_stroke = "#3b4654"
-quotes_line_num = "#7f8896"
-quotes_scramble_color = "#8cc8ff"
-quotes_text_color = "#d3d9e1"
-quotes_title_color = "#e5bb8a"
 quotes_tab_w = 122.0
 quotes_tab_h = quotes_header_h - 9.0
 quotes_tab_x = quotes_x + 10.0
@@ -931,7 +1076,7 @@ for qi, qlines in enumerate(wrapped_quotes):
                 ]
             ):
                 line_parts.append(
-                    f'<text x="{x}" y="{y}" font-size="{quote_font_size}" fill="{quotes_scramble_color}" '
+                    f'<text x="{x}" y="{y}" font-size="{quote_font_size}" fill="{QUOTES_SCRAMBLE_TEXT}" '
                     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" opacity="0">{esc(glyph)}'
                     f'<animate attributeName="opacity" dur="{quote_total_dur:.2f}s" repeatCount="indefinite" '
                     f'values="0;0;1;1;0;0" '
@@ -940,7 +1085,7 @@ for qi, qlines in enumerate(wrapped_quotes):
                 )
 
             line_parts.append(
-                f'<text x="{x}" y="{y}" font-size="{quote_font_size}" fill="{quotes_text_color}" '
+                f'<text x="{x}" y="{y}" font-size="{quote_font_size}" fill="{QUOTES_TEXT}" '
                 f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" opacity="0">{esc(ch)}'
                 f'<animate attributeName="opacity" dur="{quote_total_dur:.2f}s" repeatCount="indefinite" '
                 f'values="0;0;1;1;0;0" '
@@ -1046,67 +1191,67 @@ for i, nline in enumerate(name_lines):
 # Quotes shell
 parts.append(
     f'<rect x="{quotes_x}" y="{quotes_y}" width="{quotes_w}" height="{quotes_h}" '
-    f'rx="12" fill="{quotes_panel_bg}" stroke="{quotes_panel_stroke}" opacity="0.98"/>'
+    f'rx="12" fill="{QUOTES_PANEL_BG}" stroke="{QUOTES_PANEL_STROKE}" opacity="0.98"/>'
 )
 parts.append(
     f'<rect x="{quotes_x}" y="{quotes_y}" width="{quotes_w}" height="{quotes_header_h}" '
-    f'rx="12" fill="{quotes_header_bg}"/>'
+    f'rx="12" fill="{QUOTES_HEADER_BG}"/>'
 )
 parts.append(
     f'<rect x="{quotes_tab_x}" y="{quotes_tab_y}" width="{quotes_tab_w}" height="{quotes_tab_h}" '
-    f'rx="6" fill="{quotes_tab_bg}" stroke="{quotes_tab_stroke}"/>'
+    f'rx="6" fill="{QUOTES_TAB_BG}" stroke="{QUOTES_TAB_STROKE}"/>'
 )
 parts.append(
-    f'<text x="{quotes_tab_x + 12}" y="{quotes_title_y}" font-size="13" fill="{quotes_tab_text}" '
+    f'<text x="{quotes_tab_x + 12}" y="{quotes_title_y}" font-size="13" fill="{QUOTES_TAB_TEXT}" '
     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">daily.quotes</text>'
 )
 parts.append(
-    f'<text x="{quotes_update_time_x}" y="{quotes_utf_y}" font-size="11" fill="{quotes_status_text}" '
+    f'<text x="{quotes_update_time_x}" y="{quotes_utf_y}" font-size="11" fill="{QUOTES_STATUS_TEXT}" '
     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">{esc(quotes_update_time)}</text>'
 )
 parts.append(
-    f'<text x="{quotes_utf_x}" y="{quotes_utf_y}" font-size="11" fill="{quotes_status_text}" text-anchor="end" '
+    f'<text x="{quotes_utf_x}" y="{quotes_utf_y}" font-size="11" fill="{QUOTES_STATUS_TEXT}" text-anchor="end" '
     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">{quotes_utf_text}</text>'
 )
 parts.append(
     f'<circle cx="{quotes_close_x}" cy="{quotes_close_y}" r="{quotes_close_r}" '
-    f'fill="none" stroke="{quotes_status_text}" stroke-opacity="0.9" stroke-width="1"/>'
+    f'fill="none" stroke="{QUOTES_STATUS_TEXT}" stroke-opacity="0.9" stroke-width="1"/>'
 )
 parts.append(
-    f'<text x="{quotes_close_x}" y="{quotes_close_y + 3.4}" font-size="10" fill="{quotes_status_text}" text-anchor="middle" '
+    f'<text x="{quotes_close_x}" y="{quotes_close_y + 3.4}" font-size="10" fill="{QUOTES_STATUS_TEXT}" text-anchor="middle" '
     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">x</text>'
 )
 parts.append(
     f'<rect x="{quotes_x}" y="{quotes_y + quotes_header_h}" width="{quotes_gutter_w}" '
-    f'height="{quotes_h - quotes_header_h}" fill="{quotes_gutter_bg}" opacity="0.98"/>'
+    f'height="{quotes_h - quotes_header_h}" fill="{QUOTES_GUTTER_BG}" opacity="0.98"/>'
 )
 parts.append(
     f'<line x1="{quotes_x + quotes_gutter_w}" y1="{quotes_y + quotes_header_h}" '
     f'x2="{quotes_x + quotes_gutter_w}" y2="{quotes_y + quotes_h}" '
-    f'stroke="{quotes_gutter_stroke}" stroke-width="1"/>'
+    f'stroke="{QUOTES_GUTTER_STROKE}" stroke-width="1"/>'
 )
 parts.append(
-    f'<text x="{quotes_x + quotes_gutter_inner_pad}" y="{quotes_body_y + quote_font_size}" font-size="{quote_font_size}" fill="{quotes_line_num}" '
+    f'<text x="{quotes_x + quotes_gutter_inner_pad}" y="{quotes_body_y + quote_font_size}" font-size="{quote_font_size}" fill="{QUOTES_LINE_NUM}" '
     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">1</text>'
 )
 parts.append(
-    f'<text x="{quotes_x + quotes_gutter_inner_pad}" y="{quotes_body_y + quote_font_size + quote_line_px}" font-size="{quote_font_size}" fill="{quotes_line_num}" '
+    f'<text x="{quotes_x + quotes_gutter_inner_pad}" y="{quotes_body_y + quote_font_size + quote_line_px}" font-size="{quote_font_size}" fill="{QUOTES_LINE_NUM}" '
     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">2</text>'
 )
 parts.append(
-    f'<text x="{quotes_x + quotes_gutter_inner_pad}" y="{quotes_body_y + quote_font_size + quote_line_px * 2}" font-size="{quote_font_size}" fill="{quotes_line_num}" '
+    f'<text x="{quotes_x + quotes_gutter_inner_pad}" y="{quotes_body_y + quote_font_size + quote_line_px * 2}" font-size="{quote_font_size}" fill="{QUOTES_LINE_NUM}" '
     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">3</text>'
 )
 parts.append(
-    f'<text x="{quotes_x + quotes_gutter_inner_pad}" y="{quotes_body_y + quote_font_size + quote_line_px * 3}" font-size="{quote_font_size}" fill="{quotes_line_num}" '
+    f'<text x="{quotes_x + quotes_gutter_inner_pad}" y="{quotes_body_y + quote_font_size + quote_line_px * 3}" font-size="{quote_font_size}" fill="{QUOTES_LINE_NUM}" '
     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">4</text>'
 )
 parts.append(
-    f'<text x="{quotes_x + quotes_gutter_inner_pad}" y="{quotes_body_y + quote_font_size + quote_line_px * 4}" font-size="{quote_font_size}" fill="{quotes_line_num}" '
+    f'<text x="{quotes_x + quotes_gutter_inner_pad}" y="{quotes_body_y + quote_font_size + quote_line_px * 4}" font-size="{quote_font_size}" fill="{QUOTES_LINE_NUM}" '
     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">5</text>'
 )
 parts.append(
-    f'<text x="{quotes_body_x + quotes_body_w / 2.0}" y="{quotes_body_y + quote_font_size}" font-size="{quote_font_size}" fill="{quotes_title_color}" font-weight="700" text-anchor="middle" '
+    f'<text x="{quotes_body_x + quotes_body_w / 2.0}" y="{quotes_body_y + quote_font_size}" font-size="{quote_font_size}" fill="{QUOTES_TITLE}" font-weight="700" text-anchor="middle" '
     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">{esc(svg_preserve_line(quote_title_line))}</text>'
 )
 parts.extend(quote_groups)
@@ -1115,43 +1260,43 @@ parts.extend(quote_groups)
 status_window_parts: list[str] = []
 status_window_parts.append(
     f'<rect x="{status_x}" y="{status_y}" width="{status_w}" height="{status_h}" '
-    f'rx="8" fill="#1b2027" stroke="#5a6572" stroke-width="1.4" opacity="0.98"/>'
+    f'rx="8" fill="{STATUS_PANEL_BG}" stroke="{STATUS_PANEL_STROKE}" stroke-width="1.4" opacity="0.98"/>'
 )
 status_window_parts.append(
     f'<rect x="{status_x}" y="{status_y}" width="{status_w}" height="{status_header_h}" '
-    f'rx="8" fill="#2a313b"/>'
+    f'rx="8" fill="{STATUS_HEADER_BG}"/>'
 )
 status_window_parts.append(
     f'<rect x="{status_x}" y="{status_y + status_header_h - 2.0}" width="{status_w}" height="2" '
-    f'fill="#3fa9f5" opacity="0.9"/>'
+    f'fill="{STATUS_HEADER_ACCENT}" opacity="0.9"/>'
 )
 status_title_x = status_x + 26
 if status_header_token:
     status_window_parts.append(
         f'<rect x="{status_bubble_x}" y="{status_bubble_y}" width="{status_bubble_w}" height="{status_bubble_h}" rx="{status_bubble_h/2.0}" '
-        f'fill="#d9dee5" fill-opacity="0.12" stroke="#e8edf3" stroke-opacity="0.52" stroke-width="1.0"/>'
+        f'fill="{STATUS_HEADER_BUBBLE_BG}" fill-opacity="0.12" stroke="{STATUS_HEADER_BUBBLE_STROKE}" stroke-opacity="0.52" stroke-width="1.0"/>'
     )
     status_window_parts.append(
         f'<g clip-path="url(#statusHeaderBubbleClip)">'
-        f'<text x="{status_bubble_x + status_bubble_w / 2.0}" y="{status_y + 20}" font-size="12" fill="#d4dbe3" text-anchor="middle" '
+        f'<text x="{status_bubble_x + status_bubble_w / 2.0}" y="{status_y + 20}" font-size="12" fill="{STATUS_HEADER_BUBBLE_TEXT}" text-anchor="middle" '
         f'font-family="Inter, Arial, sans-serif" font-weight="700">{esc(status_header_token)}</text>'
         f'</g>'
     )
     status_title_x = status_bubble_x + status_bubble_w + 12.0
 else:
     status_window_parts.append(
-        f'<rect x="{status_x + 12}" y="{status_y + 9}" width="12" height="12" rx="2" fill="#3fa9f5" opacity="0.9"/>'
+        f'<rect x="{status_x + 12}" y="{status_y + 9}" width="12" height="12" rx="2" fill="{STATUS_HEADER_ACCENT}" opacity="0.9"/>'
     )
 status_window_parts.append(
-    f'<text x="{status_title_x}" y="{status_y + 20}" font-size="12" fill="#d4dbe3" '
+    f'<text x="{status_title_x}" y="{status_y + 20}" font-size="12" fill="{STATUS_HEADER_TITLE_TEXT}" '
     f'font-family="Inter, Arial, sans-serif" font-weight="700">Status.md</text>'
 )
 status_window_parts.append(
     f'<circle cx="{status_x + status_w - 16}" cy="{status_y + 15}" r="5.4" '
-    f'fill="none" stroke="#ff6b6b" stroke-opacity="0.95" stroke-width="1"/>'
+    f'fill="none" stroke="{STATUS_CLOSE_STROKE}" stroke-opacity="0.95" stroke-width="1"/>'
 )
 status_window_parts.append(
-    f'<text x="{status_x + status_w - 16}" y="{status_y + 18}" font-size="10" fill="#ff6b6b" text-anchor="middle" '
+    f'<text x="{status_x + status_w - 16}" y="{status_y + 18}" font-size="10" fill="{STATUS_CLOSE_TEXT}" text-anchor="middle" '
     f'font-family="Inter, Arial, sans-serif" font-weight="700">-</text>'
 )
 
@@ -1172,13 +1317,13 @@ for line_text, scale, weight in status_md_lines:
             status_y_cursor += img_h + status_line_px * 0.35
         else:
             status_render_parts.append(
-                f'<text x="{status_body_x}" y="{status_y_cursor}" font-size="{status_font * 0.95}" fill="#c47f7f" '
+                f'<text x="{status_body_x}" y="{status_y_cursor}" font-size="{status_font * 0.95}" fill="{STATUS_MARKDOWN_ERROR}" '
                 f'font-family="IBM Plex Mono, SFMono-Regular, Menlo, Consolas, monospace">[missing image: {esc(src)}]</text>'
             )
             status_y_cursor += status_line_px
         continue
     status_render_parts.append(
-        f'<text x="{status_body_x}" y="{status_y_cursor}" font-size="{status_font * scale}" fill="#dbe2ea" '
+        f'<text x="{status_body_x}" y="{status_y_cursor}" font-size="{status_font * scale}" fill="{STATUS_MARKDOWN_TEXT}" '
         f'font-family="IBM Plex Mono, SFMono-Regular, Menlo, Consolas, monospace" font-weight="{weight}" xml:space="preserve">{esc(svg_preserve_line(line_text))}</text>'
     )
     status_y_cursor += status_line_px
@@ -1195,13 +1340,13 @@ parts.append(
     f'rx="14" fill="{CODE_HEADER}"/>'
 )
 parts.append(
-    f'<circle cx="{left_x + 18}" cy="{left_y + 18}" r="4.5" fill="{CODE_MUTED}" opacity="0.85"/>'
+    f'<circle cx="{left_x + 18}" cy="{left_y + 18}" r="4.5" fill="{CODE_TRAFFIC_1}"/>'
 )
 parts.append(
-    f'<circle cx="{left_x + 34}" cy="{left_y + 18}" r="4.5" fill="{CODE_MUTED}" opacity="0.65"/>'
+    f'<circle cx="{left_x + 34}" cy="{left_y + 18}" r="4.5" fill="{CODE_TRAFFIC_2}"/>'
 )
 parts.append(
-    f'<circle cx="{left_x + 50}" cy="{left_y + 18}" r="4.5" fill="{CODE_MUTED}" opacity="0.45"/>'
+    f'<circle cx="{left_x + 50}" cy="{left_y + 18}" r="4.5" fill="{CODE_TRAFFIC_3}"/>'
 )
 parts.append(
     f'<text x="{left_x + 72}" y="{left_y + 23}" font-size="14" fill="{CODE_MUTED}" '
@@ -1231,20 +1376,25 @@ cursor_y = code_terminal_y + 8
 cursor_h = 14
 parts.append(
     f'<rect x="{code_terminal_x}" y="{code_terminal_y}" width="{code_terminal_w}" height="{code_terminal_h}" '
-    f'rx="7" fill="#0b1016" stroke="#34404b" stroke-width="1"/>'
+    f'rx="7" fill="{TERMINAL_BG}" stroke="{TERMINAL_BORDER}" stroke-width="1"/>'
 )
 parts.append(
-    f'<text x="{terminal_text_x}" y="{terminal_text_y}" font-size="13" fill="#9fd8ff" '
+    f'<text x="{terminal_text_x}" y="{terminal_text_y}" font-size="13" fill="{TERMINAL_PROMPT}" '
     f'font-family="IBM Plex Mono, SFMono-Regular, Menlo, Consolas, monospace">●</text>'
 )
 parts.append(
-    f'<text x="{terminal_text_x + 14}" y="{terminal_text_y}" font-size="13" fill="#c6d0da" '
+    f'<text x="{terminal_text_x + 14}" y="{terminal_text_y}" font-size="13" fill="{TERMINAL_TEXT}" '
     f'font-family="IBM Plex Mono, SFMono-Regular, Menlo, Consolas, monospace">{esc(terminal_prompt)}</text>'
 )
 parts.append(
-    f'<rect x="{cursor_x}" y="{cursor_y}" width="7" height="{cursor_h}" rx="1.5" fill="#c6d0da">'
+    f'<rect x="{cursor_x}" y="{cursor_y}" width="7" height="{cursor_h}" rx="1.5" fill="{TERMINAL_CURSOR}">'
     f'<animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.45;0.5;0.95;1" dur="1.1s" repeatCount="indefinite"/>'
     f'</rect>'
+)
+
+# ASCII inner panel background
+parts.append(
+    f'<rect x="{inner_x - 4}" y="{inner_y - 6}" width="{inner_w - 4}" height="{inner_h + 15}" fill="{ASCII_INNER_BACKGROUND}"/>'
 )
 
 # ASCII border frame
@@ -1266,7 +1416,7 @@ parts.append(
         ascii_left_x,
         ascii_first_y,
         size=ascii_font_size,
-        fill=TEXT,
+        fill=ASCII_ART_TEXT,
         line_height=ascii_line_height,
         clip_id="asciiClip",
     )
@@ -1312,10 +1462,10 @@ parts.extend(status_window_parts)
 parts.append('</g>')
 parts.append(
     f'<rect x="{card_border_x}" y="{card_border_y}" width="{card_border_w_inner}" height="{card_border_h_inner}" '
-    f'rx="{card_border_rx}" fill="none" stroke="#c9d1d9" stroke-width="{card_border_w}"/>'
+    f'rx="{card_border_rx}" fill="none" stroke="{CARD_OUTLINE_STROKE}" stroke-width="{card_border_w}"/>'
 )
 parts.append("</svg>")
 
-out_path = BASE_DIR / out_file
-out_path.write_text("\n".join(parts), encoding="utf-8")
-print(f"Generated {out_file}")
+output_path.write_text("\n".join(parts), encoding="utf-8")
+if not suppress_single_output_log:
+    print(f"Generated {output_label}")
