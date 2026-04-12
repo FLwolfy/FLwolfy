@@ -2,8 +2,11 @@ from pathlib import Path
 import base64
 import html
 import json
+import os
 import re
 import unicodedata
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 
 BASE_DIR = Path(__file__).resolve().parent
 CONFIG_FILE = BASE_DIR / "config.json"
@@ -101,6 +104,8 @@ CODE_HEADER = colors["code_header"]
 CODE_TEXT = colors["code_text"]
 CODE_MUTED = colors["code_muted"]
 INFO_STRIP = colors["info_strip"]
+EMOJI_CACHE_FILE = BASE_DIR / ".cache" / "github_emojis.json"
+EMOJI_CACHE_MAX_AGE_SEC = 7 * 24 * 60 * 60
 
 
 def esc(s: str) -> str:
@@ -272,6 +277,95 @@ def extract_quotes_update_time(quotes_path: Path) -> str:
     return m.group(1).strip()
 
 
+_github_emoji_map_cache: dict[str, str] | None = None
+
+
+def _load_github_emoji_map() -> dict[str, str]:
+    global _github_emoji_map_cache
+    if _github_emoji_map_cache is not None:
+        return _github_emoji_map_cache
+
+    # 1) Prefer recent local cache (offline-friendly).
+    try:
+        if EMOJI_CACHE_FILE.exists():
+            age = max(0.0, __import__("time").time() - EMOJI_CACHE_FILE.stat().st_mtime)
+            if age <= EMOJI_CACHE_MAX_AGE_SEC:
+                _github_emoji_map_cache = json.loads(EMOJI_CACHE_FILE.read_text(encoding="utf-8"))
+                if isinstance(_github_emoji_map_cache, dict):
+                    return _github_emoji_map_cache
+    except Exception:
+        pass
+
+    # 2) Fetch from GitHub official endpoint.
+    try:
+        req = Request("https://api.github.com/emojis")
+        req.add_header("Accept", "application/vnd.github+json")
+        req.add_header("User-Agent", "profile-card-generator")
+        token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN") or ""
+        if token:
+            req.add_header("Authorization", f"Bearer {token}")
+        with urlopen(req, timeout=8) as resp:
+            payload = json.loads(resp.read().decode("utf-8"))
+            if isinstance(payload, dict):
+                _github_emoji_map_cache = payload
+                try:
+                    EMOJI_CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+                    EMOJI_CACHE_FILE.write_text(
+                        json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
+                        encoding="utf-8",
+                    )
+                except Exception:
+                    pass
+                return _github_emoji_map_cache
+    except (HTTPError, URLError, TimeoutError, ValueError):
+        pass
+    except Exception:
+        pass
+
+    # 3) Stale cache fallback if network fetch failed.
+    try:
+        if EMOJI_CACHE_FILE.exists():
+            _github_emoji_map_cache = json.loads(EMOJI_CACHE_FILE.read_text(encoding="utf-8"))
+            if isinstance(_github_emoji_map_cache, dict):
+                return _github_emoji_map_cache
+    except Exception:
+        pass
+
+    _github_emoji_map_cache = {}
+    return _github_emoji_map_cache
+
+
+def _github_emoji_url_to_unicode(url: str) -> str | None:
+    # GitHub unicode emoji URLs look like:
+    # .../images/icons/emoji/unicode/1f512.png?v8
+    m = re.search(r"/unicode/([0-9a-fA-F\-]+)\.png", url)
+    if not m:
+        return None
+    cps = m.group(1).split("-")
+    try:
+        return "".join(chr(int(cp, 16)) for cp in cps)
+    except Exception:
+        return None
+
+
+def decode_github_emoji_shortcode(token: str) -> str:
+    s = token.strip()
+    m = re.fullmatch(r":([a-z0-9_+\-]+):", s, flags=re.IGNORECASE)
+    if not m:
+        return s
+    key = m.group(1)
+
+    emoji_map = _load_github_emoji_map()
+    url = emoji_map.get(key) or emoji_map.get(key.lower())
+    if isinstance(url, str):
+        decoded = _github_emoji_url_to_unicode(url)
+        if decoded:
+            return decoded
+
+    # Keep original shortcode for custom/non-unicode GitHub emojis.
+    return s
+
+
 def parse_status_header_tag(md_text: str) -> tuple[str, str]:
     lines = md_text.splitlines()
     header = ""
@@ -287,7 +381,7 @@ def parse_status_header_tag(md_text: str) -> tuple[str, str]:
     if i < len(lines):
         m = re.match(r"^\[#header\s+(.+?)\]\s*$", lines[i].strip(), flags=re.IGNORECASE)
         if m:
-            header = m.group(1).strip()
+            header = decode_github_emoji_shortcode(m.group(1))
             i += 1
             # Drop consecutive blank lines right after header tag.
             while i < len(lines) and not lines[i].strip():
@@ -750,6 +844,10 @@ status_body_x = status_x + status_pad_x
 status_body_y = status_y + status_header_h + status_pad_y
 status_body_w = status_w - status_pad_x * 2
 status_body_h = status_h - status_header_h - status_pad_y * 2
+status_bubble_x = status_x + 9.0
+status_bubble_y = status_y + 7.0
+status_bubble_w = 30.0
+status_bubble_h = 16.0
 
 status_base_font = 12.5
 status_line_height = 1.32
@@ -880,6 +978,7 @@ parts = [
     f'<clipPath id="codeClip"><rect x="{code_body_x}" y="{code_body_y}" width="{code_body_w}" height="{code_body_h}" /></clipPath>',
     f'<clipPath id="statsClip"><rect x="{frame_x}" y="{stats_y}" width="{frame_w}" height="{stats_box_h}" /></clipPath>',
     f'<clipPath id="statusClip"><rect x="{status_body_x}" y="{status_body_y}" width="{status_body_w}" height="{status_body_h}" /></clipPath>',
+    f'<clipPath id="statusHeaderBubbleClip"><rect x="{status_bubble_x}" y="{status_bubble_y}" width="{status_bubble_w}" height="{status_bubble_h}" rx="{status_bubble_h/2.0}" /></clipPath>',
     *quote_defs,
     "</defs>",
 ]
@@ -1028,19 +1127,17 @@ status_window_parts.append(
 )
 status_title_x = status_x + 26
 if status_header_token:
-    bubble_x = status_x + 9.0
-    bubble_y = status_y + 7.0
-    bubble_w = 30.0
-    bubble_h = 16.0
     status_window_parts.append(
-        f'<rect x="{bubble_x}" y="{bubble_y}" width="{bubble_w}" height="{bubble_h}" rx="{bubble_h/2.0}" '
+        f'<rect x="{status_bubble_x}" y="{status_bubble_y}" width="{status_bubble_w}" height="{status_bubble_h}" rx="{status_bubble_h/2.0}" '
         f'fill="#d9dee5" fill-opacity="0.12" stroke="#e8edf3" stroke-opacity="0.52" stroke-width="1.0"/>'
     )
     status_window_parts.append(
-        f'<text x="{bubble_x + bubble_w / 2.0}" y="{status_y + 20}" font-size="12" fill="#d4dbe3" text-anchor="middle" '
+        f'<g clip-path="url(#statusHeaderBubbleClip)">'
+        f'<text x="{status_bubble_x + status_bubble_w / 2.0}" y="{status_y + 20}" font-size="12" fill="#d4dbe3" text-anchor="middle" '
         f'font-family="Inter, Arial, sans-serif" font-weight="700">{esc(status_header_token)}</text>'
+        f'</g>'
     )
-    status_title_x = bubble_x + bubble_w + 12.0
+    status_title_x = status_bubble_x + status_bubble_w + 12.0
 else:
     status_window_parts.append(
         f'<rect x="{status_x + 12}" y="{status_y + 9}" width="12" height="12" rx="2" fill="#3fa9f5" opacity="0.9"/>'

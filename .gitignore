@@ -1,1 +1,41 @@
+# OS files
 .DS_Store
+Thumbs.db
+
+# Project/local cache
+.cache/
+.tmp/
+tmp/
+*.tmp
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.python-version
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+venv/
+.venv/
+env/
+
+# Node / JS
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# IDE / Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
