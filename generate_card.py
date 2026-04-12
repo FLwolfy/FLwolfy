@@ -223,6 +223,42 @@ def delay_svg_animations(svg_inner: str, delay_sec: float) -> str:
 
     return tag_re.sub(repl, svg_inner)
 
+
+def _shift_time_value(raw: str, delay_sec: float) -> str:
+    m = re.fullmatch(r"\s*([+-]?\d+(?:\.\d+)?)(ms|s)?\s*", raw, flags=re.IGNORECASE)
+    if not m:
+        return raw
+    value = float(m.group(1))
+    unit = (m.group(2) or "s").lower()
+    if unit == "ms":
+        return f"{value + delay_sec * 1000.0:g}ms"
+    return f"{value + delay_sec:g}s"
+
+
+def delay_css_animations(svg_inner: str, delay_sec: float) -> str:
+    if delay_sec <= 0:
+        return svg_inner
+
+    # 1) Shift explicit animation-delay values in inline style attributes.
+    svg_inner = re.sub(
+        r"(animation-delay\s*:\s*)([^;\"']+)",
+        lambda m: f"{m.group(1)}{_shift_time_value(m.group(2), delay_sec)}",
+        svg_inner,
+        flags=re.IGNORECASE,
+    )
+
+    # 2) In each CSS declaration block, append base animation-delay when animation exists.
+    def patch_block(match: re.Match) -> str:
+        body = match.group(1)
+        if re.search(r"\banimation\s*:", body, flags=re.IGNORECASE) and not re.search(
+            r"\banimation-delay\s*:", body, flags=re.IGNORECASE
+        ):
+            body = body.rstrip() + f" animation-delay: {delay_sec:.2f}s;"
+        return "{" + body + "}"
+
+    svg_inner = re.sub(r"\{([^{}]*)\}", patch_block, svg_inner)
+    return svg_inner
+
 txt_file = includes["ascii_art_file"]
 about_file = includes["about_file"]
 metadata_file = includes["metadata_file"]
@@ -1052,9 +1088,11 @@ intro_quotes_begin = intro_after_name_begin
 intro_code_begin = intro_quotes_begin + intro_window_stagger
 intro_status_begin = intro_code_begin + intro_window_stagger
 intro_ascii_begin = intro_after_name_begin
-stats_animation_delay = intro_misc_begin + 0.42
+stats_animation_delay = intro_misc_begin
 stats_inner = delay_svg_animations(stats_inner, stats_animation_delay)
 langs_inner = delay_svg_animations(langs_inner, stats_animation_delay)
+stats_inner = delay_css_animations(stats_inner, stats_animation_delay)
+langs_inner = delay_css_animations(langs_inner, stats_animation_delay)
 
 wave_cycle_dur = 0.85
 wave_repeat_count = max(1, int((name_typing_total + 0.2) / wave_cycle_dur + 0.5))
