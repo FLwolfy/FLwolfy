@@ -1,0 +1,19 @@
+[#ffffff]aaron@flwolfy [#ffffff]----------------------------------------------------------
+[#d6dbe37a]. [#f3a45f]Skills[#6fa8ff]: [#d6dbe37a]................. [#6fa8ff]C#, C++, Python, Java, JavaScript, Git
+[#d6dbe37a]. [#f3a45f]Focus[#6fa8ff]: [#d6dbe37a].................. [#6fa8ff]Game Programming, Engine Architecture
+[#d6dbe37a]. [#f3a45f]Interest[#6fa8ff]: [#d6dbe37a]............... [#6fa8ff]Rendering, Tooling, System Design
+
+[#d6dbe37a]. [#f3a45f]Languages[#6fa8ff]: [#d6dbe37a].............. [#6fa8ff]Mandarin, English
+[#d6dbe37a]. [#f3a45f]Hobbies[#6fa8ff]: [#d6dbe37a]................ [#6fa8ff]Football, Anime, Games, Modding, Coding
+
+[#ffffff]- Contact [#ffffff]---------------------------------------------------------------
+[#d6dbe37a]. [#f3a45f]Blog[#6fa8ff]: [#d6dbe37a]................... [#6fa8ff]blog.flwolfy.xyz
+[#d6dbe37a]. [#f3a45f]Email[#6fa8ff]: [#d6dbe37a].................. [#6fa8ff]hsuankailiao@gmail.com
+[#d6dbe37a]. [#f3a45f]Discord[#6fa8ff]: [#d6dbe37a]................ [#6fa8ff]1006448723326410782
+[#d6dbe37a]. [#f3a45f]X[#6fa8ff]: [#d6dbe37a]...................... [#6fa8ff]fl_wolfy
+
+[#ffffff]- GitHub Stats [#ffffff]----------------------------------------------------------
+[#d6dbe37a]. [#f3a45f]Repos[#6fa8ff]: [#d6dbe37a].................. [#6fa8ff]{{repos}}
+[#d6dbe37a]. [#f3a45f]Commits[#6fa8ff]: [#d6dbe37a]................ [#6fa8ff]{{commits}}
+[#d6dbe37a]. [#f3a45f]Stars Earned[#6fa8ff]: [#d6dbe37a]........... [#6fa8ff]{{stars_earned}}
+[#d6dbe37a]. [#f3a45f]Lines of Code[#6fa8ff]: [#d6dbe37a].......... [#6fa8ff]{{loc_added}}+ / {{loc_deleted}}-

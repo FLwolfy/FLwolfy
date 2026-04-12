@@ -1,11 +1,18 @@
 {
   "files": {
-    "ascii_art_file": "info/image.txt",
-    "about_file": "info/about.md",
-    "output_file": "card.svg",
-    "metadata_file": "info/metadata.json",
-    "stats_svg_file": "profile/stats.svg",
-    "top_langs_svg_file": "profile/top-langs.svg"
+    "ascii_art_file": "profile/image.txt",
+    "about_file": "profile/about.txt",
+    "metadata_file": "profile/metadata.json",
+
+    "stats_svg_file": "stats/stats.svg",
+    "top_langs_svg_file": "stats/top-langs.svg",
+    "github_stats_json_file": "stats/github_stats.json",
+
+    "quotes_file": "quote/quotes.txt",
+
+    "status_file": "status/status.md",
+
+    "output_file": "card.svg"
   },
   "colors": {
     "background": "#0d1117",

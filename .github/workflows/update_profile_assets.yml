@@ -1,0 +1,338 @@
+name: Update Profile Assets
+
+on:
+  schedule:
+    # 00:00 Asia/Taipei = 16:00 UTC (previous day)
+    - cron: "0 16 * * *"
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  refresh-assets:
+    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Sync quote timestamp and history (only when new quote is pushed)
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: |
+          python - <<'PY'
+          import json
+          import re
+          from datetime import datetime, timedelta, timezone
+          from pathlib import Path
+
+          quotes_path = Path("quote/quotes.txt")
+          history_path = Path("quote/history.txt")
+
+          if not quotes_path.exists():
+            raise SystemExit("quote/quotes.txt not found")
+          history_path.parent.mkdir(parents=True, exist_ok=True)
+          history_path.touch(exist_ok=True)
+
+          import os
+          event_name = os.environ.get("GITHUB_EVENT_NAME", "")
+          event_path = os.environ.get("GITHUB_EVENT_PATH", "")
+
+          payload = {}
+          if event_path and Path(event_path).exists():
+            payload = json.loads(Path(event_path).read_text(encoding="utf-8"))
+
+          changed_files = set()
+          commit_ts = None
+          if event_name == "push":
+            head = payload.get("head_commit") or {}
+            commit_ts = head.get("timestamp")
+            changed_files |= set(head.get("added") or [])
+            changed_files |= set(head.get("modified") or [])
+            changed_files |= set(head.get("removed") or [])
+
+          quotes_changed_in_push = ("quote/quotes.txt" in changed_files)
+
+          now_tpe = datetime.now(timezone.utc).astimezone(timezone(timedelta(hours=8)))
+          if commit_ts:
+            try:
+              dt = datetime.fromisoformat(commit_ts.replace("Z", "+00:00")).astimezone(timezone(timedelta(hours=8)))
+            except Exception:
+              dt = now_tpe
+          else:
+            dt = now_tpe
+
+          def normalize_quotes_block(text: str) -> str:
+            lines = text.replace("\r\n", "\n").split("\n")
+            out = []
+            for line in lines:
+              if re.match(r"^\s*#####\s*\[[^\]]+\]\s*LATEST QUOTES UPDATE TIME\s*#####\s*$", line):
+                continue
+              out.append(line.rstrip())
+            return "\n".join(out).strip()
+
+          quotes_text = quotes_path.read_text(encoding="utf-8")
+          history_text = history_path.read_text(encoding="utf-8")
+
+          sep = "\n\n------------------------------------------------\n\n"
+          latest_history_block = history_text.split("\n------------------------------------------------\n", 1)[0].strip() if history_text.strip() else ""
+
+          is_new = normalize_quotes_block(quotes_text) != normalize_quotes_block(latest_history_block)
+
+          # Only mutate quotes/history when a new quotes.txt is manually pushed.
+          if not (event_name == "push" and quotes_changed_in_push and is_new):
+            print("No new pushed quote content detected; skip quote timestamp/history update.")
+            raise SystemExit(0)
+
+          date_str = dt.strftime("%m/%d/%y")
+          quotes_text = re.sub(
+            r"(#####\s*)\[[^\]]+\](\s*LATEST QUOTES UPDATE TIME\s*#####)",
+            rf"\1[{date_str}]\2",
+            quotes_text,
+            count=1,
+          )
+          quotes_path.write_text(quotes_text, encoding="utf-8")
+
+          updated_block = quotes_text.strip()
+          if history_text.strip():
+            history_path.write_text(updated_block + sep + history_text.strip() + "\n", encoding="utf-8")
+          else:
+            history_path.write_text(updated_block + "\n", encoding="utf-8")
+
+          print(f"Updated quotes timestamp to [{date_str}] and prepended new block into history.")
+          PY
+
+      - name: Build stats/github_stats.json
+        env:
+          GH_TOKEN: ${{ secrets.GH_STATS_TOKEN || github.token }}
+        run: |
+          python - <<'PY'
+          import json
+          import re
+          import time
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+          from urllib.error import HTTPError
+          from urllib.parse import urlparse, parse_qs
+
+          api = "https://api.github.com"
+          token = __import__("os").environ.get("GH_TOKEN", "")
+
+          metadata = json.loads(Path("profile/metadata.json").read_text(encoding="utf-8"))
+          username = metadata["username"]
+
+          def gh_get(url: str):
+            req = Request(url)
+            req.add_header("Accept", "application/vnd.github+json")
+            req.add_header("User-Agent", "profile-assets-workflow")
+            if token:
+              req.add_header("Authorization", f"Bearer {token}")
+            with urlopen(req, timeout=30) as resp:
+              body = resp.read().decode("utf-8")
+              headers = dict(resp.headers.items())
+              return json.loads(body), headers
+
+          repos = []
+          page = 1
+          while True:
+            data, _ = gh_get(f"{api}/users/{username}/repos?type=owner&per_page=100&page={page}&sort=updated")
+            if not data:
+              break
+            repos.extend([r for r in data if not r.get("fork")])
+            if len(data) < 100:
+              break
+            page += 1
+
+          repos_count = len(repos)
+          stars_earned = sum(int(r.get("stargazers_count", 0)) for r in repos)
+
+          def parse_last_page(link_header: str):
+            if not link_header:
+              return None
+            m = re.search(r'<([^>]+)>;\s*rel="last"', link_header)
+            if not m:
+              return None
+            qs = parse_qs(urlparse(m.group(1)).query)
+            if "page" in qs and qs["page"]:
+              try:
+                return int(qs["page"][0])
+              except Exception:
+                return None
+            return None
+
+          commits = 0
+          loc_added = 0
+          loc_deleted = 0
+
+          for repo in repos:
+            owner = repo["owner"]["login"]
+            name = repo["name"]
+            default_branch = repo.get("default_branch") or "main"
+
+            # Commit count authored by the target user on default branch.
+            try:
+              _, headers = gh_get(
+                f"{api}/repos/{owner}/{name}/commits?sha={default_branch}&author={username}&per_page=1"
+              )
+              last_page = parse_last_page(headers.get("Link", ""))
+              if last_page is None:
+                # If there is no Link header, we need to check whether there's at least one commit.
+                data, _ = gh_get(
+                  f"{api}/repos/{owner}/{name}/commits?sha={default_branch}&author={username}&per_page=1"
+                )
+                commits += 1 if isinstance(data, list) and len(data) > 0 else 0
+              else:
+                commits += int(last_page)
+            except HTTPError:
+              pass
+            except Exception:
+              pass
+
+            # Code frequency (repo-level additions/deletions).
+            freq = None
+            for _ in range(4):
+              try:
+                data, _ = gh_get(f"{api}/repos/{owner}/{name}/stats/code_frequency")
+                if isinstance(data, list):
+                  freq = data
+                  break
+              except HTTPError as e:
+                # 202 means still being generated; retry.
+                if getattr(e, "code", None) == 202:
+                  time.sleep(2)
+                  continue
+              except Exception:
+                break
+              time.sleep(2)
+
+            if freq:
+              for row in freq:
+                if not isinstance(row, list) or len(row) < 3:
+                  continue
+                loc_added += max(0, int(row[1]))
+                loc_deleted += abs(int(row[2]))
+
+          payload = {
+            "repos": f"{repos_count:,}",
+            "commits": f"{commits:,}",
+            "loc_added": f"{loc_added:,}",
+            "loc_deleted": f"{loc_deleted:,}",
+            "stars_earned": f"{stars_earned:,}",
+          }
+          Path("stats/github_stats.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          print("Updated stats/github_stats.json:", payload)
+          PY
+
+      - name: Generate stats SVG cards with dark theme
+        env:
+          GH_STATS_TOKEN: ${{ secrets.GH_STATS_TOKEN || github.token }}
+        run: |
+          USERNAME=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          print(json.loads(Path("profile/metadata.json").read_text(encoding="utf-8"))["username"])
+          PY
+          )
+
+          curl -fsSL "https://github-readme-stats.vercel.app/api?username=${USERNAME}&show_icons=true&count_private=true&include_all_commits=true&hide_border=true&bg_color=00000000&title_color=e6edf3&text_color=8b949e&icon_color=58a6ff&ring_color=58a6ff&rank_icon=percentile&border_radius=8&card_width=320&token=${GH_STATS_TOKEN}" -o stats/stats.svg
+          curl -fsSL "https://github-readme-stats.vercel.app/api/top-langs/?username=${USERNAME}&layout=compact&hide_border=true&bg_color=00000000&title_color=e6edf3&text_color=8b949e&border_radius=8&langs_count=6&card_width=320&token=${GH_STATS_TOKEN}" -o stats/top-langs.svg
+
+      - name: Sync status header emoji from GitHub (best effort)
+        env:
+          GH_STATUS_TOKEN: ${{ secrets.GH_STATUS_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+
+          metadata = json.loads(Path("profile/metadata.json").read_text(encoding="utf-8"))
+          username = metadata["username"]
+          status_path = Path("status/status.md")
+          if not status_path.exists():
+            print("status/status.md not found, skip.")
+            raise SystemExit(0)
+
+          import os
+          token = os.environ.get("GH_STATUS_TOKEN") or os.environ.get("GH_TOKEN") or ""
+          if not token:
+            print("No token, skip status emoji sync.")
+            raise SystemExit(0)
+
+          query = """
+          query($login: String!) {
+            user(login: $login) {
+              status {
+                emoji
+              }
+            }
+          }
+          """
+          body = json.dumps({"query": query, "variables": {"login": username}}).encode("utf-8")
+          req = Request("https://api.github.com/graphql", data=body, method="POST")
+          req.add_header("Authorization", f"Bearer {token}")
+          req.add_header("Content-Type", "application/json")
+          req.add_header("User-Agent", "profile-assets-workflow")
+
+          emoji = None
+          try:
+            with urlopen(req, timeout=20) as resp:
+              payload = json.loads(resp.read().decode("utf-8"))
+              emoji = (
+                payload.get("data", {})
+                .get("user", {})
+                .get("status", {})
+                .get("emoji")
+              )
+          except Exception as e:
+            print("Status emoji fetch failed, skip:", e)
+            raise SystemExit(0)
+
+          if not emoji:
+            print("No emoji in GitHub status; keep existing header.")
+            raise SystemExit(0)
+
+          original = status_path.read_text(encoding="utf-8")
+          lines = original.splitlines()
+          i = 0
+          while i < len(lines) and not lines[i].strip():
+            i += 1
+          if i < len(lines) and re.match(r"^\[#header\s+.+\]\s*$", lines[i].strip(), flags=re.IGNORECASE):
+            lines[i] = f"[#header {emoji}]"
+          else:
+            lines.insert(0, f"[#header {emoji}]")
+
+          status_path.write_text("\n".join(lines) + ("\n" if original.endswith("\n") else ""), encoding="utf-8")
+          print(f"Updated status header emoji: {emoji}")
+          PY
+
+      - name: Generate card.svg
+        run: python generate_card.py
+
+      - name: Commit and push
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add quote/quotes.txt quote/history.txt stats/github_stats.json stats/stats.svg stats/top-langs.svg status/status.md card.svg
+          git commit -m "chore: auto refresh profile assets [skip ci]"
+          git push
