@@ -1,8 +1,8 @@
 
       <svg
-        width="300"
-        height="140"
-        viewBox="0 0 300 140"
+        width="320"
+        height="165"
+        viewBox="0 0 320 165"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         role="img"
@@ -13,7 +13,7 @@
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
-            fill: #fff;
+            fill: #e6edf3;
             animation: fadeInAnimation 0.8s ease-in-out forwards;
           }
           @supports(-moz-appearance: auto) {
@@ -38,7 +38,7 @@
       }
     }
     .stat {
-      font: 600 14px 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif; fill: #38bdae;
+      font: 600 14px 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif; fill: #8b949e;
     }
     @supports(-moz-appearance: auto) {
       /* Selector detects Firefox */
@@ -47,7 +47,7 @@
     .bold { font-weight: 700 }
     .lang-name {
       font: 400 11px "Segoe UI", Ubuntu, Sans-Serif;
-      fill: #38bdae;
+      fill: #8b949e;
     }
     .stagger {
       opacity: 0;
@@ -90,7 +90,7 @@
             gradientTransform="rotate(30)"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0%" stop-color="#4a00e0" />,<stop offset="100%" stop-color="#e96443" />
+            <stop offset="0%" stop-color="#0d1117" />,<stop offset="100%" stop-color="#161b22" />
           </linearGradient>
         </defs>
         
@@ -99,12 +99,12 @@
           data-testid="card-bg"
           x="0.5"
           y="0.5"
-          rx="4.5"
+          rx="8"
           height="99%"
           stroke="#e4e2e2"
-          width="299"
+          width="319"
           fill="url(#gradient)"
-          stroke-opacity="1"
+          stroke-opacity="0"
         />
 
         
@@ -132,7 +132,7 @@
       
   
       <mask id="rect-mask">
-          <rect x="0" y="0" width="250" height="8" fill="white" rx="5"/>
+          <rect x="0" y="0" width="270" height="8" fill="white" rx="5"/>
         </mask>
         
         <rect
@@ -140,7 +140,7 @@
           data-testid="lang-progress"
           x="0"
           y="0"
-          width="168.29"
+          width="156.92"
           height="8"
           fill="#178600"
         />
@@ -148,9 +148,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="168.29"
+          x="156.92"
           y="0"
-          width="38.82"
+          width="36.19"
           height="8"
           fill="#b07219"
         />
@@ -158,9 +158,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="207.10999999999999"
+          x="193.10999999999999"
           y="0"
-          width="23.54"
+          width="21.95"
           height="8"
           fill="#663399"
         />
@@ -168,11 +168,31 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="230.64999999999998"
+          x="215.05999999999997"
           y="0"
-          width="19.36"
+          width="21.86"
+          height="8"
+          fill="#f1e05a"
+        />
+      
+        <rect
+          mask="url(#rect-mask)"
+          data-testid="lang-progress"
+          x="236.91999999999996"
+          y="0"
+          width="18.05"
           height="8"
           fill="#f34b7d"
+        />
+      
+        <rect
+          mask="url(#rect-mask)"
+          data-testid="lang-progress"
+          x="254.96999999999997"
+          y="0"
+          width="15.03"
+          height="8"
+          fill="#ff6347"
         />
       
       
@@ -181,28 +201,42 @@
     <g class="stagger" style="animation-delay: 450ms">
       <circle cx="5" cy="6" r="5" fill="#178600" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        C# 67.32%
+        C# 58.12%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms">
       <circle cx="5" cy="6" r="5" fill="#b07219" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Java 15.53%
+        Java 13.41%
+      </text>
+    </g>
+  </g><g transform="translate(0, 50)">
+    <g class="stagger" style="animation-delay: 750ms">
+      <circle cx="5" cy="6" r="5" fill="#663399" />
+      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
+        CSS 8.13%
       </text>
     </g>
   </g></g><g transform="translate(150, 0)"><g transform="translate(0, 0)">
     <g class="stagger" style="animation-delay: 450ms">
-      <circle cx="5" cy="6" r="5" fill="#663399" />
+      <circle cx="5" cy="6" r="5" fill="#f1e05a" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        CSS 9.41%
+        JavaScript 8.10%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms">
       <circle cx="5" cy="6" r="5" fill="#f34b7d" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        C++ 7.74%
+        C++ 6.68%
+      </text>
+    </g>
+  </g><g transform="translate(0, 50)">
+    <g class="stagger" style="animation-delay: 750ms">
+      <circle cx="5" cy="6" r="5" fill="#ff6347" />
+      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
+        Stylus 5.57%
       </text>
     </g>
   </g></g>
