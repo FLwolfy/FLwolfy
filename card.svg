@@ -823,7 +823,7 @@
 <text x="73.52" y="616.3999999999996" font-size="16" fill="#f3a45f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Commits</text>
 <text x="141.83999999999997" y="616.3999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
 <text x="161.35999999999999" y="616.3999999999996" font-size="16" fill="#d6dbe3" fill-opacity="0.47843137254901963" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">................ </text>
-<text x="327.28" y="616.3999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">904</text>
+<text x="327.28" y="616.3999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">905</text>
 <text x="54" y="638.7999999999996" font-size="16" fill="#d6dbe3" fill-opacity="0.47843137254901963" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">. </text>
 <text x="73.52" y="638.7999999999996" font-size="16" fill="#f3a45f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Stars Earned</text>
 <text x="190.64" y="638.7999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
@@ -833,7 +833,7 @@
 <text x="73.52" y="661.1999999999996" font-size="16" fill="#f3a45f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Lines of Code</text>
 <text x="200.39999999999998" y="661.1999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
 <text x="219.92" y="661.1999999999996" font-size="16" fill="#d6dbe3" fill-opacity="0.47843137254901963" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">.......... </text>
-<text x="327.28" y="661.1999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">657,949+ / 417,148-</text>
+<text x="327.28" y="661.1999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">466,269+ / 379,808-</text>
 </g>
 <rect x="36" y="730" width="903.36" height="28" rx="7" fill="#0b1016" stroke="#34404b" stroke-width="1"/>
 <text x="52" y="749" font-size="13" fill="#9fd8ff" font-family="IBM Plex Mono, SFMono-Regular, Menlo, Consolas, monospace">●</text>
