@@ -1158,28 +1158,22 @@ for qi, qlines in enumerate(wrapped_quotes):
             cstart = cursor + x_cells * char_step
             c1 = cstart + scramble_step
             c2 = c1 + scramble_step
-            c3 = c2 + scramble_step
-            c4 = c3 + scramble_step
-            if c4 >= typing_deadline:
+            if c2 >= typing_deadline:
                 break
             visible_end = end - 0.05
             x = x0 + x_cells * char_px_est
-            r1, r2, r3, r4 = scramble_chars(seed=(qi * 131 + li * 37 + ci * 19))
+            r1, r2, _, _ = scramble_chars(seed=(qi * 131 + li * 37 + ci * 19))
 
-            for ridx, (glyph, gs, ge) in enumerate(
-                [
-                    (r1, cstart, c1),
-                    (r2, c1, c2),
-                    (r3, c2, c3),
-                    (r4, c3, c4),
-                ]
-            ):
+            for glyph, gs, ge in [
+                (r1, cstart, c1),
+                (r2, c1, c2),
+            ]:
                 line_parts.append(
                     f'<text x="{x}" y="{y}" font-size="{quote_font_size}" fill="{QUOTES_SCRAMBLE_TEXT}" '
                     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" opacity="0">{esc(glyph)}'
                     f'<animate attributeName="opacity" dur="{quote_total_dur:.2f}s" repeatCount="indefinite" '
                     f'values="0;0;1;1;0;0" '
-                    f'keyTimes="0.000000;{max(0.0, gs-0.0001)/quote_total_dur:.6f};{gs/quote_total_dur:.6f};{ge/quote_total_dur:.6f};{c4/quote_total_dur:.6f};1.000000" />'
+                    f'keyTimes="0.000000;{max(0.0, gs-0.0001)/quote_total_dur:.6f};{gs/quote_total_dur:.6f};{ge/quote_total_dur:.6f};{c2/quote_total_dur:.6f};1.000000" />'
                     f'</text>'
                 )
 
@@ -1188,7 +1182,7 @@ for qi, qlines in enumerate(wrapped_quotes):
                 f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" opacity="0">{esc(ch)}'
                 f'<animate attributeName="opacity" dur="{quote_total_dur:.2f}s" repeatCount="indefinite" '
                 f'values="0;0;1;1;0;0" '
-                f'keyTimes="0.000000;{max(0.0, c4-0.0001)/quote_total_dur:.6f};{c4/quote_total_dur:.6f};{visible_end/quote_total_dur:.6f};{end/quote_total_dur:.6f};1.000000" />'
+                f'keyTimes="0.000000;{max(0.0, c2-0.0001)/quote_total_dur:.6f};{c2/quote_total_dur:.6f};{visible_end/quote_total_dur:.6f};{end/quote_total_dur:.6f};1.000000" />'
                 f'</text>'
             )
             x_cells += cw
@@ -1277,7 +1271,7 @@ parts.append(
 
 # Header
 parts.append(
-    f'<text x="{hi_x + 30}" y="{hi_y}" font-size="28" fill="{TEXT}" '
+    f'<text x="{hi_x + 44}" y="{hi_y}" font-size="28" fill="{TEXT}" '
     f'font-family="Inter, Arial, sans-serif" font-weight="700">Hi, I&apos;m</text>'
 )
 parts.append(
