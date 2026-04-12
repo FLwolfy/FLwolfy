@@ -236,75 +236,23 @@ jobs:
           print("Updated stats/github_stats.json:", payload)
           PY
 
-      - name: Generate stats SVG cards with dark theme
-        env:
-          GH_STATS_TOKEN: ${{ secrets.GH_STATS_TOKEN || github.token }}
-        run: |
-          USERNAME=$(python - <<'PY'
-          import json
-          from pathlib import Path
-          print(json.loads(Path("profile/metadata.json").read_text(encoding="utf-8"))["username"])
-          PY
-          )
+      - name: Generate stats card (dark theme)
+        uses: readme-tools/github-readme-stats-action@v1
+        with:
+          card: stats
+          options: username=FLwolfy&bg_color=30,0d1117,161b22&title_color=e6edf3&text_color=8b949e&icon_color=58a6ff&show_icons=true&count_private=true&include_all_commits=true&rank_icon=percentile&hide_border=true&border_radius=8&card_width=320
+          path: stats/stats.svg
+          token: ${{ secrets.GH_STATS_TOKEN || github.token }}
 
-          TOKEN_PARAM=""
-          if [ -n "${GH_STATS_TOKEN:-}" ]; then
-            TOKEN_PARAM="&token=${GH_STATS_TOKEN}"
-          fi
+      - name: Generate top languages card (dark theme)
+        uses: readme-tools/github-readme-stats-action@v1
+        with:
+          card: top-langs
+          options: username=FLwolfy&bg_color=30,0d1117,161b22&title_color=e6edf3&text_color=8b949e&layout=compact&hide_border=true&border_radius=8&langs_count=6&card_width=320&hide=jupyter%20notebook,html
+          path: stats/top-langs.svg
+          token: ${{ secrets.GH_STATS_TOKEN || github.token }}
 
-          fetch_svg() {
-            local label="$1"
-            local url="$2"
-            local out="$3"
-            local tmp="${out}.tmp"
-            local max_attempts=5
-            local delay=4
-            local attempt http_code
-
-            for attempt in $(seq 1 "${max_attempts}"); do
-              http_code=$(curl -sS -L \
-                --connect-timeout 15 \
-                --max-time 90 \
-                --retry 2 \
-                --retry-delay 2 \
-                --retry-all-errors \
-                -w "%{http_code}" \
-                -o "${tmp}" \
-                "${url}" || true)
-
-              if [ "${http_code}" = "200" ] && grep -qi "<svg" "${tmp}"; then
-                mv "${tmp}" "${out}"
-                echo "Updated ${label}: ${out}"
-                return 0
-              fi
-
-              rm -f "${tmp}"
-              if [ "${attempt}" -lt "${max_attempts}" ]; then
-                echo "::warning::${label} fetch failed (attempt ${attempt}/${max_attempts}, http=${http_code:-curl_error}). Retrying in ${delay}s."
-                sleep "${delay}"
-                delay=$((delay * 2))
-              fi
-            done
-
-            echo "::warning::${label} fetch failed after ${max_attempts} attempts. Keep existing file: ${out}"
-            if [ -s "${out}" ]; then
-              return 0
-            fi
-            echo "::error::${label} is unavailable and no fallback file exists: ${out}"
-            return 1
-          }
-
-          fetch_svg \
-            "stats card" \
-            "https://github-readme-stats.vercel.app/api?username=${USERNAME}&show_icons=true&count_private=true&include_all_commits=true&hide_border=true&bg_color=00000000&title_color=e6edf3&text_color=8b949e&icon_color=58a6ff&ring_color=58a6ff&rank_icon=percentile&border_radius=8&card_width=320${TOKEN_PARAM}" \
-            "stats/stats.svg"
-
-          fetch_svg \
-            "top langs card" \
-            "https://github-readme-stats.vercel.app/api/top-langs/?username=${USERNAME}&layout=compact&hide_border=true&bg_color=00000000&title_color=e6edf3&text_color=8b949e&border_radius=8&langs_count=6&card_width=320${TOKEN_PARAM}" \
-            "stats/top-langs.svg"
-
-      - name: Sync status header emoji from GitHub (best effort)
+      - name: Sync status header emoji from GitHub
         env:
           GH_STATUS_TOKEN: ${{ secrets.GH_STATUS_TOKEN }}
           GH_TOKEN: ${{ github.token }}
@@ -319,14 +267,12 @@ jobs:
           username = metadata["username"]
           status_path = Path("status/status.md")
           if not status_path.exists():
-            print("status/status.md not found, skip.")
-            raise SystemExit(0)
+            raise SystemExit("status/status.md not found")
 
           import os
           token = os.environ.get("GH_STATUS_TOKEN") or os.environ.get("GH_TOKEN") or ""
           if not token:
-            print("No token, skip status emoji sync.")
-            raise SystemExit(0)
+            raise SystemExit("No token for status emoji sync (GH_STATUS_TOKEN/GH_TOKEN)")
 
           query = """
           query($login: String!) {
@@ -343,19 +289,14 @@ jobs:
           req.add_header("Content-Type", "application/json")
           req.add_header("User-Agent", "profile-assets-workflow")
 
-          emoji = None
-          try:
-            with urlopen(req, timeout=20) as resp:
-              payload = json.loads(resp.read().decode("utf-8"))
-              emoji = (
-                payload.get("data", {})
-                .get("user", {})
-                .get("status", {})
-                .get("emoji")
-              )
-          except Exception as e:
-            print("Status emoji fetch failed, skip:", e)
-            raise SystemExit(0)
+          with urlopen(req, timeout=20) as resp:
+            payload = json.loads(resp.read().decode("utf-8"))
+            emoji = (
+              payload.get("data", {})
+              .get("user", {})
+              .get("status", {})
+              .get("emoji")
+            )
 
           if not emoji:
             print("No emoji in GitHub status; keep existing header.")
