@@ -175,6 +175,54 @@ def invert_braille_text(text: str) -> str:
             out_chars.append(ch)
     return "".join(out_chars)
 
+
+def delay_svg_animations(svg_inner: str, delay_sec: float) -> str:
+    if delay_sec <= 0:
+        return svg_inner
+
+    tag_re = re.compile(
+        r"<(animate(?:Transform|Motion|Color)?|set)\b([^>]*)>",
+        flags=re.IGNORECASE,
+    )
+    begin_attr_re = re.compile(r'(\sbegin\s*=\s*")([^"]*)(")', flags=re.IGNORECASE)
+    clock_re = re.compile(r"^\s*([+-]?\d+(?:\.\d+)?)(ms|s)?\s*$", flags=re.IGNORECASE)
+
+    def shift_begin_value(raw: str) -> str:
+        parts = raw.split(";")
+        shifted: list[str] = []
+        for p in parts:
+            m = clock_re.fullmatch(p)
+            if not m:
+                shifted.append(p)
+                continue
+            value = float(m.group(1))
+            unit = (m.group(2) or "s").lower()
+            if unit == "ms":
+                delay_unit = delay_sec * 1000.0
+                value += delay_unit
+                shifted.append(f"{value:g}ms")
+            else:
+                value += delay_sec
+                shifted.append(f"{value:g}s")
+        return ";".join(shifted)
+
+    def repl(match: re.Match) -> str:
+        tag = match.group(1)
+        attrs = match.group(2)
+        begin_match = begin_attr_re.search(attrs)
+        if begin_match:
+            shifted = shift_begin_value(begin_match.group(2))
+            attrs = begin_attr_re.sub(
+                lambda m: f'{m.group(1)}{shifted}{m.group(3)}',
+                attrs,
+                count=1,
+            )
+        else:
+            attrs = f'{attrs} begin="{delay_sec:.2f}s"'
+        return f"<{tag}{attrs}>"
+
+    return tag_re.sub(repl, svg_inner)
+
 txt_file = includes["ascii_art_file"]
 about_file = includes["about_file"]
 metadata_file = includes["metadata_file"]
@@ -965,6 +1013,57 @@ name_line_step = name_font_size * 1.02
 name_wrap_offset_y = max(0.0, max(0, len(name_lines) - 1) * (name_line_step * 0.55) - 7.0)
 name_y -= name_wrap_offset_y
 
+intro_name_begin = 0.18
+intro_name_char_sec = 0.046
+intro_name_line_gap_sec = 0.16
+intro_window_dur = 0.46
+intro_window_rise = 14
+intro_ascii_dur = 0.44
+intro_ascii_shift_x = 10
+intro_after_name_gap_sec = 0.06
+intro_window_stagger = 0.24
+
+name_defs: list[str] = []
+name_text_parts: list[str] = []
+name_elapsed = 0.0
+for i, nline in enumerate(name_lines):
+    line_id = f"nameTypeClip{i}"
+    baseline_y = name_y + i * name_line_step
+    line_w = max(1.0, text_cells(nline) * name_char_px * 1.04)
+    line_h = name_font_size * 1.16
+    line_top = baseline_y - name_font_size * 0.93
+    line_start = intro_name_begin + name_elapsed
+    line_dur = max(0.30, text_cells(nline) * intro_name_char_sec)
+    name_defs.append(
+        f'<clipPath id="{line_id}"><rect x="{name_x}" y="{line_top}" width="0" height="{line_h}">'
+        f'<animate attributeName="width" begin="{line_start:.2f}s" dur="{line_dur:.2f}s" values="0;{line_w:.2f}" fill="freeze"/>'
+        f'</rect></clipPath>'
+    )
+    name_text_parts.append(
+        f'<text x="{name_x}" y="{baseline_y}" font-size="{name_font_size}" fill="{TEXT}" text-decoration="underline" '
+        f'font-family="Inter, Arial, sans-serif" font-weight="900" clip-path="url(#{line_id})">{esc(nline)}</text>'
+    )
+    name_elapsed += line_dur + intro_name_line_gap_sec
+
+name_typing_total = max(0.0, name_elapsed - intro_name_line_gap_sec)
+intro_after_name_begin = intro_name_begin + name_typing_total + intro_after_name_gap_sec
+intro_misc_begin = intro_after_name_begin
+intro_quotes_begin = intro_after_name_begin
+intro_code_begin = intro_quotes_begin + intro_window_stagger
+intro_status_begin = intro_code_begin + intro_window_stagger
+intro_ascii_begin = intro_after_name_begin
+stats_animation_delay = intro_misc_begin + 0.42
+stats_inner = delay_svg_animations(stats_inner, stats_animation_delay)
+langs_inner = delay_svg_animations(langs_inner, stats_animation_delay)
+
+wave_cycle_dur = 0.85
+wave_repeat_count = max(1, int((name_typing_total + 0.2) / wave_cycle_dur + 0.5))
+wave_cx = hi_x + 13.0
+wave_cy = hi_y - 12.0
+wave_text_x = hi_x - wave_cx
+wave_text_y = hi_y - wave_cy
+wave_scale_dur = max(0.55, name_typing_total + 0.2)
+
 quote_line_height = 1.35
 quote_line_px = quote_font_size * quote_line_height
 quote_title_line = "꧁≺QUOTES OF THE DAY≻꧂"
@@ -1124,6 +1223,7 @@ parts = [
     f'<clipPath id="statsClip"><rect x="{frame_x}" y="{stats_y}" width="{frame_w}" height="{stats_box_h}" /></clipPath>',
     f'<clipPath id="statusClip"><rect x="{status_body_x}" y="{status_body_y}" width="{status_body_w}" height="{status_body_h}" /></clipPath>',
     f'<clipPath id="statusHeaderBubbleClip"><rect x="{status_bubble_x}" y="{status_bubble_y}" width="{status_bubble_w}" height="{status_bubble_h}" rx="{status_bubble_h/2.0}" /></clipPath>',
+    *name_defs,
     *quote_defs,
     "</defs>",
 ]
@@ -1177,18 +1277,32 @@ parts.append(
 
 # Header
 parts.append(
-    f'<text x="{hi_x}" y="{hi_y}" font-size="28" fill="{TEXT}" '
-    f'font-family="Inter, Arial, sans-serif" font-weight="700">👋 Hi, I&apos;m</text>'
+    f'<text x="{hi_x + 30}" y="{hi_y}" font-size="28" fill="{TEXT}" '
+    f'font-family="Inter, Arial, sans-serif" font-weight="700">Hi, I&apos;m</text>'
+)
+parts.append(
+    f'<g transform="translate({wave_cx:.1f},{wave_cy:.1f})">'
+    f'<g>'
+    f'<animateTransform attributeName="transform" type="scale" begin="{intro_name_begin:.2f}s" dur="{wave_scale_dur:.2f}s" '
+    f'values="1;2;2;1" keyTimes="0;0.15;0.85;1" fill="freeze" />'
+    f'<text x="{wave_text_x:.1f}" y="{wave_text_y:.1f}" font-size="28" fill="{TEXT}" '
+    f'font-family="Inter, Arial, sans-serif" font-weight="700">👋'
+    f'<animateTransform attributeName="transform" additive="sum" type="rotate" begin="{intro_name_begin:.2f}s" '
+    f'dur="{wave_cycle_dur:.2f}s" repeatCount="{wave_repeat_count}" '
+    f'values="0;16;-10;16;-6;0" keyTimes="0;0.2;0.4;0.6;0.8;1" fill="freeze" />'
+    f'</text>'
+    f'</g>'
+    f'</g>'
 )
 
-for i, nline in enumerate(name_lines):
-    parts.append(
-        f'<text x="{name_x}" y="{name_y + i * name_line_step}" font-size="{name_font_size}" fill="{TEXT}" '
-        f'text-decoration="underline" '
-        f'font-family="Inter, Arial, sans-serif" font-weight="900">{esc(nline)}</text>'
-    )
+parts.extend(name_text_parts)
 
 # Quotes shell
+parts.append(
+    f'<g opacity="0" transform="translate(0,{intro_window_rise})">'
+    f'<animate attributeName="opacity" begin="{intro_quotes_begin:.2f}s" dur="{intro_window_dur:.2f}s" values="0;1" fill="freeze"/>'
+    f'<animateTransform attributeName="transform" type="translate" begin="{intro_quotes_begin:.2f}s" dur="{intro_window_dur:.2f}s" values="0 {intro_window_rise};0 0" fill="freeze"/>'
+)
 parts.append(
     f'<rect x="{quotes_x}" y="{quotes_y}" width="{quotes_w}" height="{quotes_h}" '
     f'rx="12" fill="{QUOTES_PANEL_BG}" stroke="{QUOTES_PANEL_STROKE}" opacity="0.98"/>'
@@ -1255,6 +1369,7 @@ parts.append(
     f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">{esc(svg_preserve_line(quote_title_line))}</text>'
 )
 parts.extend(quote_groups)
+parts.append("</g>")
 
 # status.md window (UE-style)
 status_window_parts: list[str] = []
@@ -1332,6 +1447,11 @@ status_window_parts.extend(status_render_parts)
 
 # Code block shell
 parts.append(
+    f'<g opacity="0" transform="translate(0,{intro_window_rise})">'
+    f'<animate attributeName="opacity" begin="{intro_code_begin:.2f}s" dur="{intro_window_dur:.2f}s" values="0;1" fill="freeze"/>'
+    f'<animateTransform attributeName="transform" type="translate" begin="{intro_code_begin:.2f}s" dur="{intro_window_dur:.2f}s" values="0 {intro_window_rise};0 0" fill="freeze"/>'
+)
+parts.append(
     f'<rect x="{left_x}" y="{left_y}" width="{left_w}" height="{left_h}" '
     f'rx="14" fill="{CODE_BG}" stroke="{CODE_BORDER}"/>'
 )
@@ -1391,8 +1511,14 @@ parts.append(
     f'<animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.45;0.5;0.95;1" dur="1.1s" repeatCount="indefinite"/>'
     f'</rect>'
 )
+parts.append("</g>")
 
 # ASCII inner panel background
+parts.append(
+    f'<g opacity="0" transform="translate({intro_ascii_shift_x},0)">'
+    f'<animate attributeName="opacity" begin="{intro_ascii_begin:.2f}s" dur="{intro_ascii_dur:.2f}s" values="0;1" fill="freeze"/>'
+    f'<animateTransform attributeName="transform" type="translate" begin="{intro_ascii_begin:.2f}s" dur="{intro_ascii_dur:.2f}s" values="{intro_ascii_shift_x} 0;0 0" fill="freeze"/>'
+)
 parts.append(
     f'<rect x="{inner_x - 4}" y="{inner_y - 6}" width="{inner_w - 4}" height="{inner_h + 15}" fill="{ASCII_INNER_BACKGROUND}"/>'
 )
@@ -1421,8 +1547,13 @@ parts.append(
         clip_id="asciiClip",
     )
 )
+parts.append("</g>")
 
 # Stats cards row
+parts.append(
+    f'<g opacity="0">'
+    f'<animate attributeName="opacity" begin="{intro_misc_begin:.2f}s" dur="0.42s" values="0;1" fill="freeze"/>'
+)
 parts.append('<g clip-path="url(#statsClip)">')
 parts.append(
     f'<svg x="{stats_x1}" y="{stats_y}" width="{stats_box_w1}" height="{stats_box_h}" '
@@ -1432,6 +1563,7 @@ parts.append(
     f'<svg x="{stats_x2}" y="{stats_y}" width="{stats_box_w2}" height="{stats_box_h}" '
     f'viewBox="0 0 {langs_vb_w} {langs_vb_h}" preserveAspectRatio="xMidYMid meet">{langs_inner}</svg>'
 )
+parts.append('</g>')
 parts.append('</g>')
 
 # Bottom info strip
@@ -1458,7 +1590,13 @@ parts.append(
     f'font-family="Inter, Arial, sans-serif" text-anchor="end">{esc(tagline)}</text>'
 )
 
+parts.append(
+    f'<g opacity="0" transform="translate(0,{intro_window_rise})">'
+    f'<animate attributeName="opacity" begin="{intro_status_begin:.2f}s" dur="{intro_window_dur:.2f}s" values="0;1" fill="freeze"/>'
+    f'<animateTransform attributeName="transform" type="translate" begin="{intro_status_begin:.2f}s" dur="{intro_window_dur:.2f}s" values="0 {intro_window_rise};0 0" fill="freeze"/>'
+)
 parts.extend(status_window_parts)
+parts.append("</g>")
 parts.append('</g>')
 parts.append(
     f'<rect x="{card_border_x}" y="{card_border_y}" width="{card_border_w_inner}" height="{card_border_h_inner}" '
