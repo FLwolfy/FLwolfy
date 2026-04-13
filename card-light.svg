@@ -548,7 +548,7 @@
 <text x="73.52" y="661.1999999999996" font-size="16" fill="#e7a66f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Lines of Code</text>
 <text x="200.39999999999998" y="661.1999999999996" font-size="16" fill="#ff5f56" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
 <text x="219.92" y="661.1999999999996" font-size="16" fill="#8a94a6" fill-opacity="0.5019607843137255" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">.......... </text>
-<text x="327.28" y="661.1999999999996" font-size="16" fill="#ff5f56" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">1,121,703+ / 432,374-</text>
+<text x="327.28" y="661.1999999999996" font-size="16" fill="#ff5f56" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">417,488+ / 344,827-</text>
 </g>
 <rect x="36" y="730" width="903.36" height="28" rx="7" fill="#eef3f8" stroke="#ccd6e4" stroke-width="1"/>
 <text x="52" y="749" font-size="13" fill="#d97745" font-family="IBM Plex Mono, SFMono-Regular, Menlo, Consolas, monospace">●</text>
