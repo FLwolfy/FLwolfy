@@ -9,11 +9,11 @@
         aria-labelledby="descId"
       >
         <title id="titleId">Aaron Liao's GitHub Stats, Rank: B</title>
-        <desc id="descId">Total Stars Earned: 51, Total Commits  (last year) : 762, Total Issues: 14, Contributed to (last year): 0</desc>
+        <desc id="descId">Total Stars Earned: 51, Total Commits  (last year) : 763, Total Issues: 14, Contributed to (last year): 0</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
-            fill: #f8fafc;
+            fill: #fff7ed;
             animation: fadeInAnimation 0.8s ease-in-out forwards;
           }
           @supports(-moz-appearance: auto) {
@@ -22,7 +22,7 @@
           }
           
     .stat {
-      font: 600 14px 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif; fill: #e6e9f2;
+      font: 600 14px 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif; fill: #ffe6cc;
     }
     @supports(-moz-appearance: auto) {
       /* Selector detects Firefox */
@@ -33,7 +33,7 @@
       animation: fadeInAnimation 0.3s ease-in-out forwards;
     }
     .rank-text {
-      font: 800 24px 'Segoe UI', Ubuntu, Sans-Serif; fill: #e6e9f2;
+      font: 800 24px 'Segoe UI', Ubuntu, Sans-Serif; fill: #ffe6cc;
       animation: scaleInAnimation 0.3s ease-in-out forwards;
     }
     .rank-percentile-header {
@@ -46,18 +46,18 @@
     .not_bold { font-weight: 400 }
     .bold { font-weight: 700 }
     .icon {
-      fill: #ffd08a;
+      fill: #ffbe7a;
       display: block;
     }
 
     .rank-circle-rim {
-      stroke: #f8fafc;
+      stroke: #fff7ed;
       fill: none;
       stroke-width: 6;
       opacity: 0.2;
     }
     .rank-circle {
-      stroke: #f8fafc;
+      stroke: #fff7ed;
       stroke-dasharray: 250;
       fill: none;
       stroke-width: 6;
@@ -73,7 +73,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 138.4958514207717;
+        stroke-dashoffset: 138.481828686187;
       }
     }
   
@@ -108,7 +108,7 @@
             gradientTransform="rotate(30)"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0%" stop-color="#6f6c9a" />,<stop offset="100%" stop-color="#4f4a78" />
+            <stop offset="0%" stop-color="#7a4b2f" />,<stop offset="100%" stop-color="#c56b3e" />
           </linearGradient>
         </defs>
         
@@ -173,7 +173,7 @@
         x="219.01"
         y="12.5"
         data-testid="commits"
-      >762</text>
+      >763</text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms" transform="translate(25, 0)">

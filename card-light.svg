@@ -538,7 +538,7 @@
 <text x="73.52" y="616.3999999999996" font-size="16" fill="#e7a66f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Commits</text>
 <text x="141.83999999999997" y="616.3999999999996" font-size="16" fill="#ff5f56" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
 <text x="161.35999999999999" y="616.3999999999996" font-size="16" fill="#8a94a680" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">................ </text>
-<text x="327.28" y="616.3999999999996" font-size="16" fill="#ff5f56" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">914</text>
+<text x="327.28" y="616.3999999999996" font-size="16" fill="#ff5f56" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">915</text>
 <text x="54" y="638.7999999999996" font-size="16" fill="#8a94a680" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">. </text>
 <text x="73.52" y="638.7999999999996" font-size="16" fill="#e7a66f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Stars Earned</text>
 <text x="190.64" y="638.7999999999996" font-size="16" fill="#ff5f56" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
@@ -548,7 +548,7 @@
 <text x="73.52" y="661.1999999999996" font-size="16" fill="#e7a66f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Lines of Code</text>
 <text x="200.39999999999998" y="661.1999999999996" font-size="16" fill="#ff5f56" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
 <text x="219.92" y="661.1999999999996" font-size="16" fill="#8a94a680" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">.......... </text>
-<text x="327.28" y="661.1999999999996" font-size="16" fill="#ff5f56" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">91,922+ / 37,763-</text>
+<text x="327.28" y="661.1999999999996" font-size="16" fill="#ff5f56" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">1,030,729+ / 280,781-</text>
 </g>
 <rect x="36" y="730" width="903.36" height="28" rx="7" fill="#eef3f8" stroke="#ccd6e4" stroke-width="1"/>
 <text x="52" y="749" font-size="13" fill="#d97745" font-family="IBM Plex Mono, SFMono-Regular, Menlo, Consolas, monospace">●</text>
@@ -641,11 +641,11 @@
 <g clip-path="url(#statsClip)">
 <svg x="967.36" y="682.2746268656716" width="236.37134328358206" height="75.72537313432835" viewBox="0 0 437.0 140.0" preserveAspectRatio="xMidYMid meet">
         <title id="titleId">Aaron Liao's GitHub Stats, Rank: B</title>
-        <desc id="descId">Total Stars Earned: 51, Total Commits  (last year) : 762, Total Issues: 14, Contributed to (last year): 0</desc>
+        <desc id="descId">Total Stars Earned: 51, Total Commits  (last year) : 763, Total Issues: 14, Contributed to (last year): 0</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
-            fill: #f8fafc;
+            fill: #fff7ed;
             animation: fadeInAnimation 0.8s ease-in-out forwards; animation-delay: 0.70s;}
           @supports(-moz-appearance: auto) {
             /* Selector detects Firefox */
@@ -653,7 +653,7 @@
           }
           
     .stat {
-      font: 600 14px 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif; fill: #e6e9f2;
+      font: 600 14px 'Segoe UI', Ubuntu, "Helvetica Neue", Sans-Serif; fill: #ffe6cc;
     }
     @supports(-moz-appearance: auto) {
       /* Selector detects Firefox */
@@ -663,7 +663,7 @@
       opacity: 0;
       animation: fadeInAnimation 0.3s ease-in-out forwards; animation-delay: 0.70s;}
     .rank-text {
-      font: 800 24px 'Segoe UI', Ubuntu, Sans-Serif; fill: #e6e9f2;
+      font: 800 24px 'Segoe UI', Ubuntu, Sans-Serif; fill: #ffe6cc;
       animation: scaleInAnimation 0.3s ease-in-out forwards; animation-delay: 0.70s;}
     .rank-percentile-header {
       font-size: 14px;
@@ -675,18 +675,18 @@
     .not_bold { font-weight: 400 }
     .bold { font-weight: 700 }
     .icon {
-      fill: #ffd08a;
+      fill: #ffbe7a;
       display: block;
     }
 
     .rank-circle-rim {
-      stroke: #f8fafc;
+      stroke: #fff7ed;
       fill: none;
       stroke-width: 6;
       opacity: 0.2;
     }
     .rank-circle {
-      stroke: #f8fafc;
+      stroke: #fff7ed;
       stroke-dasharray: 250;
       fill: none;
       stroke-width: 6;
@@ -701,7 +701,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 138.4958514207717;
+        stroke-dashoffset: 138.481828686187;
       }
     }
   
@@ -736,7 +736,7 @@
             gradientTransform="rotate(30)"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0%" stop-color="#6f6c9a" />,<stop offset="100%" stop-color="#4f4a78" />
+            <stop offset="0%" stop-color="#7a4b2f" />,<stop offset="100%" stop-color="#c56b3e" />
           </linearGradient>
         </defs>
         
@@ -801,7 +801,7 @@
         x="219.01"
         y="12.5"
         data-testid="commits"
-      >762</text>
+      >763</text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 1450ms" transform="translate(25, 0)">
@@ -844,7 +844,7 @@
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
-            fill: #f8fafc;
+            fill: #fff7ed;
             animation: fadeInAnimation 0.8s ease-in-out forwards; animation-delay: 0.70s;}
           @supports(-moz-appearance: auto) {
             /* Selector detects Firefox */
@@ -917,7 +917,7 @@
             gradientTransform="rotate(30)"
             gradientUnits="userSpaceOnUse"
           >
-            <stop offset="0%" stop-color="#6a6795" />,<stop offset="100%" stop-color="#5b5f84" />
+            <stop offset="0%" stop-color="#6f452d" />,<stop offset="100%" stop-color="#bf663b" />
           </linearGradient>
         </defs>
         
@@ -967,7 +967,7 @@
           data-testid="lang-progress"
           x="0"
           y="0"
-          width="165.58"
+          width="165.4"
           height="8"
           fill="#178600"
         />
@@ -975,9 +975,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="165.58"
+          x="165.4"
           y="0"
-          width="38.19"
+          width="38.15"
           height="8"
           fill="#b07219"
         />
@@ -985,9 +985,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="203.77"
+          x="203.55"
           y="0"
-          width="23.16"
+          width="23.41"
           height="8"
           fill="#663399"
         />
@@ -995,9 +995,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="226.93"
+          x="226.96"
           y="0"
-          width="23.07"
+          width="23.04"
           height="8"
           fill="#f1e05a"
         />
@@ -1008,28 +1008,28 @@
     <g class="stagger" style="animation-delay: 1150ms">
       <circle cx="5" cy="6" r="5" fill="#178600" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        C# 66.23%
+        C# 66.16%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 1300ms">
       <circle cx="5" cy="6" r="5" fill="#b07219" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Java 15.28%
+        Java 15.26%
       </text>
     </g>
   </g></g><g transform="translate(150, 0)"><g transform="translate(0, 0)">
     <g class="stagger" style="animation-delay: 1150ms">
       <circle cx="5" cy="6" r="5" fill="#663399" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        CSS 9.26%
+        CSS 9.37%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 1300ms">
       <circle cx="5" cy="6" r="5" fill="#f1e05a" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        JavaScript 9.23%
+        JavaScript 9.22%
       </text>
     </g>
   </g></g>
