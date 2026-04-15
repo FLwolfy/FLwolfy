@@ -1,22 +1,20 @@
 {
   "includes": {
-    "ascii_art_file": "profile/image.txt",
+    "braille_art_file": "profile/image.txt",
     "about_file": "profile/about.txt",
     "metadata_file": "profile/metadata.json",
-
     "stats_svg_file": "stats/stats.svg",
     "top_langs_svg_file": "stats/top-langs.svg",
     "github_stats_json_file": "stats/github_stats.json",
-
     "quotes_file": "quote/quotes.txt",
     "status_file": "status/status.md"
   },
   "outputs": {
     "base_name": "card",
-    "directory": "."
+    "directory": "./"
   },
   "themes": {
-    "dark": "themes/color.dark.json",
-    "light": "themes/color.light.json"
+    "dark": "themes/color.dark.css",
+    "light": "themes/color.light.css"
   }
 }

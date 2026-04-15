@@ -14,14 +14,55 @@ BASE_DIR = Path(__file__).resolve().parent
 CONFIG_FILE = BASE_DIR / "config.json"
 
 
+TEMPLATE_RE = re.compile(r"\{\{\s*([a-zA-Z0-9_.]+)\s*\}\}")
+
+
+def resolve_key(root: dict, key: str):
+    node = root
+    for part in key.split("."):
+        if isinstance(node, dict) and part in node:
+            node = node[part]
+        else:
+            return None
+    return node
+
+
+def resolve_templates(value, context: dict):
+    if isinstance(value, dict):
+        return {k: resolve_templates(v, context) for k, v in value.items()}
+    if isinstance(value, list):
+        return [resolve_templates(v, context) for v in value]
+    if not isinstance(value, str):
+        return value
+
+    def repl(match: re.Match) -> str:
+        resolved = resolve_key(context, match.group(1))
+        return "N/A" if resolved is None else str(resolved)
+
+    return TEMPLATE_RE.sub(repl, value)
+
+
+def load_json_with_templates(json_path: Path) -> dict:
+    raw = json.loads(json_path.read_text(encoding="utf-8"))
+    if not isinstance(raw, dict):
+        return raw
+    resolved = raw
+    for _ in range(5):
+        next_resolved = resolve_templates(resolved, resolved)
+        if next_resolved == resolved:
+            break
+        resolved = next_resolved
+    return resolved
+
+
 def load_config(config_path: Path) -> dict:
-    return json.loads(config_path.read_text(encoding="utf-8"))
+    return load_json_with_templates(config_path)
 
 
 def load_json_optional(json_path: Path) -> dict:
     if not json_path.exists():
         return {}
-    return json.loads(json_path.read_text(encoding="utf-8"))
+    return load_json_with_templates(json_path)
 
 
 def render_about_template(text: str, data: dict) -> str:
@@ -30,9 +71,27 @@ def render_about_template(text: str, data: dict) -> str:
 
     def repl(match: re.Match) -> str:
         key = match.group(1)
-        return str(data.get(key, "N/A"))
+        resolved = resolve_key(data, key)
+        return "N/A" if resolved is None else str(resolved)
 
-    return re.sub(r"\{\{\s*([a-zA-Z0-9_]+)\s*\}\}", repl, text)
+    return TEMPLATE_RE.sub(repl, text)
+
+
+def token_path_to_css_var(path: str) -> str:
+    css_name = path.replace("_", "-").replace(".", "-")
+    return f"--{css_name}"
+
+
+def load_theme_css_vars(css_path: Path) -> dict[str, str]:
+    text = css_path.read_text(encoding="utf-8")
+    matches = re.findall(r"(--[a-zA-Z0-9-]+)\s*:\s*([^;]+);", text)
+    out: dict[str, str] = {}
+    for name, raw_val in matches:
+        val = raw_val.strip()
+        if len(val) >= 2 and val[0] == val[-1] and val[0] in ("'", '"'):
+            val = val[1:-1]
+        out[name] = val
+    return out
 
 
 def load_svg_for_embed(svg_path: Path) -> tuple[str, float, float]:
@@ -117,10 +176,27 @@ if selected_theme not in color_themes:
     raise KeyError(f"Unknown theme '{selected_theme}'. Available: {', '.join(color_themes)}")
 
 color_file = color_themes[selected_theme]
-color_theme = load_config(BASE_DIR / color_file)
-color_blocks = color_theme.get("blocks", {})
-if not isinstance(color_blocks, dict):
-    raise KeyError(f"Missing blocks in {color_file}")
+color_path = BASE_DIR / color_file
+color_vars: dict[str, str]
+if color_path.suffix.lower() == ".css":
+    color_vars = load_theme_css_vars(color_path)
+else:
+    # Backward compatibility for legacy JSON themes.
+    color_theme = load_config(color_path)
+    color_blocks = color_theme.get("blocks", {})
+    if not isinstance(color_blocks, dict):
+        raise KeyError(f"Missing blocks in {color_file}")
+    color_vars = {}
+
+    def flatten_tokens(node: dict, prefix: str = ""):
+        for k, v in node.items():
+            key = f"{prefix}.{k}" if prefix else k
+            if isinstance(v, dict):
+                flatten_tokens(v, key)
+            elif isinstance(v, str):
+                color_vars[token_path_to_css_var(key)] = v
+
+    flatten_tokens(color_blocks)
 
 if selected_output:
     output_path = Path(selected_output)
@@ -135,14 +211,10 @@ except ValueError:
 
 
 def color_token(path: str) -> str:
-    node = color_blocks
-    for key in path.split("."):
-        if not isinstance(node, dict) or key not in node:
-            raise KeyError(f"Missing color token: {path} (in {color_file})")
-        node = node[key]
-    if not isinstance(node, str):
-        raise KeyError(f"Color token is not a string: {path} (in {color_file})")
-    return node
+    css_var = token_path_to_css_var(path)
+    if css_var not in color_vars:
+        raise KeyError(f"Missing color token: {path} as {css_var} (in {color_file})")
+    return color_vars[css_var]
 
 
 def color_token_optional(path: str, fallback: str) -> str:
@@ -259,7 +331,9 @@ def delay_css_animations(svg_inner: str, delay_sec: float) -> str:
     svg_inner = re.sub(r"\{([^{}]*)\}", patch_block, svg_inner)
     return svg_inner
 
-txt_file = includes["ascii_art_file"]
+txt_file = includes.get("braille_art_file") or includes.get("ascii_art_file")
+if not txt_file:
+    raise KeyError("Missing includes.braille_art_file (or legacy includes.ascii_art_file)")
 about_file = includes["about_file"]
 metadata_file = includes["metadata_file"]
 stats_svg_file = includes["stats_svg_file"]
@@ -369,18 +443,24 @@ def draw_text_lines(
     fill,
     line_height,
     clip_id=None,
+    char_px=None,
 ):
     parts = []
     if clip_id:
         parts.append(f'<g clip-path="url(#{clip_id})">')
     y = first_baseline_y
     for line in lines:
+        raw_line = line
         line = svg_preserve_line(line)
+        width_attrs = ""
+        if char_px is not None:
+            target_w = text_cells(raw_line) * char_px
+            width_attrs = f' textLength="{target_w}" lengthAdjust="spacingAndGlyphs"'
         parts.append(
             f'<text x="{x}" y="{y}" '
             f'font-size="{size}" fill="{fill}" '
             f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" '
-            f'xml:space="preserve">{esc(line)}</text>'
+            f'xml:space="preserve"{width_attrs}>{esc(line)}</text>'
         )
         y += size * line_height
     if clip_id:
@@ -388,47 +468,55 @@ def draw_text_lines(
     return "\n".join(parts)
 
 
-def parse_about_segments(line: str) -> list[tuple[str, str, float]]:
+def parse_about_segments(line: str) -> list[tuple[str, str, float, str | None]]:
     # Inline color tags:
-    # [#RRGGBB]text or [#RRGGBBAA]text
-    # [@about_markup.token_name]text
+    # [--about-markup-token]text
     # Example:
-    # [@about_markup.label]Skills: [@about_markup.value]C#, C++, Python
-    color_tag_re = re.compile(
-        r"\[((?:#[0-9A-Fa-f]{6}(?:[0-9A-Fa-f]{2})?)|(?:@[a-zA-Z0-9_.-]+))\]"
-    )
+    # [--about-markup-label]Skills: [--about-markup-value]C#, C++, Python
 
     def decode_color(token: str) -> tuple[str, float]:
-        if token.startswith("@"):
-            mapped = color_token(token[1:])
-            token = mapped
-        if len(token) == 9:
-            fill = token[:7]
-            alpha = int(token[7:9], 16) / 255.0
-            return fill, alpha
-        return token, 1.0
+        fill = color_vars.get(token)
+        if not fill:
+            return ABOUT_DEFAULT_TEXT, 1.0
+        return fill, 1.0
 
     s = line.rstrip("\n\r")
     if s == "":
-        return [("", ABOUT_DEFAULT_TEXT, 1.0)]
+        return [("", ABOUT_DEFAULT_TEXT, 1.0, None)]
 
-    segments: list[tuple[str, str, float]] = []
+    segments: list[tuple[str, str, float, str | None]] = []
     current_fill = ABOUT_DEFAULT_TEXT
     current_opacity = 1.0
     cursor = 0
 
-    for m in color_tag_re.finditer(s):
+    token_re = re.compile(r"\[([^\]]+)\]\(([^)]+)\)|\[(--[a-zA-Z0-9-]+)\]")
+
+    def sanitize_href(href: str) -> str | None:
+        href = href.strip()
+        if not href:
+            return None
+        h = href.lower()
+        if h.startswith(("http://", "https://", "mailto:", "tel:")):
+            return href
+        return None
+
+    for m in token_re.finditer(s):
         if m.start() > cursor:
             text = s[cursor:m.start()]
-            segments.append((text, current_fill, current_opacity))
-        current_fill, current_opacity = decode_color(m.group(1))
+            segments.append((text, current_fill, current_opacity, None))
+        if m.group(1) is not None:
+            link_text = m.group(1)
+            link_href = sanitize_href(m.group(2))
+            segments.append((link_text, current_fill, current_opacity, link_href))
+        else:
+            current_fill, current_opacity = decode_color(m.group(3))
         cursor = m.end()
 
     if cursor < len(s):
-        segments.append((s[cursor:], current_fill, current_opacity))
+        segments.append((s[cursor:], current_fill, current_opacity, None))
 
     if not segments:
-        return [("", ABOUT_DEFAULT_TEXT, 1.0)]
+        return [("", ABOUT_DEFAULT_TEXT, 1.0, None)]
     return segments
 
 
@@ -448,15 +536,25 @@ def draw_about_lines(
     for line in lines:
         segs = parse_about_segments(line)
         x_cursor = x
-        for seg_text, seg_fill, seg_opacity in segs:
+        for seg_text, seg_fill, seg_opacity, seg_href in segs:
             if not seg_text:
                 continue
-            parts.append(
+            link_style = ' style="cursor:pointer; text-decoration:underline;"' if seg_href else ""
+            text_node = (
                 f'<text x="{x_cursor}" y="{y}" '
                 f'font-size="{size}" fill="{seg_fill}" fill-opacity="{seg_opacity}" '
                 f'font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" '
-                f'xml:space="preserve">{esc(svg_preserve_line(seg_text))}</text>'
+                f'xml:space="preserve"{link_style}>{esc(svg_preserve_line(seg_text))}</text>'
             )
+            if seg_href:
+                safe_href = esc_attr(seg_href)
+                text_node = (
+                    f'<a href="{safe_href}" target="_blank">'
+                    f'<title>{esc(seg_href)}</title>'
+                    f'{text_node}'
+                    f'</a>'
+                )
+            parts.append(text_node)
             x_cursor += text_cells(seg_text) * char_px
         y += size * line_height
     if clip_id:
@@ -861,7 +959,10 @@ if ASCII_AUTO_INVERT:
 about_raw = (BASE_DIR / about_file).read_text(encoding="utf-8")
 if github_stats_json_file:
     github_stats_data = load_json_optional(BASE_DIR / github_stats_json_file)
-    about_raw = render_about_template(about_raw, github_stats_data)
+    about_template_data = dict(github_stats_data)
+    stats_scope_name = Path(github_stats_json_file).stem
+    about_template_data[stats_scope_name] = github_stats_data
+    about_raw = render_about_template(about_raw, about_template_data)
 about_lines = [normalize_tabs(line.rstrip("\n\r")) for line in about_raw.splitlines()]
 if not about_lines:
     about_lines = [""]
@@ -954,10 +1055,11 @@ inner_h = frame_h - line_px * 2
 CROP_PAD_LEFT = char_px * 1.0
 CROP_PAD_RIGHT = char_px * 1.0 + 10.0
 CROP_PAD_Y = line_px * 0.45
+ASCII_RIGHT_EXPAND_PX = 10.0
 
 crop_x = inner_x + CROP_PAD_LEFT
 crop_y = inner_y + CROP_PAD_Y
-crop_w = max(1.0, inner_w - CROP_PAD_LEFT - CROP_PAD_RIGHT)
+crop_w = max(1.0, inner_w - CROP_PAD_LEFT - CROP_PAD_RIGHT + ASCII_RIGHT_EXPAND_PX)
 crop_h = max(1.0, inner_h - CROP_PAD_Y * 2)
 
 ascii_max_chars = max(text_cells(line) for line in ascii_lines) if ascii_lines else 0
@@ -1552,7 +1654,7 @@ parts.append(
     f'<animateTransform attributeName="transform" type="translate" begin="{intro_ascii_begin:.2f}s" dur="{intro_ascii_dur:.2f}s" values="{intro_ascii_shift_x} 0;0 0" fill="freeze"/>'
 )
 parts.append(
-    f'<rect x="{inner_x - 4}" y="{inner_y - 6}" width="{inner_w - 4}" height="{inner_h + 15}" fill="{ASCII_INNER_BACKGROUND}"/>'
+    f'<rect x="{inner_x - 4}" y="{inner_y - 6}" width="{inner_w - 4 + ASCII_RIGHT_EXPAND_PX}" height="{inner_h + 15}" fill="{ASCII_INNER_BACKGROUND}"/>'
 )
 
 # ASCII border frame
@@ -1564,6 +1666,7 @@ parts.append(
         size=ascii_font_size,
         fill=TEXT,
         line_height=ascii_line_height,
+        char_px=char_px,
     )
 )
 
@@ -1577,6 +1680,7 @@ parts.append(
         fill=ASCII_ART_TEXT,
         line_height=ascii_line_height,
         clip_id="asciiClip",
+        char_px=char_px,
     )
 )
 parts.append("</g>")

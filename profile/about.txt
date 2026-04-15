@@ -1,19 +1,19 @@
-[@about_markup.header]aaron@flwolfy [@about_markup.header]----------------------------------------------------------
-[@about_markup.dim]. [@about_markup.label]Skills[@about_markup.value]: [@about_markup.dim]................. [@about_markup.value]C#, C++, Python, Java, JavaScript, Git
-[@about_markup.dim]. [@about_markup.label]Focus[@about_markup.value]: [@about_markup.dim].................. [@about_markup.value]Game Programming, Engine Architecture
-[@about_markup.dim]. [@about_markup.label]Interest[@about_markup.value]: [@about_markup.dim]............... [@about_markup.value]Rendering, Tooling, System Design
+[--about-markup-header]aaron@flwolfy [--about-markup-header]----------------------------------------------------------
+[--about-markup-dim]. [--about-markup-label]Skills[--about-markup-value]: [--about-markup-dim]................. [--about-markup-value]C#, C++, Python, Java, JavaScript, Git
+[--about-markup-dim]. [--about-markup-label]Focus[--about-markup-value]: [--about-markup-dim].................. [--about-markup-value]Game Programming, Engine Architecture
+[--about-markup-dim]. [--about-markup-label]Interest[--about-markup-value]: [--about-markup-dim]............... [--about-markup-value]Rendering, Tooling, System Design
 
-[@about_markup.dim]. [@about_markup.label]Languages[@about_markup.value]: [@about_markup.dim].............. [@about_markup.value]Mandarin, English
-[@about_markup.dim]. [@about_markup.label]Hobbies[@about_markup.value]: [@about_markup.dim]................ [@about_markup.value]Football, Anime, Games, Modding, Coding
+[--about-markup-dim]. [--about-markup-label]Languages[--about-markup-value]: [--about-markup-dim].............. [--about-markup-value]Mandarin, English
+[--about-markup-dim]. [--about-markup-label]Hobbies[--about-markup-value]: [--about-markup-dim]................ [--about-markup-value]Football, Anime, Games, Modding, Coding
 
-[@about_markup.header]- Contact [@about_markup.header]---------------------------------------------------------------
-[@about_markup.dim]. [@about_markup.label]Blog[@about_markup.value]: [@about_markup.dim]................... [@about_markup.value]blog.flwolfy.xyz
-[@about_markup.dim]. [@about_markup.label]Email[@about_markup.value]: [@about_markup.dim].................. [@about_markup.value]hsuankailiao@gmail.com
-[@about_markup.dim]. [@about_markup.label]Discord[@about_markup.value]: [@about_markup.dim]................ [@about_markup.value]1006448723326410782
-[@about_markup.dim]. [@about_markup.label]X[@about_markup.value]: [@about_markup.dim]...................... [@about_markup.value]fl_wolfy
+[--about-markup-header]- Contact [--about-markup-header]---------------------------------------------------------------
+[--about-markup-dim]. [--about-markup-label]Blog[--about-markup-value]: [--about-markup-dim]................... [--about-markup-value][blog.flwolfy.xyz](https://blog.flwolfy.xyz)
+[--about-markup-dim]. [--about-markup-label]Email[--about-markup-value]: [--about-markup-dim].................. [--about-markup-value][hsuankailiao@gmail.com](mailto:hsuankailiao@gmail.com)
+[--about-markup-dim]. [--about-markup-label]Discord[--about-markup-value]: [--about-markup-dim]................ [--about-markup-value][@wolfeee](https://discord.com/users/1006448723326410782)
+[--about-markup-dim]. [--about-markup-label]X[--about-markup-value]: [--about-markup-dim]...................... [--about-markup-value][@fl_wolfy](https://twitter.com/fl_wolfy)
 
-[@about_markup.header]- GitHub Stats [@about_markup.header]----------------------------------------------------------
-[@about_markup.dim]. [@about_markup.label]Repos[@about_markup.value]: [@about_markup.dim].................. [@about_markup.value]{{repos}}
-[@about_markup.dim]. [@about_markup.label]Commits[@about_markup.value]: [@about_markup.dim]................ [@about_markup.value]{{commits}}
-[@about_markup.dim]. [@about_markup.label]Stars Earned[@about_markup.value]: [@about_markup.dim]........... [@about_markup.value]{{stars_earned}}
-[@about_markup.dim]. [@about_markup.label]Lines of Code[@about_markup.value]: [@about_markup.dim].......... [@about_markup.value]{{loc_added}}+ / {{loc_deleted}}-
+[--about-markup-header]- GitHub Stats [--about-markup-header]----------------------------------------------------------
+[--about-markup-dim]. [--about-markup-label]Repos[--about-markup-value]: [--about-markup-dim].................. [--about-markup-value]{{github_stats.repos}}
+[--about-markup-dim]. [--about-markup-label]Commits[--about-markup-value]: [--about-markup-dim]................ [--about-markup-value]{{github_stats.commits}}
+[--about-markup-dim]. [--about-markup-label]Stars Earned[--about-markup-value]: [--about-markup-dim]........... [--about-markup-value]{{github_stats.stars_earned}}
+[--about-markup-dim]. [--about-markup-label]Lines of Code[--about-markup-value]: [--about-markup-dim].......... [--about-markup-value]{{github_stats.loc_added}}+ / {{github_stats.loc_deleted}}-

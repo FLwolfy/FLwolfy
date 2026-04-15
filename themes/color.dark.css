@@ -1,0 +1,60 @@
+:root {
+  --app-background: #0d1117;
+  --app-card-surface: #161b22;
+  --app-text-primary: #e6edf3;
+  --app-ascii-art-text: #ffffff;
+  --app-ascii-inner-background: #0000004d;
+  --app-text-muted: #8b949e;
+  --app-decorative-flag: #1f6feb;
+  --app-decorative-accent-secondary: #081f4d;
+  --app-decorative-edge-highlight: #8cc8ff;
+  --app-card-outline-stroke: #c9d1d9;
+  --app-info-strip-background: #11161d;
+
+  --code-window-background: #0f141b;
+  --code-window-border: #2f3942;
+  --code-window-header-background: #161b22;
+  --code-window-text-primary: #c9d1d9;
+  --code-window-text-muted: #7d8590;
+  --code-window-traffic-dot-1: #ff6b6b;
+  --code-window-traffic-dot-2: #e5bb8a;
+  --code-window-traffic-dot-3: #8cc8ff;
+  --code-window-terminal-background: #0b1016;
+  --code-window-terminal-border: #34404b;
+  --code-window-terminal-prompt: #9fd8ff;
+  --code-window-terminal-text: #c6d0da;
+  --code-window-terminal-cursor: #c6d0da;
+
+  --quotes-window-panel-background: #1b2027;
+  --quotes-window-panel-stroke: #444f5e;
+  --quotes-window-header-background: #242a33;
+  --quotes-window-tab-background: #2b323d;
+  --quotes-window-tab-stroke: #5a6572;
+  --quotes-window-tab-text: #d4dbe3;
+  --quotes-window-status-text: #8f98a6;
+  --quotes-window-gutter-background: #1b1f26;
+  --quotes-window-gutter-stroke: #343b46;
+  --quotes-window-line-number-text: #7f8896;
+  --quotes-window-scramble-text: #3fa9f5;
+  --quotes-window-quote-text: #e8edf3;
+  --quotes-window-title-text: #e5bb8a;
+
+  --status-window-panel-background: #202631;
+  --status-window-panel-stroke: #444f5e;
+  --status-window-header-background: #2a313b;
+  --status-window-header-accent: #58a6ff;
+  --status-window-header-bubble-background: #8cc8ff;
+  --status-window-header-bubble-stroke: #8cc8ff;
+  --status-window-header-bubble-text: #dbe2ea;
+  --status-window-header-title-text: #d9dee5;
+  --status-window-close-button-stroke: #c5cdd8;
+  --status-window-close-button-text: #c5cdd8;
+  --status-window-markdown-text: #dbe2ea;
+  --status-window-markdown-error-text: #c47f7f;
+
+  --about-markup-default-text: #c9d1d9;
+  --about-markup-header: #ffffff;
+  --about-markup-dim: #d6dbe37a;
+  --about-markup-label: #f3a45f;
+  --about-markup-value: #6fa8ff;
+}

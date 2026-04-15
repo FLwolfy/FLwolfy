@@ -130,6 +130,7 @@ jobs:
 
           api = "https://api.github.com"
           token = __import__("os").environ.get("GH_TOKEN", "")
+          cache_path = Path("stats/loc_cache.json")
 
           metadata = json.loads(Path("profile/metadata.json").read_text(encoding="utf-8"))
           username = metadata["username"]
@@ -144,6 +145,44 @@ jobs:
               body = resp.read().decode("utf-8")
               headers = dict(resp.headers.items())
               return json.loads(body), headers
+
+          def gh_graphql(query: str, variables: dict):
+            req = Request(f"{api}/graphql", method="POST")
+            req.add_header("Accept", "application/vnd.github+json")
+            req.add_header("User-Agent", "profile-assets-workflow")
+            req.add_header("Content-Type", "application/json")
+            if token:
+              req.add_header("Authorization", f"Bearer {token}")
+            payload = json.dumps({"query": query, "variables": variables}).encode("utf-8")
+            for _ in range(4):
+              try:
+                with urlopen(req, data=payload, timeout=30) as resp:
+                  body = json.loads(resp.read().decode("utf-8"))
+                if body.get("errors"):
+                  raise RuntimeError(f"GraphQL errors: {body['errors']}")
+                return body["data"]
+              except HTTPError as e:
+                if e.code in (502, 503, 504):
+                  time.sleep(2)
+                  continue
+                raise
+            raise RuntimeError("GraphQL request failed after retries")
+
+          def load_cache():
+            if not cache_path.exists():
+              return {}
+            try:
+              data = json.loads(cache_path.read_text(encoding="utf-8"))
+              return data if isinstance(data, dict) else {}
+            except Exception:
+              return {}
+
+          def save_cache(cache: dict):
+            cache_path.parent.mkdir(parents=True, exist_ok=True)
+            cache_path.write_text(
+              json.dumps(cache, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+            )
 
           repos = []
           page = 1
@@ -173,57 +212,121 @@ jobs:
                 return None
             return None
 
+          user_id_query = """
+          query ($login: String!) {
+            user(login: $login) {
+              id
+            }
+          }
+          """
+          viewer_id = gh_graphql(user_id_query, {"login": username})["user"]["id"]
+
+          cache = load_cache()
+          new_cache: dict[str, dict] = {}
           commits = 0
           loc_added = 0
           loc_deleted = 0
 
+          commit_history_query = """
+          query ($owner: String!, $name: String!, $cursor: String) {
+            repository(owner: $owner, name: $name) {
+              defaultBranchRef {
+                target {
+                  ... on Commit {
+                    history(first: 100, after: $cursor) {
+                      nodes {
+                        additions
+                        deletions
+                        author {
+                          user { id }
+                        }
+                      }
+                      pageInfo {
+                        endCursor
+                        hasNextPage
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          """
+
           for repo in repos:
             owner = repo["owner"]["login"]
             name = repo["name"]
+            full_name = repo["full_name"]
             default_branch = repo.get("default_branch") or "main"
 
-            # Commit count authored by the target user on default branch.
+            # Count all commits on default branch; if unchanged, we can trust cached LOC/commit stats.
+            total_commits = 0
             try:
               _, headers = gh_get(
-                f"{api}/repos/{owner}/{name}/commits?sha={default_branch}&author={username}&per_page=1"
+                f"{api}/repos/{owner}/{name}/commits?sha={default_branch}&per_page=1"
               )
               last_page = parse_last_page(headers.get("Link", ""))
-              if last_page is None:
-                # If there is no Link header, we need to check whether there's at least one commit.
-                data, _ = gh_get(
-                  f"{api}/repos/{owner}/{name}/commits?sha={default_branch}&author={username}&per_page=1"
-                )
-                commits += 1 if isinstance(data, list) and len(data) > 0 else 0
+              if last_page is not None:
+                total_commits = int(last_page)
               else:
-                commits += int(last_page)
-            except HTTPError:
-              pass
+                data, _ = gh_get(
+                  f"{api}/repos/{owner}/{name}/commits?sha={default_branch}&per_page=1"
+                )
+                total_commits = 1 if isinstance(data, list) and len(data) > 0 else 0
             except Exception:
-              pass
+              # Keep 0 if repo is empty/inaccessible in this run.
+              total_commits = 0
 
-            # Code frequency (repo-level additions/deletions).
-            freq = None
-            for _ in range(4):
-              try:
-                data, _ = gh_get(f"{api}/repos/{owner}/{name}/stats/code_frequency")
-                if isinstance(data, list):
-                  freq = data
+            prev = cache.get(full_name)
+            if (
+              isinstance(prev, dict)
+              and prev.get("default_branch") == default_branch
+              and int(prev.get("total_commits", -1)) == total_commits
+            ):
+              my_commits = int(prev.get("my_commits", 0))
+              my_added = int(prev.get("loc_added", 0))
+              my_deleted = int(prev.get("loc_deleted", 0))
+            else:
+              my_commits = 0
+              my_added = 0
+              my_deleted = 0
+              cursor = None
+              while True:
+                data = gh_graphql(
+                  commit_history_query,
+                  {"owner": owner, "name": name, "cursor": cursor},
+                )
+                repo_node = data.get("repository") or {}
+                branch_ref = repo_node.get("defaultBranchRef")
+                if not branch_ref:
                   break
-              except HTTPError as e:
-                # 202 means still being generated; retry.
-                if getattr(e, "code", None) == 202:
-                  time.sleep(2)
-                  continue
-              except Exception:
-                break
-              time.sleep(2)
+                history = (
+                  ((branch_ref.get("target") or {}).get("history")) or {}
+                )
+                nodes = history.get("nodes") or []
+                for node in nodes:
+                  author = ((node.get("author") or {}).get("user") or {})
+                  if author.get("id") == viewer_id:
+                    my_commits += 1
+                    my_added += max(0, int(node.get("additions") or 0))
+                    my_deleted += max(0, int(node.get("deletions") or 0))
+                page_info = history.get("pageInfo") or {}
+                if not page_info.get("hasNextPage"):
+                  break
+                cursor = page_info.get("endCursor")
 
-            if freq:
-              for row in freq:
-                if not isinstance(row, list) or len(row) < 3:
-                  continue
-                loc_added += max(0, int(row[1]))
-                loc_deleted += abs(int(row[2]))
+            commits += my_commits
+            loc_added += my_added
+            loc_deleted += my_deleted
+            new_cache[full_name] = {
+              "default_branch": default_branch,
+              "total_commits": total_commits,
+              "my_commits": my_commits,
+              "loc_added": my_added,
+              "loc_deleted": my_deleted,
+            }
+
+          save_cache(new_cache)
 
           payload = {
             "repos": f"{repos_count:,}",
@@ -240,7 +343,7 @@ jobs:
         uses: readme-tools/github-readme-stats-action@v1
         with:
           card: stats
-          options: username=FLwolfy&bg_color=30,6f6c9a,4f4a78&title_color=f8fafc&text_color=e6e9f2&icon_color=ffd08a&show_icons=true&count_private=true&hide_title=true&hide=prs&theme=tokyonight&card_width=300
+          options: username=FLwolfy&bg_color=30,7a4b2f,c56b3e&title_color=fff7ed&text_color=ffe6cc&icon_color=ffbe7a&show_icons=true&count_private=true&hide_title=true&hide=prs&theme=tokyonight&card_width=300
           path: stats/stats.svg
           token: ${{ secrets.GH_STATS_TOKEN || github.token }}
 
@@ -248,7 +351,7 @@ jobs:
         uses: readme-tools/github-readme-stats-action@v1
         with:
           card: top-langs
-          options: username=FLwolfy&bg_color=30,6a6795,5b5f84&title_color=f8fafc&layout=compact&theme=tokyonight&card_width=300&langs_count=4&hide=jupyter notebook,html
+          options: username=FLwolfy&bg_color=30,6f452d,bf663b&title_color=fff7ed&layout=compact&theme=tokyonight&card_width=300&langs_count=4&hide=jupyter notebook,html
           path: stats/top-langs.svg
           token: ${{ secrets.GH_STATS_TOKEN || github.token }}
 
@@ -328,6 +431,6 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add quote/quotes.txt quote/history.txt stats/github_stats.json stats/stats.svg stats/top-langs.svg status/status.md card-dark.svg card-light.svg
+          git add quote/quotes.txt quote/history.txt stats/github_stats.json stats/loc_cache.json stats/stats.svg stats/top-langs.svg status/status.md card-dark.svg card-light.svg
           git commit -m "chore: auto refresh profile assets [skip ci]"
           git push

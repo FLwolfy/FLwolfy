@@ -1,0 +1,61 @@
+:root {
+  --app-background: #edf1f5;
+  --app-card-surface: #e6ebf2;
+  --app-text-primary: #1f2937;
+  --app-ascii-art-text: #000000;
+  --app-ascii-auto-invert: true;
+  --app-ascii-inner-background: #edf1f6cc;
+  --app-text-muted: #5b6473;
+  --app-decorative-flag: #e48a67;
+  --app-decorative-accent-secondary: #d97757;
+  --app-decorative-edge-highlight: #efb39a;
+  --app-card-outline-stroke: #c8d2e0;
+  --app-info-strip-background: #d7dde6;
+
+  --code-window-background: #f8fafc;
+  --code-window-border: #d6deea;
+  --code-window-header-background: #f1f5f9;
+  --code-window-text-primary: #1f2937;
+  --code-window-text-muted: #6b7280;
+  --code-window-traffic-dot-1: #ff5f56;
+  --code-window-traffic-dot-2: #f7c28a;
+  --code-window-traffic-dot-3: #f3b179;
+  --code-window-terminal-background: #eef3f8;
+  --code-window-terminal-border: #ccd6e4;
+  --code-window-terminal-prompt: #d97745;
+  --code-window-terminal-text: #334155;
+  --code-window-terminal-cursor: #334155;
+
+  --quotes-window-panel-background: #f8fafc;
+  --quotes-window-panel-stroke: #d3dce9;
+  --quotes-window-header-background: #f8f0eb;
+  --quotes-window-tab-background: #f5ece6;
+  --quotes-window-tab-stroke: #e5d2c6;
+  --quotes-window-tab-text: #334155;
+  --quotes-window-status-text: #64748b;
+  --quotes-window-gutter-background: #f6efea;
+  --quotes-window-gutter-stroke: #d6deea;
+  --quotes-window-line-number-text: #8f8177;
+  --quotes-window-scramble-text: #d66e52;
+  --quotes-window-quote-text: #1f2937;
+  --quotes-window-title-text: #d97706;
+
+  --status-window-panel-background: #f7f9fc;
+  --status-window-panel-stroke: #d3dce9;
+  --status-window-header-background: #faeee8;
+  --status-window-header-accent: #e07a55;
+  --status-window-header-bubble-background: #f8cfbb;
+  --status-window-header-bubble-stroke: #eca98a;
+  --status-window-header-bubble-text: #8b4635;
+  --status-window-header-title-text: #334155;
+  --status-window-close-button-stroke: #64748b;
+  --status-window-close-button-text: #64748b;
+  --status-window-markdown-text: #273444;
+  --status-window-markdown-error-text: #b91c1c;
+
+  --about-markup-default-text: #334155;
+  --about-markup-header: #0f172a;
+  --about-markup-dim: #8a94a680;
+  --about-markup-label: #e7a66f;
+  --about-markup-value: #ff5f56;
+}
