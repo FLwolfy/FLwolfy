@@ -343,7 +343,7 @@ jobs:
         uses: readme-tools/github-readme-stats-action@v1
         with:
           card: stats
-          options: username=FLwolfy&bg_color=30,7a4b2f,c56b3e&title_color=fff7ed&text_color=ffe6cc&icon_color=ffbe7a&show_icons=true&count_private=true&hide_title=true&hide=prs&theme=tokyonight&card_width=300
+          options: username=FLwolfy&bg_color=30,bf663b,6f452d&title_color=fff7ed&text_color=ffe6cc&icon_color=ffbe7a&show_icons=true&count_private=true&hide_title=true&hide=prs&theme=tokyonight&card_width=300
           path: stats/stats.svg
           token: ${{ secrets.GH_STATS_TOKEN || github.token }}
 
