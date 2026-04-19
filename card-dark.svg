@@ -641,7 +641,7 @@
 <g clip-path="url(#statsClip)">
 <svg x="967.36" y="682.2746268656716" width="236.37134328358206" height="75.72537313432835" viewBox="0 0 437.0 140.0" preserveAspectRatio="xMidYMid meet">
         <title id="titleId">Aaron Liao's GitHub Stats, Rank: B</title>
-        <desc id="descId">Total Stars Earned: 51, Total Commits  (last year) : 764, Total Issues: 14, Contributed to (last year): 0</desc>
+        <desc id="descId">Total Stars Earned: 51, Total Commits  (last year) : 763, Total Issues: 14, Contributed to (last year): 0</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -701,7 +701,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 138.46784477702965;
+        stroke-dashoffset: 138.481828686187;
       }
     }
   
@@ -801,7 +801,7 @@
         x="219.01"
         y="12.5"
         data-testid="commits"
-      >764</text>
+      >763</text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 1450ms" transform="translate(25, 0)">
