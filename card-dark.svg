@@ -538,7 +538,7 @@
 <text x="73.52" y="616.3999999999996" font-size="16" fill="#f3a45f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Commits</text>
 <text x="141.83999999999997" y="616.3999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
 <text x="161.35999999999999" y="616.3999999999996" font-size="16" fill="#d6dbe37a" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">................ </text>
-<text x="327.28" y="616.3999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">917</text>
+<text x="327.28" y="616.3999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">918</text>
 <text x="54" y="638.7999999999996" font-size="16" fill="#d6dbe37a" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">. </text>
 <text x="73.52" y="638.7999999999996" font-size="16" fill="#f3a45f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Stars Earned</text>
 <text x="190.64" y="638.7999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
@@ -548,7 +548,7 @@
 <text x="73.52" y="661.1999999999996" font-size="16" fill="#f3a45f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Lines of Code</text>
 <text x="200.39999999999998" y="661.1999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
 <text x="219.92" y="661.1999999999996" font-size="16" fill="#d6dbe37a" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">.......... </text>
-<text x="327.28" y="661.1999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">1,030,735+ / 280,789-</text>
+<text x="327.28" y="661.1999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">1,030,839+ / 280,836-</text>
 </g>
 <rect x="36" y="730" width="903.36" height="28" rx="7" fill="#0b1016" stroke="#34404b" stroke-width="1"/>
 <text x="52" y="749" font-size="13" fill="#9fd8ff" font-family="IBM Plex Mono, SFMono-Regular, Menlo, Consolas, monospace">●</text>
@@ -641,7 +641,7 @@
 <g clip-path="url(#statsClip)">
 <svg x="967.36" y="682.2746268656716" width="236.37134328358206" height="75.72537313432835" viewBox="0 0 437.0 140.0" preserveAspectRatio="xMidYMid meet">
         <title id="titleId">Aaron Liao's GitHub Stats, Rank: B</title>
-        <desc id="descId">Total Stars Earned: 51, Total Commits  (last year) : 764, Total Issues: 14, Contributed to (last year): 0</desc>
+        <desc id="descId">Total Stars Earned: 51, Total Commits  (last year) : 765, Total Issues: 14, Contributed to (last year): 0</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -701,7 +701,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 138.46784477702965;
+        stroke-dashoffset: 138.4538995858019;
       }
     }
   
@@ -801,7 +801,7 @@
         x="219.01"
         y="12.5"
         data-testid="commits"
-      >764</text>
+      >765</text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 1450ms" transform="translate(25, 0)">
@@ -1050,7 +1050,7 @@
 <rect x="644.36" y="578.0" width="300.0" height="30.0" rx="8" fill="#2a313b"/>
 <rect x="644.36" y="606.0" width="300.0" height="2" fill="#58a6ff" opacity="0.9"/>
 <rect x="653.36" y="585.0" width="30.0" height="16.0" rx="8.0" fill="#8cc8ff" fill-opacity="0.12" stroke="#8cc8ff" stroke-opacity="0.52" stroke-width="1.0"/>
-<g clip-path="url(#statusHeaderBubbleClip)"><text x="668.36" y="598.0" font-size="12" fill="#dbe2ea" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="700">:lock_with_ink_pen:</text></g>
+<g clip-path="url(#statusHeaderBubbleClip)"><text x="668.36" y="598.0" font-size="12" fill="#dbe2ea" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="700">🔏</text></g>
 <text x="695.36" y="598.0" font-size="12" fill="#d9dee5" font-family="Inter, Arial, sans-serif" font-weight="700">Status.md</text>
 <circle cx="928.36" cy="593.0" r="5.4" fill="none" stroke="#c5cdd8" stroke-opacity="0.95" stroke-width="1"/>
 <text x="928.36" y="596.0" font-size="10" fill="#c5cdd8" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="700">-</text>
