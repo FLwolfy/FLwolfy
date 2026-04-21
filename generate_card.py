@@ -7,8 +7,6 @@ import re
 import subprocess
 import sys
 import unicodedata
-from urllib.error import HTTPError, URLError
-from urllib.request import Request, urlopen
 
 BASE_DIR = Path(__file__).resolve().parent
 CONFIG_FILE = BASE_DIR / "config.json"
@@ -411,8 +409,7 @@ STATUS_CLOSE_TEXT = color_token("status_window.close_button_text")
 STATUS_MARKDOWN_TEXT = color_token("status_window.markdown_text")
 STATUS_MARKDOWN_ERROR = color_token("status_window.markdown_error_text")
 ABOUT_DEFAULT_TEXT = color_token("about_markup.default_text")
-EMOJI_CACHE_FILE = BASE_DIR / ".cache" / "github_emojis.json"
-EMOJI_CACHE_MAX_AGE_SEC = 7 * 24 * 60 * 60
+EMOJI_CACHE_FILE = BASE_DIR / includes.get("emoji_cache_file", "status/github_emojis_cache.json")
 
 
 def esc(s: str) -> str:
@@ -617,58 +614,27 @@ def extract_quotes_update_time(quotes_path: Path) -> str:
 _github_emoji_map_cache: dict[str, str] | None = None
 
 
-def _load_github_emoji_map() -> dict[str, str]:
+def _load_github_emoji_map_from_cache() -> dict[str, str]:
     global _github_emoji_map_cache
     if _github_emoji_map_cache is not None:
         return _github_emoji_map_cache
 
-    # 1) Prefer recent local cache (offline-friendly).
     try:
         if EMOJI_CACHE_FILE.exists():
-            age = max(0.0, __import__("time").time() - EMOJI_CACHE_FILE.stat().st_mtime)
-            if age <= EMOJI_CACHE_MAX_AGE_SEC:
-                _github_emoji_map_cache = json.loads(EMOJI_CACHE_FILE.read_text(encoding="utf-8"))
-                if isinstance(_github_emoji_map_cache, dict):
-                    return _github_emoji_map_cache
-    except Exception:
-        pass
-
-    # 2) Fetch from GitHub official endpoint.
-    try:
-        req = Request("https://api.github.com/emojis")
-        req.add_header("Accept", "application/vnd.github+json")
-        req.add_header("User-Agent", "profile-card-generator")
-        token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN") or ""
-        if token:
-            req.add_header("Authorization", f"Bearer {token}")
-        with urlopen(req, timeout=8) as resp:
-            payload = json.loads(resp.read().decode("utf-8"))
+            payload = json.loads(EMOJI_CACHE_FILE.read_text(encoding="utf-8"))
             if isinstance(payload, dict):
                 _github_emoji_map_cache = payload
-                try:
-                    EMOJI_CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
-                    EMOJI_CACHE_FILE.write_text(
-                        json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
-                        encoding="utf-8",
-                    )
-                except Exception:
-                    pass
-                return _github_emoji_map_cache
-    except (HTTPError, URLError, TimeoutError, ValueError):
-        pass
-    except Exception:
-        pass
-
-    # 3) Stale cache fallback if network fetch failed.
-    try:
-        if EMOJI_CACHE_FILE.exists():
-            _github_emoji_map_cache = json.loads(EMOJI_CACHE_FILE.read_text(encoding="utf-8"))
-            if isinstance(_github_emoji_map_cache, dict):
                 return _github_emoji_map_cache
     except Exception:
         pass
 
     _github_emoji_map_cache = {}
+    try:
+        EMOJI_CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+        if not EMOJI_CACHE_FILE.exists():
+            EMOJI_CACHE_FILE.write_text("{}", encoding="utf-8")
+    except Exception:
+        pass
     return _github_emoji_map_cache
 
 
@@ -690,10 +656,10 @@ def decode_github_emoji_shortcode(token: str) -> str:
     m = re.fullmatch(r":([a-z0-9_+\-]+):", s, flags=re.IGNORECASE)
     if not m:
         return s
-    key = m.group(1)
+    key = m.group(1).lower()
 
-    emoji_map = _load_github_emoji_map()
-    url = emoji_map.get(key) or emoji_map.get(key.lower())
+    emoji_map = _load_github_emoji_map_from_cache()
+    url = emoji_map.get(key)
     if isinstance(url, str):
         decoded = _github_emoji_url_to_unicode(url)
         if decoded:

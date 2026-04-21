@@ -7,7 +7,9 @@
     "top_langs_svg_file": "stats/top-langs.svg",
     "github_stats_json_file": "stats/github_stats.json",
     "quotes_file": "quote/quotes.txt",
-    "status_file": "status/status.md"
+    "status_file": "status/status.md",
+    "loc_cache_file": "stats/loc_cache.json",
+    "emoji_cache_file": "status/github_emojis_cache.json"
   },
   "outputs": {
     "base_name": "card",

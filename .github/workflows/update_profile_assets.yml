@@ -130,7 +130,9 @@ jobs:
 
           api = "https://api.github.com"
           token = __import__("os").environ.get("GH_TOKEN", "")
-          cache_path = Path("stats/loc_cache.json")
+          cfg = json.loads(Path("config.json").read_text(encoding="utf-8"))
+          includes = cfg.get("includes") or {}
+          cache_path = Path(includes.get("loc_cache_file", "stats/loc_cache.json"))
 
           metadata = json.loads(Path("profile/metadata.json").read_text(encoding="utf-8"))
           username = metadata["username"]
@@ -419,6 +421,92 @@ jobs:
           print(f"Updated status header emoji: {emoji}")
           PY
 
+      - name: Refresh status emoji cache
+        env:
+          GH_TOKEN: ${{ secrets.GH_STATS_TOKEN || github.token }}
+        run: |
+          python - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+
+          cfg = json.loads(Path("config.json").read_text(encoding="utf-8"))
+          includes = cfg.get("includes") or {}
+          status_path = Path(includes.get("status_file", "status/status.md"))
+          cache_path = Path(includes.get("emoji_cache_file", "status/github_emojis_cache.json"))
+
+          if not status_path.exists():
+            raise SystemExit("status/status.md not found")
+
+          def load_cache():
+            if not cache_path.exists():
+              return {}
+            try:
+              data = json.loads(cache_path.read_text(encoding="utf-8"))
+              return data if isinstance(data, dict) else {}
+            except Exception:
+              return {}
+
+          def save_cache(cache: dict):
+            cache_path.parent.mkdir(parents=True, exist_ok=True)
+            cache_path.write_text(
+              json.dumps(cache, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+            )
+
+          lines = status_path.read_text(encoding="utf-8").splitlines()
+          i = 0
+          while i < len(lines) and not lines[i].strip():
+            i += 1
+
+          shortcode = None
+          if i < len(lines):
+            m = re.match(r"^\[#header\s+(.+?)\]\s*$", lines[i].strip(), flags=re.IGNORECASE)
+            if m:
+              token = m.group(1).strip()
+              m_token = re.fullmatch(r":([a-z0-9_+\-]+):", token, flags=re.IGNORECASE)
+              if m_token:
+                shortcode = m_token.group(1).lower()
+
+          cache = load_cache()
+          if not shortcode:
+            save_cache(cache)
+            print("No shortcode header emoji found; kept cache as-is.")
+            raise SystemExit(0)
+
+          if isinstance(cache.get(shortcode), str):
+            save_cache(cache)
+            print(f"Emoji cache hit: :{shortcode}:")
+            raise SystemExit(0)
+
+          import os
+          token = os.environ.get("GH_TOKEN", "")
+
+          req = Request("https://api.github.com/emojis")
+          req.add_header("Accept", "application/vnd.github+json")
+          req.add_header("User-Agent", "profile-assets-workflow")
+          if token:
+            req.add_header("Authorization", f"Bearer {token}")
+
+          try:
+            with urlopen(req, timeout=20) as resp:
+              payload = json.loads(resp.read().decode("utf-8"))
+            if isinstance(payload, dict):
+              refreshed = {str(k).lower(): v for k, v in payload.items() if isinstance(v, str)}
+              save_cache(refreshed)
+              if shortcode in refreshed:
+                print(f"Emoji cache refreshed and found: :{shortcode}:")
+              else:
+                print(f"Emoji cache refreshed; shortcode still not found: :{shortcode}:")
+            else:
+              save_cache(cache)
+              print("Emoji endpoint response is not a dict; kept previous cache.")
+          except Exception as e:
+            save_cache(cache)
+            print(f"Failed to refresh emoji cache: {e}. Kept previous cache.")
+          PY
+
       - name: Generate profile cards
         run: python generate_card.py
 
@@ -431,6 +519,6 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add quote/quotes.txt quote/history.txt stats/github_stats.json stats/loc_cache.json stats/stats.svg stats/top-langs.svg status/status.md card-dark.svg card-light.svg
+          git add quote/quotes.txt quote/history.txt stats/github_stats.json stats/loc_cache.json stats/stats.svg stats/top-langs.svg status/status.md status/github_emojis_cache.json card-dark.svg card-light.svg
           git commit -m "chore: auto refresh profile assets [skip ci]"
           git push
