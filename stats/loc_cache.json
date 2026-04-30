@@ -1,7 +1,14 @@
 {
+  "FLwolfy/Blog-Pages": {
+    "default_branch": "main",
+    "total_commits": 78,
+    "my_commits": 78,
+    "loc_added": 65727,
+    "loc_deleted": 24201
+  },
   "FLwolfy/FLwolfy": {
     "default_branch": "main",
-    "total_commits": 180,
+    "total_commits": 181,
     "my_commits": 117,
     "loc_added": 9216,
     "loc_deleted": 4610
@@ -54,13 +61,6 @@
     "my_commits": 48,
     "loc_added": 12144,
     "loc_deleted": 3769
-  },
-  "FLwolfy/Blog-Pages": {
-    "default_branch": "main",
-    "total_commits": 73,
-    "my_commits": 73,
-    "loc_added": 62032,
-    "loc_deleted": 22888
   },
   "FLwolfy/Blog": {
     "default_branch": "main",
