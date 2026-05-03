@@ -1,14 +1,14 @@
 {
   "FLwolfy/Blog-Pages": {
     "default_branch": "main",
-    "total_commits": 108,
-    "my_commits": 108,
-    "loc_added": 143364,
-    "loc_deleted": 37784
+    "total_commits": 113,
+    "my_commits": 113,
+    "loc_added": 148262,
+    "loc_deleted": 41310
   },
   "FLwolfy/FLwolfy": {
     "default_branch": "main",
-    "total_commits": 183,
+    "total_commits": 184,
     "my_commits": 117,
     "loc_added": 9216,
     "loc_deleted": 4610
