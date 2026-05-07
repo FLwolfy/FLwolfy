@@ -511,7 +511,7 @@
 <text x="73.52" y="459.5999999999998" font-size="16" fill="#f3a45f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Blog</text>
 <text x="112.56" y="459.5999999999998" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
 <text x="132.08" y="459.5999999999998" font-size="16" fill="#d6dbe37a" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">................... </text>
-<a href="https://blog.flwolfy.xyz" target="_blank"><title>https://blog.flwolfy.xyz</title><text x="327.28" y="459.5999999999998" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve" style="cursor:pointer; text-decoration:underline;">blog.flwolfy.xyz</text></a>
+<a href="https://blog.wolfiora.site" target="_blank"><title>https://blog.wolfiora.site</title><text x="327.28" y="459.5999999999998" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve" style="cursor:pointer; text-decoration:underline;">blog.wolfiora.site</text></a>
 <text x="54" y="481.9999999999998" font-size="16" fill="#d6dbe37a" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">. </text>
 <text x="73.52" y="481.9999999999998" font-size="16" fill="#f3a45f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Email</text>
 <text x="122.32" y="481.9999999999998" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
@@ -538,7 +538,7 @@
 <text x="73.52" y="616.3999999999996" font-size="16" fill="#f3a45f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Commits</text>
 <text x="141.83999999999997" y="616.3999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
 <text x="161.35999999999999" y="616.3999999999996" font-size="16" fill="#d6dbe37a" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">................ </text>
-<text x="327.28" y="616.3999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">975</text>
+<text x="327.28" y="616.3999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">981</text>
 <text x="54" y="638.7999999999996" font-size="16" fill="#d6dbe37a" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">. </text>
 <text x="73.52" y="638.7999999999996" font-size="16" fill="#f3a45f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Stars Earned</text>
 <text x="190.64" y="638.7999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
@@ -548,7 +548,7 @@
 <text x="73.52" y="661.1999999999996" font-size="16" fill="#f3a45f" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">Lines of Code</text>
 <text x="200.39999999999998" y="661.1999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">: </text>
 <text x="219.92" y="661.1999999999996" font-size="16" fill="#d6dbe37a" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">.......... </text>
-<text x="327.28" y="661.1999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">1,128,058+ / 362,224-</text>
+<text x="327.28" y="661.1999999999996" font-size="16" fill="#6fa8ff" fill-opacity="1.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" xml:space="preserve">1,128,766+ / 362,964-</text>
 </g>
 <rect x="36" y="730" width="903.36" height="28" rx="7" fill="#0b1016" stroke="#34404b" stroke-width="1"/>
 <text x="52" y="749" font-size="13" fill="#9fd8ff" font-family="IBM Plex Mono, SFMono-Regular, Menlo, Consolas, monospace">●</text>
@@ -641,7 +641,7 @@
 <g clip-path="url(#statsClip)">
 <svg x="967.36" y="682.2746268656716" width="236.37134328358206" height="75.72537313432835" viewBox="0 0 437.0 140.0" preserveAspectRatio="xMidYMid meet">
         <title id="titleId">Aaron Liao's GitHub Stats, Rank: B</title>
-        <desc id="descId">Total Stars Earned: 51, Total Commits  (last year) : 905, Total Issues: 14, Contributed to (last year): 0</desc>
+        <desc id="descId">Total Stars Earned: 51, Total Commits  (last year) : 915, Total Issues: 14, Contributed to (last year): 0</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -701,7 +701,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 136.83810941298208;
+        stroke-dashoffset: 136.74494741630255;
       }
     }
   
@@ -801,7 +801,7 @@
         x="219.01"
         y="12.5"
         data-testid="commits"
-      >905</text>
+      >915</text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 1450ms" transform="translate(25, 0)">
@@ -967,7 +967,7 @@
           data-testid="lang-progress"
           x="0"
           y="0"
-          width="162.74"
+          width="162.81"
           height="8"
           fill="#178600"
         />
@@ -975,9 +975,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="162.74"
+          x="162.81"
           y="0"
-          width="37.54"
+          width="37.55"
           height="8"
           fill="#b07219"
         />
@@ -985,9 +985,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="200.28"
+          x="200.36"
           y="0"
-          width="26.26"
+          width="26.27"
           height="8"
           fill="#663399"
         />
@@ -995,9 +995,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="226.54"
+          x="226.63000000000002"
           y="0"
-          width="23.47"
+          width="23.36"
           height="8"
           fill="#f1e05a"
         />
@@ -1008,28 +1008,28 @@
     <g class="stagger" style="animation-delay: 1150ms">
       <circle cx="5" cy="6" r="5" fill="#178600" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        C# 65.09%
+        C# 65.12%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 1300ms">
       <circle cx="5" cy="6" r="5" fill="#b07219" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Java 15.01%
+        Java 15.02%
       </text>
     </g>
   </g></g><g transform="translate(150, 0)"><g transform="translate(0, 0)">
     <g class="stagger" style="animation-delay: 1150ms">
       <circle cx="5" cy="6" r="5" fill="#663399" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        CSS 10.50%
+        CSS 10.51%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 1300ms">
       <circle cx="5" cy="6" r="5" fill="#f1e05a" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        JavaScript 9.39%
+        JavaScript 9.35%
       </text>
     </g>
   </g></g>
