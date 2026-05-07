@@ -7,7 +7,7 @@
 [--about-markup-dim]. [--about-markup-label]Hobbies[--about-markup-value]: [--about-markup-dim]................ [--about-markup-value]Football, Anime, Games, Modding, Coding
 
 [--about-markup-header]- Contact [--about-markup-header]---------------------------------------------------------------
-[--about-markup-dim]. [--about-markup-label]Blog[--about-markup-value]: [--about-markup-dim]................... [--about-markup-value][blog.flwolfy.xyz](https://blog.flwolfy.xyz)
+[--about-markup-dim]. [--about-markup-label]Blog[--about-markup-value]: [--about-markup-dim]................... [--about-markup-value][blog.wolfiora.site](https://blog.wolfiora.site)
 [--about-markup-dim]. [--about-markup-label]Email[--about-markup-value]: [--about-markup-dim].................. [--about-markup-value][hsuankailiao@gmail.com](mailto:hsuankailiao@gmail.com)
 [--about-markup-dim]. [--about-markup-label]Discord[--about-markup-value]: [--about-markup-dim]................ [--about-markup-value][discord.com/users/1006448723326410782](https://discord.com/users/1006448723326410782)
 [--about-markup-dim]. [--about-markup-label]X[--about-markup-value]: [--about-markup-dim]...................... [--about-markup-value][x.com/fl_wolfy](https://x.com/fl_wolfy)
