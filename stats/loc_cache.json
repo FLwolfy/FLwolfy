@@ -1,17 +1,17 @@
 {
+  "FLwolfy/FLwolfy": {
+    "default_branch": "main",
+    "total_commits": 225,
+    "my_commits": 119,
+    "loc_added": 9218,
+    "loc_deleted": 4612
+  },
   "FLwolfy/Blog-Pages": {
     "default_branch": "main",
     "total_commits": 179,
     "my_commits": 179,
     "loc_added": 231509,
     "loc_deleted": 144077
-  },
-  "FLwolfy/FLwolfy": {
-    "default_branch": "main",
-    "total_commits": 224,
-    "my_commits": 119,
-    "loc_added": 9218,
-    "loc_deleted": 4612
   },
   "FLwolfy/BindGen-CS": {
     "default_branch": "main",
