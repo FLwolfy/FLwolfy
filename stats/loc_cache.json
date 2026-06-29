@@ -1,7 +1,7 @@
 {
   "FLwolfy/FLwolfy": {
     "default_branch": "main",
-    "total_commits": 243,
+    "total_commits": 244,
     "my_commits": 119,
     "loc_added": 9218,
     "loc_deleted": 4612
@@ -106,7 +106,7 @@
   },
   "FLwolfy/Normal-Mapping-Practice": {
     "default_branch": "main",
-    "total_commits": 10,
+    "total_commits": 0,
     "my_commits": 10,
     "loc_added": 501,
     "loc_deleted": 42
