@@ -1,7 +1,14 @@
 {
+  "FLwolfy/Pay-To-Teleport": {
+    "default_branch": "latest",
+    "total_commits": 52,
+    "my_commits": 52,
+    "loc_added": 12871,
+    "loc_deleted": 4422
+  },
   "FLwolfy/FLwolfy": {
     "default_branch": "main",
-    "total_commits": 268,
+    "total_commits": 269,
     "my_commits": 119,
     "loc_added": 9218,
     "loc_deleted": 4612
@@ -61,13 +68,6 @@
     "my_commits": 22,
     "loc_added": 2422,
     "loc_deleted": 738
-  },
-  "FLwolfy/Pay-To-Teleport": {
-    "default_branch": "latest",
-    "total_commits": 48,
-    "my_commits": 48,
-    "loc_added": 12144,
-    "loc_deleted": 3769
   },
   "FLwolfy/Blog": {
     "default_branch": "main",
