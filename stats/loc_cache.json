@@ -1,17 +1,17 @@
 {
+  "FLwolfy/FLwolfy": {
+    "default_branch": "main",
+    "total_commits": 291,
+    "my_commits": 119,
+    "loc_added": 9218,
+    "loc_deleted": 4612
+  },
   "FLwolfy/Blog-Pages": {
     "default_branch": "main",
     "total_commits": 180,
     "my_commits": 180,
     "loc_added": 237937,
     "loc_deleted": 144698
-  },
-  "FLwolfy/FLwolfy": {
-    "default_branch": "main",
-    "total_commits": 290,
-    "my_commits": 119,
-    "loc_added": 9218,
-    "loc_deleted": 4612
   },
   "FLwolfy/Pay-To-Teleport": {
     "default_branch": "latest",
@@ -85,7 +85,7 @@
   },
   "FLwolfy/Flappy-Bird-Plus-Android": {
     "default_branch": "master",
-    "total_commits": 7,
+    "total_commits": 0,
     "my_commits": 7,
     "loc_added": 5440,
     "loc_deleted": 21
