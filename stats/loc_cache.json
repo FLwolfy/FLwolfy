@@ -1,17 +1,24 @@
 {
-  "FLwolfy/FLwolfy": {
-    "default_branch": "main",
-    "total_commits": 316,
-    "my_commits": 119,
-    "loc_added": 9218,
-    "loc_deleted": 4612
-  },
   "FLwolfy/InnoEngine": {
     "default_branch": "master",
     "total_commits": 445,
     "my_commits": 445,
     "loc_added": 3063132,
     "loc_deleted": 357196
+  },
+  "FLwolfy/2D-ECS-JavaFX": {
+    "default_branch": "main",
+    "total_commits": 20,
+    "my_commits": 20,
+    "loc_added": 3467,
+    "loc_deleted": 552
+  },
+  "FLwolfy/FLwolfy": {
+    "default_branch": "main",
+    "total_commits": 317,
+    "my_commits": 119,
+    "loc_added": 9218,
+    "loc_deleted": 4612
   },
   "FLwolfy/InnoEngine.Rendering2D": {
     "default_branch": "main",
@@ -47,13 +54,6 @@
     "my_commits": 43,
     "loc_added": 442929,
     "loc_deleted": 6755
-  },
-  "FLwolfy/2D-ECS-JavaFX": {
-    "default_branch": "main",
-    "total_commits": 20,
-    "my_commits": 20,
-    "loc_added": 3467,
-    "loc_deleted": 552
   },
   "FLwolfy/TriggerFlow": {
     "default_branch": "main",
