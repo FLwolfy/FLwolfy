@@ -9,7 +9,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">Aaron Liao's GitHub Stats, Rank: B+</title>
-        <desc id="descId">Total Stars Earned: 32, Total Commits  (last year) : 1160, Total Issues: 62, Contributed to (last year): 11</desc>
+        <desc id="descId">Total Stars Earned: 32, Total Commits  (last year) : 1215, Total Issues: 68, Contributed to (last year): 11</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -73,7 +73,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 95.61314908812045;
+        stroke-dashoffset: 94.44399437237557;
       }
     }
   
@@ -188,7 +188,7 @@
         x="219.01"
         y="12.5"
         data-testid="issues"
-      >62</text>
+      >68</text>
     </g>
   </g><g transform="translate(0, 75)">
     <g class="stagger" style="animation-delay: 900ms" transform="translate(25, 0)">
